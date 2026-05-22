@@ -1,7 +1,6 @@
 "use server"
 
 import { prisma } from "@/lib/prisma";
-import { getProductImageUrl } from "@/lib/vercel-blob";
 
 export interface HomeProduct {
   id: number;
@@ -44,20 +43,12 @@ export async function getHomePageData() {
     },
   });
 
-  // Fetch Vercel Blob images for all products in parallel
-  const blobImageUrls = await Promise.all(
-    products.map((p) => getProductImageUrl(p.id))
-  );
-
   // Map products to home product type
-  const featuredProducts: HomeProduct[] = products.map((p, idx) => {
+  const featuredProducts: HomeProduct[] = products.map((p) => {
     const stock = p.stocks[0];
-
-    // Priority: Vercel Blob → DB main image → first DB image → placeholder
-    const blobUrl = blobImageUrls[idx];
-    const dbImage = p.images.find((img) => img.type === "main")?.url
-      || p.images[0]?.url;
-    const image = blobUrl || dbImage || "/images/products/placeholder.jpg";
+    const image = p.images.find((img) => img.type === "main")?.url
+      || p.images[0]?.url
+      || "/images/products/placeholder.jpg";
 
     const price = stock ? stock.price * (1 - stock.discount / 100) : p.affiliatePrice;
     const originalPrice = stock && stock.discount > 0 ? stock.price : null;
