@@ -246,7 +246,7 @@ export async function updateProductWithFiles(productId: number, formData: FormDa
         // 2. إذا وجد ملفات جديدة، نقوم بعملية التنظيف والإضافة
         if (files.length > 0) {
             // أ. رفع الملفات الجديدة أولاً
-            fileDataArray = await Promise.all(files.map(uploadSingleFile));
+            fileDataArray = await Promise.all(files.map((file, idx) => uploadSingleFile(file, idx === 0)));
 
             // ب. جلب بيانات الصور القديمة لحذفها من Vercel Blob
             const currentProduct = await prisma.product.findUnique({
