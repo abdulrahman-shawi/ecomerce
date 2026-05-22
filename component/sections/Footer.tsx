@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* About */}
           <div>
-            <h3 className="text-3xl font-bold text-pink mb-4 font-tajawal">جلامور</h3>
+            <h3 className="text-3xl font-bold text-pink mb-4 font-tajawal">SKYNOVA</h3>
             <p className="text-gray-400 leading-relaxed text-sm font-tajawal">
               وجهتك الأولى لمنتجات العناية بالبشرة والشعر. نقدم لكِ أفضل المنتجات الأصلية بأسعار مميزة مع توصيل سريع لجميع أنحاء المملكة.
             </p>
@@ -77,7 +77,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="border-t border-gray-700 pt-6 text-center">
           <p className="text-gray-500 text-sm font-tajawal">
-            © 2026 جلامور. جميع الحقوق محفوظة.
+            © 2026 SKYNOVA. جميع الحقوق محفوظة.
           </p>
         </div>
       </div>
