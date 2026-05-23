@@ -13,6 +13,7 @@ export interface Product {
   originalPrice: number | null;
   image: string;
   badge: string | null;
+  description?: string | null;
 }
 
 interface ProductCardProps {

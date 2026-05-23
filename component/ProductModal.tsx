@@ -103,9 +103,9 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
               )}
             </div>
 
-            {/* Description placeholder */}
-            <p className="text-gray-500 text-sm mb-6 leading-relaxed font-tajawal">
-              منتج عالي الجودة يوفر لك أفضل النتائج. تم اختياره بعناية لتلبية احتياجاتك اليومية.
+            {/* Description */}
+            <p className="text-gray-500 text-sm mb-6 leading-relaxed font-tajawal min-h-[3rem]">
+              {product.description ?? "منتج عالي الجودة يوفر لك أفضل النتائج. تم اختياره بعناية لتلبية احتياجاتك اليومية."}
             </p>
 
             {/* Quantity Selector */}
