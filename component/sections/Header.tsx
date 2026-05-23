@@ -3,14 +3,20 @@
 import { useState, useEffect } from 'react';
 import { Search, User, Heart, ShoppingCart, Menu, X } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
+import AuthModal from '@/component/AuthModal';
 
 const navItems = ['الرئيسية', 'منتجاتنا', 'الفئات', 'العروض', 'من نحن'];
 
 export default function Header() {
   const { totalItems, setIsOpen } = useCart();
+  const { isLoggedIn } = useAuth();
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [authModalOpen, setAuthModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -91,7 +97,16 @@ export default function Header() {
 
         {/* Icons */}
         <div className="flex items-center gap-2">
-          <button className="p-2 hover:text-pink hover:scale-110 transition-all">
+          <button
+            onClick={() => {
+              if (isLoggedIn) {
+                router.push('/account');
+              } else {
+                setAuthModalOpen(true);
+              }
+            }}
+            className="p-2 hover:text-pink hover:scale-110 transition-all"
+          >
             <User size={22} />
           </button>
           <button className="p-2 hover:text-pink hover:scale-110 transition-all hidden sm:block">
@@ -110,6 +125,8 @@ export default function Header() {
           </button>
         </div>
       </div>
+
+      <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
