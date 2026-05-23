@@ -14,11 +14,11 @@ const config: Config = {
       },
       colors: {
         pink: {
-          DEFAULT: "#ff99cc",
-          light: "#ffb3d9",
-          dark: "#ff66b2",
-          50: "#fff0f5",
-          100: "#ffe0ec",
+          DEFAULT: "#A4C8A0",
+          light: "#C5E0C2",
+          dark: "#7DAF7A",
+          50: "#F0F7EF",
+          100: "#E0F0DE",
         },
         gray: {
           dark: "#2d2d2d",
