@@ -2,6 +2,7 @@
 
 import { X, Plus, Minus, ShoppingBag, Trash2 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import Link from 'next/link';
 
 export default function CartDrawer() {
   const { items, isOpen, setIsOpen, updateQuantity, removeFromCart, totalPrice } = useCart();
@@ -96,9 +97,13 @@ export default function CartDrawer() {
                 {totalPrice} ريال
               </span>
             </div>
-            <button className="w-full bg-pink text-white py-3 rounded-full font-bold hover:bg-pink-dark transition-colors font-tajawal">
+            <Link
+              href="/checkout"
+              onClick={() => setIsOpen(false)}
+              className="block w-full bg-pink text-white py-3 rounded-full font-bold hover:bg-pink-dark transition-colors font-tajawal text-center"
+            >
               إتمام الطلب
-            </button>
+            </Link>
             <button
               onClick={() => setIsOpen(false)}
               className="w-full border border-gray-200 text-gray-600 py-3 rounded-full font-medium hover:bg-gray-50 transition-colors font-tajawal"
