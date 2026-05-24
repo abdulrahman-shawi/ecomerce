@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -21,6 +21,16 @@ L.Marker.prototype.options.icon = defaultIcon;
 interface MapPickerProps {
   position: [number, number] | null;
   onPositionChange: (pos: [number, number]) => void;
+}
+
+function ChangeView({ position }: { position: [number, number] | null }) {
+  const map = useMap();
+  useEffect(() => {
+    if (position) {
+      map.setView(position, 15);
+    }
+  }, [position, map]);
+  return null;
 }
 
 function LocationMarker({
@@ -68,6 +78,7 @@ export default function MapPicker({
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        <ChangeView position={position} />
         <LocationMarker position={position} onPositionChange={onPositionChange} />
       </MapContainer>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useCart } from "@/context/CartContext";
@@ -61,6 +61,31 @@ export default function CheckoutPage() {
   const [position, setPosition] = useState<[number, number] | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [locationError, setLocationError] = useState<string | null>(null);
+
+  // Auto-detect user location on mount
+  useEffect(() => {
+    if (!navigator.geolocation) {
+      setLocationError("المتصفح لا يدعم تحديد الموقع الجغرافي");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (geo) => {
+        const pos: [number, number] = [geo.coords.latitude, geo.coords.longitude];
+        setPosition(pos);
+        setLocationError(null);
+      },
+      (err) => {
+        let msg = "تعذر تحديد الموقع";
+        if (err.code === 1) msg = "تم رفض إذن الوصول للموقع. يرجى السماح بالوصول أو تحديد الموقع يدوياً.";
+        else if (err.code === 2) msg = "معلومات الموقع غير متوفرة حالياً.";
+        else if (err.code === 3) msg = "انتهى الوقت المحدد لتحديد الموقع.";
+        setLocationError(msg);
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+  }, []);
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -348,6 +373,12 @@ export default function CheckoutPage() {
                     <p className="text-xs text-pink-dark mt-2 flex items-center gap-1">
                       <CheckCircle size={14} />
                       تم تحديد الموقع: {position[0].toFixed(5)}, {position[1].toFixed(5)}
+                    </p>
+                  )}
+                  {locationError && (
+                    <p className="text-xs text-amber-600 mt-2 flex items-center gap-1">
+                      <MapPin size={14} />
+                      {locationError}
                     </p>
                   )}
                 </div>
