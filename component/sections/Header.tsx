@@ -41,6 +41,20 @@ export default function Header() {
     setMobileMenuOpen(false);
   };
 
+  const handleSearch = () => {
+    const trimmed = searchQuery.trim();
+    if (trimmed) {
+      router.push(`/search?q=${encodeURIComponent(trimmed)}`);
+      setSearchQuery('');
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${
@@ -87,9 +101,13 @@ export default function Header() {
               placeholder="ابحثي عن منتج..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleKeyDown}
               className="w-full h-10 pr-4 pl-12 border border-gray-200 rounded-full focus:outline-none focus:border-pink focus:ring-1 focus:ring-pink text-sm font-tajawal"
             />
-            <button className="absolute left-1.5 top-1/2 -translate-y-1/2 bg-pink text-white p-2 rounded-full hover:bg-pink-dark transition-colors">
+            <button
+              onClick={handleSearch}
+              className="absolute left-1.5 top-1/2 -translate-y-1/2 bg-pink text-white p-2 rounded-full hover:bg-pink-dark transition-colors"
+            >
               <Search size={16} />
             </button>
           </div>
@@ -148,9 +166,15 @@ export default function Header() {
               <input
                 type="text"
                 placeholder="ابحثي عن منتج..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
                 className="w-full h-10 pr-4 pl-12 border border-gray-200 rounded-full focus:outline-none focus:border-pink text-sm font-tajawal"
               />
-              <button className="absolute left-1.5 top-1/2 -translate-y-1/2 bg-pink text-white p-2 rounded-full">
+              <button
+                onClick={handleSearch}
+                className="absolute left-1.5 top-1/2 -translate-y-1/2 bg-pink text-white p-2 rounded-full"
+              >
                 <Search size={16} />
               </button>
             </div>
