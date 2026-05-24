@@ -2,9 +2,11 @@
 
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import { useCart } from "@/context/CartContext";
-import MapPicker from "@/component/MapPicker";
 import { MapPin, Phone, Mail, User, ShoppingBag, ChevronLeft, CheckCircle } from "lucide-react";
+
+const MapPicker = dynamic(() => import("@/component/MapPicker"), { ssr: false });
 
 const countries = [
   { code: "SY", name: "سوريا" },
