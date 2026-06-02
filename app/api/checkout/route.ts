@@ -31,91 +31,95 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create or find customer by phone
-    let customer;
-    try {
-      customer = await prisma.customer.findFirst({
+    // Execute everything in a single transaction
+    const { customer, order } = await prisma.$transaction(async (tx) => {
+      // 1. Search for existing customer by phone
+      let customer = await tx.customer.findFirst({
         where: { phone: { has: phone } },
       });
-    } catch (findErr) {
-      console.error("Customer find error:", findErr);
-    }
 
-    if (!customer) {
-      try {
-        customer = await prisma.customer.create({
-          data: {
-            name,
-            phone: [phone],
-            country,
-            city,
-          },
-        });
-      } catch (createErr: any) {
-        console.error("Customer create error:", createErr);
-        // If name already exists, try to find by name and update phone
-        if (createErr?.code === "P2002") {
-          customer = await prisma.customer.findUnique({
-            where: { name },
+      // 2. If not found, create a new customer
+      if (!customer) {
+        try {
+          customer = await tx.customer.create({
+            data: {
+              name,
+              phone: [phone],
+              status: "فرصة جديدة",
+              phonestatus: "معلق",
+              country,
+              city,
+            },
           });
-          if (customer) {
-            customer = await prisma.customer.update({
-              where: { id: customer.id },
-              data: {
-                phone: { push: phone },
-                country,
-                city,
-              },
+        } catch (createErr: any) {
+          // If name is duplicate (P2002), find existing customer by name and update phone
+          if (createErr?.code === "P2002") {
+            customer = await tx.customer.findUnique({
+              where: { name },
             });
+            if (customer) {
+              customer = await tx.customer.update({
+                where: { id: customer.id },
+                data: {
+                  phone: { push: phone },
+                  country,
+                  city,
+                },
+              });
+            }
+          }
+          if (!customer) {
+            throw new Error(
+              `Failed to create customer: ${createErr?.message || "Unknown error"}`
+            );
           }
         }
-        if (!customer) {
-          return NextResponse.json(
-            { error: "Failed to create customer", details: createErr?.message || "Unknown error" },
-            { status: 500 }
-          );
-        }
       }
-    }
 
-    // Generate Google Maps link if coordinates exist
-    let googleMapsLink: string | undefined;
-    if (lat != null && lng != null) {
-      googleMapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
-    }
+      // 3. Generate Google Maps link if coordinates exist
+      let googleMapsLink: string | undefined;
+      if (lat != null && lng != null) {
+        googleMapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
+      }
 
-    // Create order
-    const order = await prisma.order.create({
-      data: {
-        orderNumber: generateOrderNumber(),
-        totalAmount: totalPrice,
-        finalAmount: totalPrice,
-        discount: 0,
-        paymentMethod: "CASH",
-        receiverName: name,
-        receiverPhone: [phone],
-        country,
-        city,
-        fullAddress: address,
-        deliveryNotes: notes || undefined,
-        googleMapsLink,
-        status: "PENDING",
-        customerId: customer.id,
-        items: {
-          create: items.map((item: any) => ({
-            quantity: item.quantity,
-            price: item.price,
-            discount: 0,
-            productId: item.id,
-          })),
+      // 4. Create the order linked to the customer
+      const order = await tx.order.create({
+        data: {
+          orderNumber: generateOrderNumber(),
+          totalAmount: totalPrice,
+          finalAmount: totalPrice,
+          discount: 0,
+          paymentMethod: "CASH",
+          receiverName: name,
+          receiverPhone: [phone],
+          country,
+          city,
+          fullAddress: address,
+          deliveryNotes: notes || undefined,
+          googleMapsLink,
+          status: "PENDING",
+          customerId: customer.id,
+          items: {
+            create: items.map((item: any) => ({
+              quantity: item.quantity,
+              price: item.price,
+              discount: 0,
+              productId: item.id,
+            })),
+          },
         },
-      },
-      include: {
-        items: true,
-      },
+        include: {
+          items: true,
+        },
+      });
+
+      return { customer, order };
     });
 
-    return NextResponse.json({ success: true, order }, { status: 201 });
+    return NextResponse.json(
+      { success: true, order, customer },
+      { status: 201 }
+    );
   } catch (error: any) {
     console.error("Checkout error:", error);
     return NextResponse.json(
