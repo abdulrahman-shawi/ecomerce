@@ -50,7 +50,7 @@ export async function getHomePageData() {
       || p.images[0]?.url
       || "/images/products/placeholder.jpg";
 
-    const price = stock ? stock.price * (1 - stock.discount / 100) : p.affiliatePrice;
+    const price = stock ? stock.price - stock.discount : p.affiliatePrice;
     const originalPrice = stock && stock.discount > 0 ? stock.price : null;
 
     return {
