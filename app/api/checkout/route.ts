@@ -32,19 +32,50 @@ export async function POST(request: NextRequest) {
     }
 
     // Create or find customer by phone
-    let customer = await prisma.customer.findFirst({
-      where: { phone: { has: phone } },
-    });
+    let customer;
+    try {
+      customer = await prisma.customer.findFirst({
+        where: { phone: { has: phone } },
+      });
+    } catch (findErr) {
+      console.error("Customer find error:", findErr);
+    }
 
     if (!customer) {
-      customer = await prisma.customer.create({
-        data: {
-          name,
-          phone: [phone],
-          country,
-          city,
-        },
-      });
+      try {
+        customer = await prisma.customer.create({
+          data: {
+            name,
+            phone: [phone],
+            country,
+            city,
+          },
+        });
+      } catch (createErr: any) {
+        console.error("Customer create error:", createErr);
+        // If name already exists, try to find by name and update phone
+        if (createErr?.code === "P2002") {
+          customer = await prisma.customer.findUnique({
+            where: { name },
+          });
+          if (customer) {
+            customer = await prisma.customer.update({
+              where: { id: customer.id },
+              data: {
+                phone: { push: phone },
+                country,
+                city,
+              },
+            });
+          }
+        }
+        if (!customer) {
+          return NextResponse.json(
+            { error: "Failed to create customer", details: createErr?.message || "Unknown error" },
+            { status: 500 }
+          );
+        }
+      }
     }
 
     // Generate Google Maps link if coordinates exist
@@ -85,10 +116,10 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({ success: true, order }, { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Checkout error:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Internal server error", details: error?.message || "Unknown error" },
       { status: 500 }
     );
   }
