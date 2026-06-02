@@ -31,14 +31,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Execute everything in a single transaction
+    const stockCountry = country === "TR" ? "تركيا" : "سوريا";
+
     const { customer, order } = await prisma.$transaction(async (tx) => {
-      // 1. Search for existing customer by phone
+      // ─── 1. Find or create customer ───
       let customer = await tx.customer.findFirst({
         where: { phone: { has: phone } },
       });
 
-      // 2. If not found, create a new customer
       if (!customer) {
         try {
           customer = await tx.customer.create({
@@ -52,11 +52,8 @@ export async function POST(request: NextRequest) {
             },
           });
         } catch (createErr: any) {
-          // If name is duplicate (P2002), find existing customer by name and update phone
           if (createErr?.code === "P2002") {
-            customer = await tx.customer.findUnique({
-              where: { name },
-            });
+            customer = await tx.customer.findUnique({ where: { name } });
             if (customer) {
               customer = await tx.customer.update({
                 where: { id: customer.id },
@@ -76,13 +73,59 @@ export async function POST(request: NextRequest) {
         }
       }
 
-      // 3. Generate Google Maps link if coordinates exist
+      // ─── 2. Determine warehouse by country ───
+      const warehouses = await tx.warehouse.findMany();
+      const warehouse = warehouses.find((w) =>
+        w.location.toLowerCase().includes(stockCountry.toLowerCase()) ||
+        w.name.toLowerCase().includes(stockCountry.toLowerCase())
+      ) ?? warehouses[0];
+
+      if (!warehouse) {
+        throw new Error("No warehouse found");
+      }
+
+      // ─── 3. Validate & deduct stock ───
+      for (const item of items) {
+        const stocks = await tx.productStock.findMany({
+          where: {
+            productId: item.id,
+            warehouseId: warehouse.id,
+          },
+          orderBy: { quantity: "desc" },
+        });
+
+        const totalAvailable = stocks.reduce((sum, s) => sum + s.quantity, 0);
+        if (totalAvailable < item.quantity) {
+          throw new Error(
+            `Insufficient stock for product ${item.name}. Available: ${totalAvailable}, Requested: ${item.quantity}`
+          );
+        }
+
+        let remaining = item.quantity;
+        for (const stock of stocks) {
+          if (remaining <= 0) break;
+          const deduct = Math.min(stock.quantity, remaining);
+          await tx.productStock.update({
+            where: { id: stock.id },
+            data: { quantity: { decrement: deduct } },
+          });
+          remaining -= deduct;
+        }
+      }
+
+      // ─── 4. Update customer status ───
+      customer = await tx.customer.update({
+        where: { id: customer.id },
+        data: { status: "تم البيع" },
+      });
+
+      // ─── 5. Generate Google Maps link ───
       let googleMapsLink: string | undefined;
       if (lat != null && lng != null) {
         googleMapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
       }
 
-      // 4. Create the order linked to the customer
+      // ─── 6. Create order ───
       const order = await tx.order.create({
         data: {
           orderNumber: generateOrderNumber(),
@@ -97,8 +140,9 @@ export async function POST(request: NextRequest) {
           fullAddress: address,
           deliveryNotes: notes || undefined,
           googleMapsLink,
-          status: "PENDING",
+          status: "طلب جديد",
           customerId: customer.id,
+          warehouseId: warehouse.id,
           items: {
             create: items.map((item: any) => ({
               quantity: item.quantity,
