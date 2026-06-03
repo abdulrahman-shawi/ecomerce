@@ -89,16 +89,16 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
             {/* Price */}
             <div className="flex items-center gap-3 mb-4">
               <span className="text-2xl font-bold text-pink-dark font-tajawal">
-                {product.price} ريال
+                {product.price} $
               </span>
               {product.originalPrice && (
                 <span className="text-lg text-gray-400 line-through font-tajawal">
-                  {product.originalPrice} ريال
+                  {product.originalPrice} $
                 </span>
               )}
               {discount > 0 && (
                 <span className="text-sm bg-green-100 text-green-700 px-2 py-1 rounded-md font-tajawal">
-                  وفّر {product.originalPrice! - product.price} ريال
+                  وفّر {product.originalPrice! - product.price} $
                 </span>
               )}
             </div>
@@ -132,7 +132,7 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
             <div className="flex items-center justify-between mb-6 pb-6 border-b border-gray-100">
               <span className="text-gray-600 font-tajawal">الإجمالي:</span>
               <span className="text-xl font-bold text-gray-800 font-tajawal">
-                {product.price * quantity} ريال
+                {product.price * quantity} $
               </span>
             </div>
 

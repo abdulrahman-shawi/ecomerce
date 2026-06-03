@@ -11,7 +11,7 @@ export default function TopBanner() {
   return (
     <div className="bg-pink text-white h-10 flex items-center justify-center relative animate-in slide-in-from-top duration-500">
       <p className="text-sm font-medium font-tajawal">
-        شحن مجاني للطلبات فوق 299 ريال | توصيل سريع خلال 2-5 أيام
+        شحن مجاني للطلبات فوق 299$ | توصيل سريع خلال 2-5 أيام
       </p>
       <button
         onClick={() => setIsVisible(false)}

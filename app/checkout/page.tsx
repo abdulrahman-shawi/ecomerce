@@ -4,7 +4,9 @@ import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useCart } from "@/context/CartContext";
-import { MapPin, Phone, Mail, User, ShoppingBag, ChevronLeft, CheckCircle } from "lucide-react";
+import { MapPin, User, ShoppingBag, ChevronLeft, CheckCircle } from "lucide-react";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 
 const MapPicker = dynamic(() => import("@/component/MapPicker"), { ssr: false });
 
@@ -237,19 +239,15 @@ export default function CheckoutPage() {
                     <label className="block text-sm font-medium text-gray-700 mb-1.5">
                       رقم الهاتف <span className="text-red-500">*</span>
                     </label>
-                    <div className="relative">
-                      <Phone
-                        size={18}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
-                      />
-                      <input
-                        type="tel"
-                        name="phone"
-                        required
+                    <div className="phone-input-wrapper" dir="ltr">
+                      <PhoneInput
+                        defaultCountry="SY"
                         value={formData.phone}
-                        onChange={handleChange}
-                        placeholder="مثال: 0991234567"
-                        className="w-full pr-10 pl-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink/50 focus:border-pink transition-all text-gray-dark"
+                        onChange={(value) =>
+                          setFormData((prev) => ({ ...prev, phone: value || "" }))
+                        }
+                        placeholder="Enter phone number"
+                        className="w-full border border-gray-200 rounded-xl focus-within:border-pink focus-within:ring-2 focus-within:ring-pink/50 text-gray-dark overflow-hidden"
                       />
                     </div>
                   </div>
@@ -388,7 +386,7 @@ export default function CheckoutPage() {
                         الكمية: {item.quantity}
                       </p>
                       <p className="text-pink-dark font-bold text-sm mt-1">
-                        {item.price * item.quantity} ريال
+                        {item.price * item.quantity} $
                       </p>
                     </div>
                   </div>
@@ -405,7 +403,7 @@ export default function CheckoutPage() {
                 <div className="flex items-center justify-between">
                   <span className="text-gray-600 font-tajawal">الإجمالي</span>
                   <span className="text-2xl font-bold text-pink-dark font-tajawal">
-                    {totalPrice} ريال
+                    {totalPrice} $
                   </span>
                 </div>
               </div>

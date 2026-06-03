@@ -6,7 +6,7 @@ const features = [
   {
     icon: Truck,
     title: 'شحن مجاني',
-    desc: 'للطلبات فوق 299 ريال',
+    desc: 'للطلبات فوق 299$',
   },
   {
     icon: ShieldCheck,

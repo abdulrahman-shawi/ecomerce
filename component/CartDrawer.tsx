@@ -54,7 +54,7 @@ export default function CartDrawer() {
                       {item.name}
                     </h4>
                     <p className="text-pink-dark font-bold font-tajawal mb-2">
-                      {item.price} ريال
+                      {item.price} $
                     </p>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 bg-white rounded-full px-2 py-1">
@@ -94,7 +94,7 @@ export default function CartDrawer() {
             <div className="flex items-center justify-between">
               <span className="text-gray-600 font-tajawal">الإجمالي:</span>
               <span className="text-2xl font-bold text-pink-dark font-tajawal">
-                {totalPrice} ريال
+                {totalPrice} $
               </span>
             </div>
             <Link

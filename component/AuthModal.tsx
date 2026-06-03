@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { X, User, Phone } from "lucide-react";
+import { X, User } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -162,15 +164,14 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 <label className="block text-sm font-medium text-gray-700 mb-1 font-tajawal">
                   رقم الهاتف
                 </label>
-                <div className="relative">
-                  <input
-                    type="tel"
+                <div className="phone-input-wrapper" dir="ltr">
+                  <PhoneInput
+                    defaultCountry="SY"
                     value={loginPhone}
-                    onChange={(e) => setLoginPhone(e.target.value)}
-                    className="w-full h-11 pr-10 pl-4 border border-gray-200 rounded-xl focus:outline-none focus:border-pink focus:ring-1 focus:ring-pink text-sm font-tajawal"
-                    placeholder="05xxxxxxxx"
+                    onChange={(value) => setLoginPhone(value || "")}
+                    placeholder="Enter phone number"
+                    className="w-full h-11 border border-gray-200 rounded-xl focus-within:border-pink focus-within:ring-1 focus-within:ring-pink text-sm font-tajawal overflow-hidden"
                   />
-                  <Phone size={18} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 </div>
               </div>
 
@@ -204,15 +205,14 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 <label className="block text-sm font-medium text-gray-700 mb-1 font-tajawal">
                   رقم الهاتف
                 </label>
-                <div className="relative">
-                  <input
-                    type="tel"
+                <div className="phone-input-wrapper" dir="ltr">
+                  <PhoneInput
+                    defaultCountry="SY"
                     value={regPhone}
-                    onChange={(e) => setRegPhone(e.target.value)}
-                    className="w-full h-11 pr-10 pl-4 border border-gray-200 rounded-xl focus:outline-none focus:border-pink focus:ring-1 focus:ring-pink text-sm font-tajawal"
-                    placeholder="05xxxxxxxx"
+                    onChange={(value) => setRegPhone(value || "")}
+                    placeholder="Enter phone number"
+                    className="w-full h-11 border border-gray-200 rounded-xl focus-within:border-pink focus-within:ring-1 focus-within:ring-pink text-sm font-tajawal overflow-hidden"
                   />
-                  <Phone size={18} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 </div>
               </div>
 
