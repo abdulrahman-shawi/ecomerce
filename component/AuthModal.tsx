@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X, Eye, EyeOff, Mail, Lock, User } from "lucide-react";
+import { X, User, Phone } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 
@@ -16,30 +16,25 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const { login, register } = useAuth();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<Tab>("login");
-  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   // Login fields
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
+  const [loginName, setLoginName] = useState("");
+  const [loginPhone, setLoginPhone] = useState("");
 
   // Register fields
   const [regName, setRegName] = useState("");
-  const [regEmail, setRegEmail] = useState("");
-  const [regPassword, setRegPassword] = useState("");
-  const [regConfirm, setRegConfirm] = useState("");
+  const [regPhone, setRegPhone] = useState("");
 
   if (!isOpen) return null;
 
   const resetFields = () => {
     setError("");
-    setLoginEmail("");
-    setLoginPassword("");
+    setLoginName("");
+    setLoginPhone("");
     setRegName("");
-    setRegEmail("");
-    setRegPassword("");
-    setRegConfirm("");
+    setRegPhone("");
   };
 
   const handleTabChange = (tab: Tab) => {
@@ -50,39 +45,31 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    if (!loginEmail || !loginPassword) {
+    if (!loginName || !loginPhone) {
       setError("الرجاء ملء جميع الحقول");
       return;
     }
     setLoading(true);
-    const result = await login(loginEmail, loginPassword);
+    const result = await login(loginName, loginPhone);
     setLoading(false);
     if (result.success) {
       resetFields();
       onClose();
       router.push("/account");
     } else {
-      setError(result.error || "البريد الإلكتروني أو كلمة المرور غير صحيحة");
+      setError(result.error || "الاسم أو رقم الهاتف غير صحيح");
     }
   };
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    if (!regName || !regEmail || !regPassword || !regConfirm) {
+    if (!regName || !regPhone) {
       setError("الرجاء ملء جميع الحقول");
       return;
     }
-    if (regPassword.length < 6) {
-      setError("كلمة المرور يجب أن تكون 6 أحرف على الأقل");
-      return;
-    }
-    if (regPassword !== regConfirm) {
-      setError("كلمتا المرور غير متطابقتين");
-      return;
-    }
     setLoading(true);
-    const result = await register(regName, regEmail, regPassword);
+    const result = await register(regName, regPhone);
     setLoading(false);
     if (result.success) {
       resetFields();
@@ -157,50 +144,34 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1 font-tajawal">
-                  البريد الإلكتروني
+                  اسم المستخدم
                 </label>
                 <div className="relative">
                   <input
-                    type="email"
-                    value={loginEmail}
-                    onChange={(e) => setLoginEmail(e.target.value)}
+                    type="text"
+                    value={loginName}
+                    onChange={(e) => setLoginName(e.target.value)}
                     className="w-full h-11 pr-10 pl-4 border border-gray-200 rounded-xl focus:outline-none focus:border-pink focus:ring-1 focus:ring-pink text-sm font-tajawal"
-                    placeholder="example@email.com"
+                    placeholder="محمد أحمد"
                   />
-                  <Mail size={18} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <User size={18} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1 font-tajawal">
-                  كلمة المرور
+                  رقم الهاتف
                 </label>
                 <div className="relative">
                   <input
-                    type={showPassword ? "text" : "password"}
-                    value={loginPassword}
-                    onChange={(e) => setLoginPassword(e.target.value)}
-                    className="w-full h-11 pr-10 pl-10 border border-gray-200 rounded-xl focus:outline-none focus:border-pink focus:ring-1 focus:ring-pink text-sm font-tajawal"
-                    placeholder="••••••••"
+                    type="tel"
+                    value={loginPhone}
+                    onChange={(e) => setLoginPhone(e.target.value)}
+                    className="w-full h-11 pr-10 pl-4 border border-gray-200 rounded-xl focus:outline-none focus:border-pink focus:ring-1 focus:ring-pink text-sm font-tajawal"
+                    placeholder="05xxxxxxxx"
                   />
-                  <Lock size={18} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
+                  <Phone size={18} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 </div>
-              </div>
-
-              <div className="text-left">
-                <button
-                  type="button"
-                  className="text-sm text-pink hover:text-pink-dark font-tajawal transition-colors"
-                >
-                  نسيت كلمة المرور؟
-                </button>
               </div>
 
               <button
@@ -231,56 +202,17 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1 font-tajawal">
-                  البريد الإلكتروني
+                  رقم الهاتف
                 </label>
                 <div className="relative">
                   <input
-                    type="email"
-                    value={regEmail}
-                    onChange={(e) => setRegEmail(e.target.value)}
+                    type="tel"
+                    value={regPhone}
+                    onChange={(e) => setRegPhone(e.target.value)}
                     className="w-full h-11 pr-10 pl-4 border border-gray-200 rounded-xl focus:outline-none focus:border-pink focus:ring-1 focus:ring-pink text-sm font-tajawal"
-                    placeholder="example@email.com"
+                    placeholder="05xxxxxxxx"
                   />
-                  <Mail size={18} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1 font-tajawal">
-                  كلمة المرور
-                </label>
-                <div className="relative">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    value={regPassword}
-                    onChange={(e) => setRegPassword(e.target.value)}
-                    className="w-full h-11 pr-10 pl-10 border border-gray-200 rounded-xl focus:outline-none focus:border-pink focus:ring-1 focus:ring-pink text-sm font-tajawal"
-                    placeholder="••••••••"
-                  />
-                  <Lock size={18} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1 font-tajawal">
-                  تأكيد كلمة المرور
-                </label>
-                <div className="relative">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    value={regConfirm}
-                    onChange={(e) => setRegConfirm(e.target.value)}
-                    className="w-full h-11 pr-10 pl-4 border border-gray-200 rounded-xl focus:outline-none focus:border-pink focus:ring-1 focus:ring-pink text-sm font-tajawal"
-                    placeholder="••••••••"
-                  />
-                  <Lock size={18} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <Phone size={18} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 </div>
               </div>
 

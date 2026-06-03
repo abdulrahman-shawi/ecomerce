@@ -14,15 +14,14 @@ import type { AuthUser } from "@/server/auth";
 interface UserData {
   id: string;
   name: string;
-  email: string;
   phone: string | null;
 }
 
 interface AuthContextType {
   user: UserData | null;
   isLoggedIn: boolean;
-  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
-  register: (name: string, email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  login: (username: string, phone: string) => Promise<{ success: boolean; error?: string }>;
+  register: (name: string, phone: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
 }
 
@@ -57,22 +56,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [user]);
 
-  const login = useCallback(async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
-    const result = await loginUser(email, password);
+  const login = useCallback(async (username: string, phone: string): Promise<{ success: boolean; error?: string }> => {
+    const result = await loginUser(username, phone);
     if (result.success) {
-      const { id, name, email: userEmail, phone, token } = result.user;
-      setUser({ id, name, email: userEmail, phone });
+      const { id, name, phone: userPhone, token } = result.user;
+      setUser({ id, name, phone: userPhone });
       localStorage.setItem(AUTH_TOKEN_KEY, token);
       return { success: true };
     }
     return { success: false, error: result.error };
   }, []);
 
-  const register = useCallback(async (name: string, email: string, password: string): Promise<{ success: boolean; error?: string }> => {
-    const result = await registerUser(name, email, password);
+  const register = useCallback(async (name: string, phone: string): Promise<{ success: boolean; error?: string }> => {
+    const result = await registerUser(name, phone);
     if (result.success) {
-      const { id, name: userName, email: userEmail, phone, token } = result.user;
-      setUser({ id, name: userName, email: userEmail, phone });
+      const { id, name: userName, phone: userPhone, token } = result.user;
+      setUser({ id, name: userName, phone: userPhone });
       localStorage.setItem(AUTH_TOKEN_KEY, token);
       return { success: true };
     }

@@ -3,7 +3,7 @@
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { User, Mail, LogOut, Package, Heart, MapPin, Phone } from "lucide-react";
+import { User, LogOut, Package, Heart, MapPin, Phone } from "lucide-react";
 import Header from "@/component/sections/Header";
 import Footer from "@/component/sections/Footer";
 
@@ -31,10 +31,6 @@ export default function AccountPage() {
               <User size={36} />
             </div>
             <h1 className="text-2xl font-bold font-tajawal">{user.name}</h1>
-            <p className="text-white/80 text-sm mt-1 flex items-center justify-center gap-1">
-              <Mail size={14} />
-              {user.email}
-            </p>
             {user.phone && (
               <p className="text-white/80 text-sm mt-1 flex items-center justify-center gap-1">
                 <Phone size={14} />

@@ -7,35 +7,34 @@ import { signToken } from "@/lib/jwt";
 export interface AuthUser {
   id: string;
   name: string;
-  email: string;
   phone: string | null;
   token: string;
 }
 
-export async function loginUser(email: string, password: string): Promise<{ success: true; user: AuthUser } | { success: false; error: string }> {
+export async function loginUser(
+  username: string,
+  phone: string
+): Promise<{ success: true; user: AuthUser } | { success: false; error: string }> {
   try {
-    const user = await prisma.user.findUnique({
-      where: { email },
+    const customer = await prisma.customer.findFirst({
+      where: {
+        name: username,
+        phone: { has: phone },
+      },
     });
 
-    if (!user) {
-      return { success: false, error: "البريد الإلكتروني أو كلمة المرور غير صحيحة" };
+    if (!customer) {
+      return { success: false, error: "الاسم أو رقم الهاتف غير صحيح" };
     }
 
-    const isValid = await bcrypt.compare(password, user.password);
-    if (!isValid) {
-      return { success: false, error: "البريد الإلكتروني أو كلمة المرور غير صحيحة" };
-    }
-
-    const token = signToken(user.id, user.email);
+    const token = signToken(customer.id, phone);
 
     return {
       success: true,
       user: {
-        id: user.id,
-        name: user.username,
-        email: user.email,
-        phone: user.phone ?? null,
+        id: customer.id,
+        name: customer.name,
+        phone: customer.phone[0] ?? null,
         token,
       },
     };
@@ -46,37 +45,44 @@ export async function loginUser(email: string, password: string): Promise<{ succ
 
 export async function registerUser(
   name: string,
-  email: string,
-  password: string
+  phone: string
 ): Promise<{ success: true; user: AuthUser } | { success: false; error: string }> {
   try {
-    const existing = await prisma.user.findUnique({
-      where: { email },
+    const existingByPhone = await prisma.customer.findFirst({
+      where: { phone: { has: phone } },
     });
 
-    if (existing) {
-      return { success: false, error: "البريد الإلكتروني مسجل مسبقاً" };
+    const existingByName = await prisma.customer.findUnique({
+      where: { name },
+    });
+
+    if (existingByPhone && existingByName) {
+      return { success: false, error: "الاسم ورقم الهاتف مسجلان مسبقاً" };
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12);
+    if (existingByPhone) {
+      return { success: false, error: "رقم الهاتف مسجل مسبقاً" };
+    }
 
-    const user = await prisma.user.create({
+    if (existingByName) {
+      return { success: false, error: "اسم المستخدم مسجل مسبقاً" };
+    }
+
+    const customer = await prisma.customer.create({
       data: {
-        username: name,
-        email,
-        password: hashedPassword,
+        name,
+        phone: [phone],
       },
     });
 
-    const token = signToken(user.id, user.email);
+    const token = signToken(customer.id, phone);
 
     return {
       success: true,
       user: {
-        id: user.id,
-        name: user.username,
-        email: user.email,
-        phone: user.phone ?? null,
+        id: customer.id,
+        name: customer.name,
+        phone: customer.phone[0] ?? null,
         token,
       },
     };
