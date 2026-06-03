@@ -72,7 +72,7 @@ export async function registerUser(
       data: {
         name,
         phone: [phone],
-        status: "عن طريق المتجر",
+        status:"المتجر",
       },
     });
 
