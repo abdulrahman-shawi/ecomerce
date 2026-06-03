@@ -72,9 +72,11 @@ export async function registerUser(
       data: {
         name,
         phone: [phone],
-        status:"عن طريق المتجر",
+        status: "عن طريق المتجر",
       },
     });
+
+    console.log("CREATED CUSTOMER:", JSON.stringify(customer, null, 2));
 
     const token = signToken(customer.id, phone);
 
@@ -87,7 +89,8 @@ export async function registerUser(
         token,
       },
     };
-  } catch {
+  } catch (err: any) {
+    console.error("REGISTER ERROR:", err?.message || err);
     return { success: false, error: "حدث خطأ أثناء إنشاء الحساب" };
   }
 }
