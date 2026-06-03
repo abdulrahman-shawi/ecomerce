@@ -50,7 +50,6 @@ export default function CheckoutPage() {
 
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
     phone: "",
     country: "",
     city: "",
@@ -250,27 +249,6 @@ export default function CheckoutPage() {
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="مثال: 0991234567"
-                        className="w-full pr-10 pl-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink/50 focus:border-pink transition-all text-gray-dark"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Email */}
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                      البريد الإلكتروني
-                    </label>
-                    <div className="relative">
-                      <Mail
-                        size={18}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
-                      />
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="example@email.com"
                         className="w-full pr-10 pl-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink/50 focus:border-pink transition-all text-gray-dark"
                       />
                     </div>

@@ -12,7 +12,6 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const {
       name,
-      email,
       phone,
       country,
       city,
