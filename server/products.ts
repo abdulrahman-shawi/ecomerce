@@ -57,6 +57,7 @@ export async function searchProducts(query: string): Promise<HomeProduct[]> {
       originalPrice: originalPrice ? Math.round(originalPrice) : null,
       badge: getBadge(p),
       categoryName: p.category?.name ?? null,
+      seoSlug: p.seoSlug,
     };
   });
 }
@@ -119,10 +120,61 @@ async function fetchCategoryProducts(category: { id: number; name: string }) {
       originalPrice: originalPrice ? Math.round(originalPrice) : null,
       badge: getBadge(p),
       categoryName: p.category?.name ?? null,
+      seoSlug: p.seoSlug,
     };
   });
 
   return { categoryName: category.name, products: mapped };
+}
+
+export async function getProductBySlug(
+  identifier: string
+): Promise<HomeProduct & { seoSlug: string | null; categorySlug: string | null } | null> {
+  const whereClause = isNaN(Number(identifier))
+    ? { seoSlug: identifier }
+    : { id: Number(identifier) };
+
+  const product = await prisma.product.findFirst({
+    where: {
+      ...whereClause,
+      isActive: true,
+    },
+    include: {
+      category: true,
+      images: true,
+      stocks: {
+        orderBy: { price: "asc" },
+        take: 1,
+      },
+      orderItems: true,
+    },
+  });
+
+  if (!product) return null;
+
+  const stock = product.stocks[0];
+  const image =
+    product.images.find((img) => img.type === "main")?.url ||
+    product.images[0]?.url ||
+    "/images/products/placeholder.jpg";
+
+  const price = stock
+    ? stock.price * (1 - stock.discount / 100)
+    : product.affiliatePrice;
+  const originalPrice = stock && stock.discount > 0 ? stock.price : null;
+
+  return {
+    id: product.id,
+    name: product.name,
+    description: product.description,
+    image,
+    price: Math.round(price),
+    originalPrice: originalPrice ? Math.round(originalPrice) : null,
+    badge: getBadge(product),
+    categoryName: product.category?.name ?? null,
+    seoSlug: product.seoSlug,
+    categorySlug: product.category?.slug ?? null,
+  };
 }
 
 function getBadge(product: {

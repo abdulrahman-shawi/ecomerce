@@ -1,0 +1,267 @@
+import { notFound } from "next/navigation";
+import { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import Header from "@/component/sections/Header";
+import Footer from "@/component/sections/Footer";
+import TopBanner from "@/component/sections/TopBanner";
+import CartDrawer from "@/component/CartDrawer";
+import { getProductBySlug } from "@/server/products";
+import { ShoppingCart, Heart, ArrowLeft } from "lucide-react";
+
+interface ProductPageProps {
+  params: { identifier: string };
+}
+
+export async function generateMetadata({
+  params,
+}: ProductPageProps): Promise<Metadata> {
+  const product = await getProductBySlug(params.identifier);
+
+  if (!product) {
+    return {
+      title: "المنتج غير موجود | SKYNOVA",
+      description: "عذراً، المنتج الذي تبحثين عنه غير متوفر حالياً.",
+    };
+  }
+
+  const title = `${product.name} | SKYNOVA`;
+  const description =
+    product.description ??
+    `اشترِ ${product.name} بأفضل سعر. منتج عالي الجودة للعناية بالبشرة والشعر من SKYNOVA.`;
+  const url = `https://skynova.store/product/${product.seoSlug ?? product.id}`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url,
+      images: [
+        {
+          url: product.image,
+          width: 800,
+          height: 800,
+          alt: product.name,
+        },
+      ],
+      type: "website",
+      locale: "ar_AR",
+      siteName: "SKYNOVA",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [product.image],
+    },
+    alternates: {
+      canonical: url,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
+
+export default async function ProductPage({ params }: ProductPageProps) {
+  const product = await getProductBySlug(params.identifier);
+
+  if (!product) {
+    notFound();
+  }
+
+  const discount = product.originalPrice
+    ? Math.round(
+        ((product.originalPrice - product.price) / product.originalPrice) * 100
+      )
+    : 0;
+
+  const productUrl = `https://skynova.store/product/${
+    product.seoSlug ?? product.id
+  }`;
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    image: product.image,
+    description: product.description ?? undefined,
+    url: productUrl,
+    brand: {
+      "@type": "Brand",
+      name: "SKYNOVA",
+    },
+    offers: {
+      "@type": "Offer",
+      url: productUrl,
+      priceCurrency: "USD",
+      price: product.price.toString(),
+      availability: "https://schema.org/InStock",
+      ...(product.originalPrice && {
+        priceValidUntil: new Date(
+          Date.now() + 365 * 24 * 60 * 60 * 1000
+        ).toISOString(),
+      }),
+    },
+    ...(product.originalPrice && {
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.8",
+        reviewCount: "120",
+        bestRating: "5",
+        worstRating: "1",
+      },
+    }),
+  };
+
+  return (
+    <div dir="rtl" className="font-tajawal min-h-screen bg-gray-light">
+      <TopBanner />
+      <Header />
+
+      {/* Breadcrumb */}
+      <div className="bg-white border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <nav className="flex items-center gap-2 text-sm font-tajawal">
+            <Link href="/" className="text-gray-500 hover:text-pink transition-colors">
+              الرئيسية
+            </Link>
+            <span className="text-gray-300">/</span>
+            {product.categoryName && (
+              <>
+                <Link
+                  href={`/category/${product.categorySlug ?? product.categoryName}`}
+                  className="text-gray-500 hover:text-pink transition-colors"
+                >
+                  {product.categoryName}
+                </Link>
+                <span className="text-gray-300">/</span>
+              </>
+            )}
+            <span className="text-gray-800 font-medium truncate">
+              {product.name}
+            </span>
+          </nav>
+        </div>
+      </div>
+
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+          <div className="grid md:grid-cols-2 gap-0">
+            {/* Image Section */}
+            <div className="relative aspect-square bg-gray-50">
+              <Image
+                src={product.image}
+                alt={product.name}
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+              {product.badge && (
+                <span className="absolute top-4 right-4 bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg font-tajawal">
+                  {product.badge}
+                </span>
+              )}
+              {discount > 0 && (
+                <span className="absolute top-4 right-4 mt-8 bg-pink text-white text-xs font-bold px-3 py-1.5 rounded-lg font-tajawal">
+                  -{discount}%
+                </span>
+              )}
+            </div>
+
+            {/* Details Section */}
+            <div className="p-6 md:p-10 flex flex-col text-right">
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 font-tajawal leading-relaxed">
+                {product.name}
+              </h1>
+
+              {/* Price */}
+              <div className="flex items-center gap-4 mb-6">
+                <span className="text-3xl font-bold text-pink-dark font-tajawal">
+                  {product.price} $
+                </span>
+                {product.originalPrice && (
+                  <span className="text-xl text-gray-400 line-through font-tajawal">
+                    {product.originalPrice} $
+                  </span>
+                )}
+                {discount > 0 && (
+                  <span className="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-md font-tajawal">
+                    وفّر {product.originalPrice! - product.price} $
+                  </span>
+                )}
+              </div>
+
+              {/* Description */}
+              <p className="text-gray-600 text-base mb-8 leading-relaxed font-tajawal">
+                {product.description ??
+                  "منتج عالي الجودة يوفر لكِ أفضل النتائج. تم اختياره بعناية لتلبية احتياجاتك اليومية في العناية بالبشرة والشعر."}
+              </p>
+
+              {/* Meta Info */}
+              <div className="space-y-3 mb-8 text-sm text-gray-500 font-tajawal">
+                {product.categoryName && (
+                  <div className="flex items-center gap-2">
+                    <span>القسم:</span>
+                    <Link
+                      href={`/category/${product.categorySlug ?? product.categoryName}`}
+                      className="text-pink hover:underline"
+                    >
+                      {product.categoryName}
+                    </Link>
+                  </div>
+                )}
+                <div className="flex items-center gap-2">
+                  <span>التوصيل:</span>
+                  <span className="text-green-600">متوفر لجميع المناطق</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span>الدفع:</span>
+                  <span>عند الاستلام أو إلكتروني</span>
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="mt-auto flex gap-4">
+                <Link
+                  href="/checkout"
+                  className="flex-1 py-4 rounded-full font-bold text-base transition-all duration-300 flex items-center justify-center gap-2 font-tajawal bg-pink text-white hover:bg-pink-dark"
+                >
+                  <ShoppingCart size={20} />
+                  اشتري الآن
+                </Link>
+                <button className="w-14 h-14 rounded-full border-2 border-gray-200 flex items-center justify-center transition-all duration-300 hover:border-red-300 hover:text-red-500 text-gray-400">
+                  <Heart size={22} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Back Link */}
+        <div className="mt-8">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-gray-600 hover:text-pink transition-colors font-tajawal"
+          >
+            <ArrowLeft size={20} />
+            العودة للرئيسية
+          </Link>
+        </div>
+      </main>
+
+      <Footer />
+      <CartDrawer />
+
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+    </div>
+  );
+}

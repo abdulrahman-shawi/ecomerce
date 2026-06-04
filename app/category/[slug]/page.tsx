@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 import Header from "@/component/sections/Header";
 import Footer from "@/component/sections/Footer";
 import TopBanner from "@/component/sections/TopBanner";
@@ -8,6 +9,46 @@ import { getProductsByCategory } from "@/server/products";
 
 interface CategoryPageProps {
   params: { slug: string };
+}
+
+export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
+  const data = await getProductsByCategory(params.slug);
+  
+  if (!data) {
+    return {
+      title: "القسم غير موجود | SKYNOVA",
+      description: "عذراً، القسم الذي تبحثين عنه غير متوفر حالياً.",
+    };
+  }
+
+  const title = `منتجات ${data.categoryName} | SKYNOVA`;
+  const description = `تصفحي أفضل منتجات ${data.categoryName} بأسعار مميزة. ${data.products.length} منتج متوفر مع توصيل سريع ودفع عند الاستلام.`;
+  const url = `https://skynova.store/category/${params.slug}`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url,
+      type: "website",
+      locale: "ar_AR",
+      siteName: "SKYNOVA",
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description,
+    },
+    alternates: {
+      canonical: url,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {

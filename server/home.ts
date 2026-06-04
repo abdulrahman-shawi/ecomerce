@@ -11,6 +11,7 @@ export interface HomeProduct {
   originalPrice: number | null;
   badge: string | null;
   categoryName: string | null;
+  seoSlug?: string | null;
 }
 
 export interface HomeCategory {
@@ -62,6 +63,7 @@ export async function getHomePageData() {
       originalPrice: originalPrice ? Math.round(originalPrice) : null,
       badge: getBadge(p),
       categoryName: p.category?.name ?? null,
+      seoSlug: p.seoSlug,
     };
   });
 
