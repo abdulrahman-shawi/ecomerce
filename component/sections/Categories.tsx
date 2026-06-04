@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import SectionTitle from '@/component/SectionTitle';
 
 interface HomeCategory {
@@ -20,9 +21,10 @@ export default function Categories({ categories }: CategoriesProps) {
         <SectionTitle title="تسوقي حسب الفئة" />
         <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
           {categories.map((cat) => (
-            <div
+            <Link
               key={cat.id}
-              className="group cursor-pointer"
+              href={cat.slug ? `/category/${cat.slug}` : `/category/${cat.id}`}
+              className="group cursor-pointer block"
             >
               <div className="relative overflow-hidden rounded-2xl aspect-square mb-3">
                 <img
@@ -35,7 +37,7 @@ export default function Categories({ categories }: CategoriesProps) {
               <h3 className="text-center font-bold text-gray-dark font-tajawal group-hover:text-pink transition-colors">
                 {cat.name}
               </h3>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

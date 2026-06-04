@@ -79,7 +79,7 @@ export async function getHomePageData() {
     id: c.id,
     name: c.name,
     slug: c.slug,
-    image: "/images/categories/placeholder.jpg",
+    image: c.image ?? "/images/categories/placeholder.jpg",
   }));
 
   return {

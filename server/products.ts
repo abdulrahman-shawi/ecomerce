@@ -61,6 +61,70 @@ export async function searchProducts(query: string): Promise<HomeProduct[]> {
   });
 }
 
+export async function getProductsByCategory(
+  slug: string
+): Promise<{ categoryName: string; products: HomeProduct[] } | null> {
+  const category = await prisma.category.findUnique({
+    where: { slug },
+  });
+
+  if (!category) {
+    // جرب البحث بالـ id إذا لم يكن slug موجوداً
+    const catById = await prisma.category.findUnique({
+      where: { id: parseInt(slug) || 0 },
+    });
+    if (!catById) return null;
+    return fetchCategoryProducts(catById);
+  }
+
+  return fetchCategoryProducts(category);
+}
+
+async function fetchCategoryProducts(category: { id: number; name: string }) {
+  const products = await prisma.product.findMany({
+    where: {
+      isActive: true,
+      categoryId: category.id,
+    },
+    orderBy: { createdAt: "desc" },
+    include: {
+      category: true,
+      images: true,
+      stocks: {
+        orderBy: { price: "asc" },
+        take: 1,
+      },
+      orderItems: true,
+    },
+  });
+
+  const mapped: HomeProduct[] = products.map((p) => {
+    const stock = p.stocks[0];
+    const image =
+      p.images.find((img) => img.type === "main")?.url ||
+      p.images[0]?.url ||
+      "/images/products/placeholder.jpg";
+
+    const price = stock
+      ? stock.price * (1 - stock.discount / 100)
+      : p.affiliatePrice;
+    const originalPrice = stock && stock.discount > 0 ? stock.price : null;
+
+    return {
+      id: p.id,
+      name: p.name,
+      description: p.description,
+      image,
+      price: Math.round(price),
+      originalPrice: originalPrice ? Math.round(originalPrice) : null,
+      badge: getBadge(p),
+      categoryName: p.category?.name ?? null,
+    };
+  });
+
+  return { categoryName: category.name, products: mapped };
+}
+
 function getBadge(product: {
   orderItems: unknown[];
   createdAt: Date;

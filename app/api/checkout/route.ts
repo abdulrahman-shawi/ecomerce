@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
             data: {
               name,
               phone: [phone],
-              status: "فرصة جديدة",
+              status: "المتجر ",
               phonestatus: "معلق",
               country,
               city,
