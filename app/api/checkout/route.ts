@@ -139,7 +139,7 @@ export async function POST(request: NextRequest) {
           fullAddress: address,
           deliveryNotes: notes || undefined,
           googleMapsLink,
-          status: "طلب جديد",
+          status: "متجر",
           customerId: customer.id,
           warehouseId: warehouse.id,
           items: {
