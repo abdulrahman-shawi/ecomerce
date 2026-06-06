@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Search, User, Heart, ShoppingCart, Menu, X } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { useWishlist } from '@/context/WishlistContext';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import AuthModal from '@/component/AuthModal';
@@ -11,6 +12,7 @@ const navItems = ['الرئيسية', 'منتجاتنا', 'الفئات', 'ال�
 
 export default function Header() {
   const { totalItems, setIsOpen } = useCart();
+  const { wishlistCount } = useWishlist();
   const { isLoggedIn } = useAuth();
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
@@ -127,8 +129,16 @@ export default function Header() {
           >
             <User size={22} />
           </button>
-          <button className="p-2 hover:text-pink hover:scale-110 transition-all hidden sm:block">
+          <button
+            onClick={() => router.push('/wishlist')}
+            className="p-2 hover:text-pink hover:scale-110 transition-all hidden sm:block relative"
+          >
             <Heart size={22} />
+            {wishlistCount > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 bg-pink-dark text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                {wishlistCount}
+              </span>
+            )}
           </button>
           <button
             onClick={() => setIsOpen(true)}

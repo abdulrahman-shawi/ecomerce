@@ -151,7 +151,7 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
               </button>
 
               <button
-                onClick={() => toggleWishlist(product.id)}
+                onClick={() => toggleWishlist(product)}
                 className={`w-14 h-14 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
                   wishlisted
                     ? "border-red-500 bg-red-50 text-red-500"

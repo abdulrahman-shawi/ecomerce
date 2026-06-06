@@ -40,6 +40,12 @@ export default function ProductCard({ product }: ProductCardProps) {
     setTimeout(() => setAdded(false), 1500);
   };
 
+  const handleToggleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleWishlist(product);
+  };
+
   const wishlisted = isWishlisted(product.id);
 
   const discount = product.originalPrice
@@ -69,11 +75,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               </span>
             )}
             <button
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleWishlist(product.id);
-              }}
+              onClick={handleToggleWishlist}
               className={`absolute top-3 left-1/2 -translate-x-1/2 rounded-full p-2 shadow-md opacity-0 group-hover:opacity-100 transition-all duration-300 ${
                 wishlisted
                   ? "bg-red-500 text-white"

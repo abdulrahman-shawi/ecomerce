@@ -1,8 +1,13 @@
 "use client";
 
+"use client";
+
 import React, { useState } from "react";
+import Link from "next/link";
+import { useWishlist } from "@/context/WishlistContext";
 
 export default function Header() {
+  const { wishlistCount } = useWishlist();
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -78,13 +83,15 @@ export default function Header() {
           </a>
 
           {/* المفضلة */}
-          <a href="#" className="flex flex-col items-center gap-1 hover:text-[#c96] transition-colors relative group">
+          <Link href="/wishlist" className="flex flex-col items-center gap-1 hover:text-[#c96] transition-colors relative group">
             <svg className="w-6 h-6 stroke-1 group-hover:stroke-2 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
-            <span className="absolute -top-1 right-2 bg-[#c96] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-sans">3</span>
+            {wishlistCount > 0 && (
+              <span className="absolute -top-1 right-2 bg-[#c96] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-sans">{wishlistCount}</span>
+            )}
             <span className="hidden md:inline">المفضلة</span>
-          </a>
+          </Link>
 
           {/* السلة */}
           <a href="#" className="flex flex-col items-center gap-1 hover:text-[#c96] transition-colors relative group">
