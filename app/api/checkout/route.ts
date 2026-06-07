@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { cookies } from "next/headers";
 
 function generateOrderNumber(): string {
   const timestamp = Date.now().toString(36).toUpperCase();
@@ -28,6 +29,18 @@ export async function POST(request: NextRequest) {
         { error: "Missing required fields" },
         { status: 400 }
       );
+    }
+
+    // ─── Read affiliate code from cookie ───
+    const cookieStore = await cookies();
+    const affiliateCode = cookieStore.get("affiliate-code")?.value;
+    let affiliateLink: { id: string; commissionRate: number; productId: number } | null = null;
+
+    if (affiliateCode) {
+      affiliateLink = await prisma.affiliateLink.findUnique({
+        where: { uniqueCode: affiliateCode },
+        select: { id: true, commissionRate: true, productId: true },
+      });
     }
 
     const stockCountry = country === "TR" ? "تركيا" : "سوريا";
@@ -124,7 +137,7 @@ export async function POST(request: NextRequest) {
         googleMapsLink = `https://www.google.com/maps?q=${lat},${lng}`;
       }
 
-      // ─── 6. Create order ───
+      // ─── 6. Create order (without items first) ───
       const order = await tx.order.create({
         data: {
           orderNumber: generateOrderNumber(),
@@ -142,19 +155,60 @@ export async function POST(request: NextRequest) {
           status: "متجر",
           customerId: customer.id,
           warehouseId: warehouse.id,
-          items: {
-            create: items.map((item: any) => ({
-              quantity: item.quantity,
-              price: item.price,
-              discount: 0,
-              productId: item.id,
-            })),
-          },
-        },
-        include: {
-          items: true,
         },
       });
+
+      // ─── 7. Create order items with affiliate link tracking ───
+      for (const item of items) {
+        const itemAffiliateLinkId =
+          affiliateLink && affiliateLink.productId === item.id
+            ? affiliateLink.id
+            : null;
+
+        await tx.orderItem.create({
+          data: {
+            quantity: item.quantity,
+            price: item.price,
+            discount: 0,
+            productId: item.id,
+            orderId: order.id,
+            affiliateLinkId: itemAffiliateLinkId,
+          },
+        });
+      }
+
+      // ─── 8. Create commission if affiliate link matches ───
+      if (affiliateLink) {
+        const matchedItem = items.find((i: any) => i.id === affiliateLink!.productId);
+        if (matchedItem) {
+          const product = await tx.product.findUnique({
+            where: { id: matchedItem.id },
+            select: { affiliatePrice: true },
+          });
+
+          const basePrice =
+            product && product.affiliatePrice > 0
+              ? product.affiliatePrice
+              : matchedItem.price;
+
+          const commissionAmount =
+            (basePrice * matchedItem.quantity * affiliateLink.commissionRate) / 100;
+
+          await tx.commission.create({
+            data: {
+              affiliateLinkId: affiliateLink.id,
+              orderId: order.id,
+              amount: Math.round(commissionAmount * 100) / 100,
+              status: "PENDING",
+            },
+          });
+
+          await tx.affiliateLink.update({
+            where: { id: affiliateLink.id },
+            data: { conversions: { increment: 1 } },
+          });
+        }
+      }
 
       return { customer, order };
     });

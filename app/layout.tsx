@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Tajawal } from "next/font/google";
 import "./globals.css";
 import ClientProviders from "@/component/ClientProviders";
+import AffiliateTracker from "@/component/AffiliateTracker";
 
 const tajawal = Tajawal({
   subsets: ["arabic"],
@@ -71,6 +72,7 @@ export default function RootLayout({
     <html lang="ar" dir="rtl">
       <body className={`${tajawal.variable} font-tajawal antialiased`}>
         <ClientProviders>
+          <AffiliateTracker />
           {children}
         </ClientProviders>
       </body>
