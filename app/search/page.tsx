@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { searchProducts } from "@/server/products";
 import ProductCard from "@/component/ProductCard";
 import { Search, ArrowLeft } from "lucide-react";

@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import TopBanner from "@/component/sections/TopBanner";
 import Header from "@/component/sections/Header";
 import HeroSlider from "@/component/sections/HeroSlider";
