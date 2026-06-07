@@ -111,15 +111,18 @@ export default function CheckoutPage() {
     setIsSubmitting(true);
 
     try {
+      const affiliateCode = typeof window !== "undefined" ? localStorage.getItem("affiliate-code") : null;
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({
           ...formData,
           lat: position?.[0] ?? null,
           lng: position?.[1] ?? null,
           items,
           totalPrice,
+          affiliateCode,
         }),
       });
 
