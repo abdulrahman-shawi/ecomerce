@@ -72,7 +72,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             )}
             {hasDiscount && (
               <span className="absolute top-3 right-3 bg-pink text-white text-xs font-bold px-2 py-1 rounded-lg font-tajawal">
-                -{product.originalPrice} $
+                -{discountAmount} $
               </span>
             )}
             <button
@@ -95,7 +95,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               <span className="text-pink-dark font-bold font-tajawal">{product.price} $</span>
               {discountAmount && (
                 <span className="text-gray-400 line-through text-sm font-tajawal">
-                  {product.originalPrice} $
+                  {discountAmount} $
                 </span>
               )}
             </div>
