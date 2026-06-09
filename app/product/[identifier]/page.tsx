@@ -9,7 +9,8 @@ import Footer from "@/component/sections/Footer";
 import TopBanner from "@/component/sections/TopBanner";
 import CartDrawer from "@/component/CartDrawer";
 import { getProductBySlug } from "@/server/products";
-import { ShoppingCart, Heart, ArrowLeft } from "lucide-react";
+import { Heart, ArrowLeft } from "lucide-react";
+import BuyNowButton from "@/component/BuyNowButton";
 
 interface ProductPageProps {
   params: { identifier: string };
@@ -229,13 +230,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
               {/* Actions */}
               <div className="mt-auto flex gap-4">
-                <Link
-                  href="/checkout"
-                  className="flex-1 py-4 rounded-full font-bold text-base transition-all duration-300 flex items-center justify-center gap-2 font-tajawal bg-pink text-white hover:bg-pink-dark"
-                >
-                  <ShoppingCart size={20} />
-                  اشتري الآن
-                </Link>
+                <BuyNowButton product={{
+                  id: product.id,
+                  name: product.name,
+                  price: product.price,
+                  image: product.image,
+                }} />
                 <button className="w-14 h-14 rounded-full border-2 border-gray-200 flex items-center justify-center transition-all duration-300 hover:border-red-300 hover:text-red-500 text-gray-400">
                   <Heart size={22} />
                 </button>

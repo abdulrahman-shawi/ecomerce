@@ -34,11 +34,13 @@ export async function GET(
     const response = NextResponse.redirect(new URL(productUrl, request.url));
 
     // Set affiliate cookie for 30 days
+    // Using sameSite: "none" + secure for maximum compatibility in production
     response.cookies.set("affiliate-code", code, {
       maxAge: 60 * 60 * 24 * 30,
       path: "/",
       httpOnly: false,
-      sameSite: "lax",
+      sameSite: "none",
+      secure: true,
     });
 
     return response;

@@ -31,12 +31,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // ─── Read affiliate code from cookie or body ───
+    // ─── Read affiliate code from body (most reliable) or cookie ───
     const cookieStore = await cookies();
     const cookieCode = cookieStore.get("affiliate-code")?.value;
     const bodyCode = body.affiliateCode;
-    const affiliateCode = cookieCode || bodyCode || null;
-    console.log("[CHECKOUT] affiliate-code cookie:", cookieCode, "body:", bodyCode, "final:", affiliateCode);
+    const affiliateCode = bodyCode || cookieCode || null;
     let affiliateLink: { id: string; commissionRate: number; productId: number } | null = null;
 
     if (affiliateCode) {
@@ -44,7 +43,6 @@ export async function POST(request: NextRequest) {
         where: { uniqueCode: affiliateCode },
         select: { id: true, commissionRate: true, productId: true },
       });
-      console.log("[CHECKOUT] affiliateLink found:", affiliateLink);
     }
 
     const stockCountry = country === "TR" ? "تركيا" : "سوريا";
@@ -156,7 +154,7 @@ export async function POST(request: NextRequest) {
           fullAddress: address,
           deliveryNotes: notes || undefined,
           googleMapsLink,
-          status: "متجر",
+          status: "المتجر",
           customerId: customer.id,
           warehouseId: warehouse.id,
         },
@@ -184,7 +182,6 @@ export async function POST(request: NextRequest) {
       // ─── 8. Create commission if affiliate link matches ───
       if (affiliateLink) {
         const matchedItem = items.find((i: any) => i.id === affiliateLink!.productId);
-        console.log("[CHECKOUT] matchedItem:", matchedItem, "productId:", affiliateLink!.productId, "items:", items.map((i: any) => ({ id: i.id, name: i.name })));
         if (matchedItem) {
           const product = await tx.product.findUnique({
             where: { id: matchedItem.id },
@@ -199,7 +196,7 @@ export async function POST(request: NextRequest) {
           const commissionAmount =
             (basePrice * matchedItem.quantity * affiliateLink.commissionRate) / 100;
 
-          const commission = await tx.commission.create({
+          await tx.commission.create({
             data: {
               affiliateLinkId: affiliateLink.id,
               orderId: order.id,
@@ -207,17 +204,12 @@ export async function POST(request: NextRequest) {
               status: "PENDING",
             },
           });
-          console.log("[CHECKOUT] commission created:", commission);
 
           await tx.affiliateLink.update({
             where: { id: affiliateLink.id },
             data: { conversions: { increment: 1 } },
           });
-        } else {
-          console.log("[CHECKOUT] no matched item for affiliate");
         }
-      } else {
-        console.log("[CHECKOUT] no affiliate link");
       }
 
       return { customer, order };
