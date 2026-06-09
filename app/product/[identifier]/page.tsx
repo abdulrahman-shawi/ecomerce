@@ -76,11 +76,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
-  const discount = product.originalPrice
-    ? Math.round(
-        ((product.originalPrice - product.price) / product.originalPrice) * 100
-      )
+  const discountAmount = product.originalPrice
+    ? Math.round(product.originalPrice - product.price)
     : 0;
+  const hasDiscount = discountAmount > 0;
 
   const productUrl = `https://skynova.store/product/${
     product.seoSlug ?? product.id
@@ -169,9 +168,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   {product.badge}
                 </span>
               )}
-              {discount > 0 && (
+              {hasDiscount && (
                 <span className="absolute top-4 right-4 mt-8 bg-pink text-white text-xs font-bold px-3 py-1.5 rounded-lg font-tajawal">
-                  -{discount}%
+                  -{discountAmount} $
                 </span>
               )}
             </div>
@@ -192,9 +191,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     {product.originalPrice} $
                   </span>
                 )}
-                {discount > 0 && (
+                {hasDiscount && (
                   <span className="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-md font-tajawal">
-                    وفّر {product.originalPrice! - product.price} $
+                    وفّر {discountAmount} $
                   </span>
                 )}
               </div>

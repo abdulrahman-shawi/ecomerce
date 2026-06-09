@@ -63,6 +63,8 @@ export default function CheckoutPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [locationError, setLocationError] = useState<string | null>(null);
+  const [stockErrors, setStockErrors] = useState<string[]>([]);
+  const [checkingStock, setCheckingStock] = useState(false);
 
   // Auto-detect user location on mount
   useEffect(() => {
@@ -88,6 +90,36 @@ export default function CheckoutPage() {
     );
   }, []);
 
+  const validateStock = useCallback(async (country: string) => {
+    if (!country || items.length === 0) {
+      setStockErrors([]);
+      return;
+    }
+    setCheckingStock(true);
+    try {
+      const res = await fetch("/api/checkout/validate-stock", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ country, items }),
+      });
+      const data = await res.json();
+      if (data.outOfStock?.length > 0) {
+        setStockErrors(
+          data.outOfStock.map(
+            (item: any) =>
+              `${item.name}: المخزون غير كافي (متوفر: ${item.available}, مطلوب: ${item.requested})`
+          )
+        );
+      } else {
+        setStockErrors([]);
+      }
+    } catch {
+      setStockErrors([]);
+    } finally {
+      setCheckingStock(false);
+    }
+  }, [items]);
+
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target;
@@ -95,11 +127,12 @@ export default function CheckoutPage() {
         const next = { ...prev, [name]: value };
         if (name === "country") {
           next.city = "";
+          validateStock(value);
         }
         return next;
       });
     },
-    []
+    [validateStock]
   );
 
   const availableCities = formData.country ? citiesByCountry[formData.country] || [] : [];
@@ -361,6 +394,28 @@ export default function CheckoutPage() {
                     </p>
                   )}
                 </div>
+
+                {/* Stock Errors */}
+                {checkingStock && (
+                  <div className="text-sm text-gray-500 flex items-center gap-2">
+                    <span className="w-4 h-4 border-2 border-pink border-t-transparent rounded-full animate-spin inline-block" />
+                    جاري التحقق من المخزون...
+                  </div>
+                )}
+                {stockErrors.length > 0 && (
+                  <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+                    <p className="text-red-600 font-bold text-sm mb-2 font-tajawal">
+                      المنتجات التالية غير متوفرة في المخزون:
+                    </p>
+                    <ul className="space-y-1">
+                      {stockErrors.map((err, idx) => (
+                        <li key={idx} className="text-red-500 text-sm font-tajawal">
+                          • {err}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </form>
             </div>
           </div>
@@ -414,10 +469,14 @@ export default function CheckoutPage() {
               <button
                 type="submit"
                 form="checkout-form"
-                disabled={isSubmitting}
+                disabled={isSubmitting || stockErrors.length > 0 || checkingStock}
                 className="w-full mt-6 bg-pink text-white py-3.5 rounded-full font-bold hover:bg-pink-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-tajawal"
               >
-                {isSubmitting ? "جاري إرسال الطلب..." : "تأكيد الطلب"}
+                {isSubmitting
+                  ? "جاري إرسال الطلب..."
+                  : stockErrors.length > 0
+                  ? "المنتجات غير متوفرة في المخزون"
+                  : "تأكيد الطلب"}
               </button>
             </div>
           </div>

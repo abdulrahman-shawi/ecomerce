@@ -48,9 +48,10 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   const wishlisted = isWishlisted(product.id);
 
-  const discount = product.originalPrice
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+  const discountAmount = product.originalPrice
+    ? Math.round(product.originalPrice - product.price)
     : 0;
+  const hasDiscount = discountAmount > 0;
 
   const productUrl = `/product/${product.seoSlug ?? product.id}`;
 
@@ -69,9 +70,9 @@ export default function ProductCard({ product }: ProductCardProps) {
                 {product.badge}
               </span>
             )}
-            {discount > 0 && (
+            {hasDiscount && (
               <span className="absolute top-3 right-3 bg-pink text-white text-xs font-bold px-2 py-1 rounded-lg font-tajawal">
-                -{discount}%
+                -{discountAmount} $
               </span>
             )}
             <button
