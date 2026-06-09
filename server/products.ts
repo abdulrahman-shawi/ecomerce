@@ -107,9 +107,9 @@ async function fetchCategoryProducts(category: { id: number; name: string }) {
       "/images/products/placeholder.jpg";
 
     const price = stock
-      ? stock.price * (1 - stock.discount / 100)
+      ? stock.discount
       : p.affiliatePrice;
-    const originalPrice = stock && stock.discount > 0 ? stock.price : null;
+    const originalPrice = stock  ? stock.price : null;
 
     return {
       id: p.id,
