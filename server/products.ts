@@ -109,7 +109,7 @@ async function fetchCategoryProducts(category: { id: number; name: string }) {
     const price = stock
       ? stock.discount
       : p.affiliatePrice;
-    const originalPrice = stock  ? stock.price : null;
+    const originalPrice = stock.price;
 
     return {
       id: p.id,
