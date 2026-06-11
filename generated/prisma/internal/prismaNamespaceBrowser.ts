@@ -55,6 +55,7 @@ export const ModelName = {
   Permission: 'Permission',
   Category: 'Category',
   Product: 'Product',
+  Review: 'Review',
   Warehouse: 'Warehouse',
   ProductStock: 'ProductStock',
   StockMovement: 'StockMovement',
@@ -178,10 +179,26 @@ export const ProductScalarFieldEnum = {
   createdAt: 'createdAt',
   seoSlug: 'seoSlug',
   isActive: 'isActive',
-  affiliatePrice: 'affiliatePrice'
+  affiliatePrice: 'affiliatePrice',
+  affiliateCommissionRate: 'affiliateCommissionRate'
 } as const
 
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const ReviewScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  userId: 'userId',
+  name: 'name',
+  rating: 'rating',
+  comment: 'comment',
+  isApproved: 'isApproved',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
 
 
 export const WarehouseScalarFieldEnum = {

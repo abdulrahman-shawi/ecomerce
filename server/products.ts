@@ -33,6 +33,7 @@ export async function searchProducts(query: string): Promise<HomeProduct[]> {
         take: 1,
       },
       orderItems: true,
+      reviews: { where: { isApproved: true } },
     },
   });
 
@@ -45,6 +46,7 @@ export async function searchProducts(query: string): Promise<HomeProduct[]> {
 
     const price = stock ? stock.discount : p.affiliatePrice;
     const originalPrice = stock.price;
+    const { averageRating, totalReviews } = getRatingInfo(p.reviews);
 
     return {
       id: p.id,
@@ -56,6 +58,8 @@ export async function searchProducts(query: string): Promise<HomeProduct[]> {
       badge: getBadge(p),
       categoryName: p.category?.name ?? null,
       seoSlug: p.seoSlug,
+      averageRating,
+      totalReviews,
     };
   });
 }
@@ -94,6 +98,7 @@ async function fetchCategoryProducts(category: { id: number; name: string }) {
         take: 1,
       },
       orderItems: true,
+      reviews: { where: { isApproved: true } },
     },
   });
 
@@ -108,6 +113,7 @@ async function fetchCategoryProducts(category: { id: number; name: string }) {
       ? stock.discount
       : p.affiliatePrice;
     const originalPrice = stock.price;
+    const { averageRating, totalReviews } = getRatingInfo(p.reviews);
 
     return {
       id: p.id,
@@ -119,6 +125,8 @@ async function fetchCategoryProducts(category: { id: number; name: string }) {
       badge: getBadge(p),
       categoryName: p.category?.name ?? null,
       seoSlug: p.seoSlug,
+      averageRating,
+      totalReviews,
     };
   });
 
@@ -145,6 +153,7 @@ export async function getProductBySlug(
         take: 1,
       },
       orderItems: true,
+      reviews: { where: { isApproved: true } },
     },
   });
 
@@ -158,6 +167,7 @@ export async function getProductBySlug(
 
   const price = stock ? stock.discount : product.affiliatePrice;
   const originalPrice = stock.price;
+  const { averageRating, totalReviews } = getRatingInfo(product.reviews);
 
   return {
     id: product.id,
@@ -170,6 +180,22 @@ export async function getProductBySlug(
     categoryName: product.category?.name ?? null,
     seoSlug: product.seoSlug,
     categorySlug: product.category?.slug ?? null,
+    averageRating,
+    totalReviews,
+  };
+}
+
+function getRatingInfo(reviews: { rating: number }[]): {
+  averageRating?: number;
+  totalReviews?: number;
+} {
+  const totalReviews = reviews.length;
+  if (totalReviews === 0) return {};
+  const averageRating =
+    reviews.reduce((sum, r) => sum + r.rating, 0) / totalReviews;
+  return {
+    averageRating: Math.round(averageRating * 10) / 10,
+    totalReviews,
   };
 }
 

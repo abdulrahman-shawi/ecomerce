@@ -185,7 +185,7 @@ export async function POST(request: NextRequest) {
         if (matchedItem) {
           const product = await tx.product.findUnique({
             where: { id: matchedItem.id },
-            select: { affiliatePrice: true },
+            select: { affiliatePrice: true, affiliateCommissionRate: true },
           });
 
           const basePrice =
@@ -193,8 +193,13 @@ export async function POST(request: NextRequest) {
               ? product.affiliatePrice
               : matchedItem.price;
 
+          const commissionRate =
+            product && product.affiliateCommissionRate != null
+              ? product.affiliateCommissionRate
+              : affiliateLink.commissionRate;
+
           const commissionAmount =
-            (basePrice * matchedItem.quantity * affiliateLink.commissionRate) / 100;
+            (basePrice * matchedItem.quantity * commissionRate) / 100;
 
           await tx.commission.create({
             data: {

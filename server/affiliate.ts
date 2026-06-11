@@ -300,7 +300,12 @@ export async function processAffiliateCommission(
           ? item.product.affiliatePrice
           : item.price;
 
-      const commissionAmount = (productPrice * item.quantity * link.commissionRate) / 100;
+      const commissionRate =
+        item.product.affiliateCommissionRate != null
+          ? item.product.affiliateCommissionRate
+          : link.commissionRate;
+
+      const commissionAmount = (productPrice * item.quantity * commissionRate) / 100;
 
       await prisma.commission.create({
         data: {

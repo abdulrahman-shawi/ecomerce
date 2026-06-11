@@ -30,12 +30,14 @@ export type ProductAvgAggregateOutputType = {
   id: number | null
   categoryId: number | null
   affiliatePrice: number | null
+  affiliateCommissionRate: number | null
 }
 
 export type ProductSumAggregateOutputType = {
   id: number | null
   categoryId: number | null
   affiliatePrice: number | null
+  affiliateCommissionRate: number | null
 }
 
 export type ProductMinAggregateOutputType = {
@@ -48,6 +50,7 @@ export type ProductMinAggregateOutputType = {
   seoSlug: string | null
   isActive: boolean | null
   affiliatePrice: number | null
+  affiliateCommissionRate: number | null
 }
 
 export type ProductMaxAggregateOutputType = {
@@ -60,6 +63,7 @@ export type ProductMaxAggregateOutputType = {
   seoSlug: string | null
   isActive: boolean | null
   affiliatePrice: number | null
+  affiliateCommissionRate: number | null
 }
 
 export type ProductCountAggregateOutputType = {
@@ -72,6 +76,7 @@ export type ProductCountAggregateOutputType = {
   seoSlug: number
   isActive: number
   affiliatePrice: number
+  affiliateCommissionRate: number
   _all: number
 }
 
@@ -80,12 +85,14 @@ export type ProductAvgAggregateInputType = {
   id?: true
   categoryId?: true
   affiliatePrice?: true
+  affiliateCommissionRate?: true
 }
 
 export type ProductSumAggregateInputType = {
   id?: true
   categoryId?: true
   affiliatePrice?: true
+  affiliateCommissionRate?: true
 }
 
 export type ProductMinAggregateInputType = {
@@ -98,6 +105,7 @@ export type ProductMinAggregateInputType = {
   seoSlug?: true
   isActive?: true
   affiliatePrice?: true
+  affiliateCommissionRate?: true
 }
 
 export type ProductMaxAggregateInputType = {
@@ -110,6 +118,7 @@ export type ProductMaxAggregateInputType = {
   seoSlug?: true
   isActive?: true
   affiliatePrice?: true
+  affiliateCommissionRate?: true
 }
 
 export type ProductCountAggregateInputType = {
@@ -122,6 +131,7 @@ export type ProductCountAggregateInputType = {
   seoSlug?: true
   isActive?: true
   affiliatePrice?: true
+  affiliateCommissionRate?: true
   _all?: true
 }
 
@@ -221,6 +231,7 @@ export type ProductGroupByOutputType = {
   seoSlug: string | null
   isActive: boolean
   affiliatePrice: number
+  affiliateCommissionRate: number | null
   _count: ProductCountAggregateOutputType | null
   _avg: ProductAvgAggregateOutputType | null
   _sum: ProductSumAggregateOutputType | null
@@ -256,6 +267,7 @@ export type ProductWhereInput = {
   seoSlug?: Prisma.StringNullableFilter<"Product"> | string | null
   isActive?: Prisma.BoolFilter<"Product"> | boolean
   affiliatePrice?: Prisma.FloatFilter<"Product"> | number
+  affiliateCommissionRate?: Prisma.FloatNullableFilter<"Product"> | number | null
   orderItems?: Prisma.OrderItemListRelationFilter
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   images?: Prisma.ProductImageListRelationFilter
@@ -264,6 +276,7 @@ export type ProductWhereInput = {
   stockMovements?: Prisma.StockMovementListRelationFilter
   warrantiesAsProduct?: Prisma.WarrantyListRelationFilter
   affiliateLinks?: Prisma.AffiliateLinkListRelationFilter
+  reviews?: Prisma.ReviewListRelationFilter
 }
 
 export type ProductOrderByWithRelationInput = {
@@ -276,6 +289,7 @@ export type ProductOrderByWithRelationInput = {
   seoSlug?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   affiliatePrice?: Prisma.SortOrder
+  affiliateCommissionRate?: Prisma.SortOrderInput | Prisma.SortOrder
   orderItems?: Prisma.OrderItemOrderByRelationAggregateInput
   category?: Prisma.CategoryOrderByWithRelationInput
   images?: Prisma.ProductImageOrderByRelationAggregateInput
@@ -284,6 +298,7 @@ export type ProductOrderByWithRelationInput = {
   stockMovements?: Prisma.StockMovementOrderByRelationAggregateInput
   warrantiesAsProduct?: Prisma.WarrantyOrderByRelationAggregateInput
   affiliateLinks?: Prisma.AffiliateLinkOrderByRelationAggregateInput
+  reviews?: Prisma.ReviewOrderByRelationAggregateInput
 }
 
 export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -299,6 +314,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   isActive?: Prisma.BoolFilter<"Product"> | boolean
   affiliatePrice?: Prisma.FloatFilter<"Product"> | number
+  affiliateCommissionRate?: Prisma.FloatNullableFilter<"Product"> | number | null
   orderItems?: Prisma.OrderItemListRelationFilter
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   images?: Prisma.ProductImageListRelationFilter
@@ -307,6 +323,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   stockMovements?: Prisma.StockMovementListRelationFilter
   warrantiesAsProduct?: Prisma.WarrantyListRelationFilter
   affiliateLinks?: Prisma.AffiliateLinkListRelationFilter
+  reviews?: Prisma.ReviewListRelationFilter
 }, "id" | "seoSlug">
 
 export type ProductOrderByWithAggregationInput = {
@@ -319,6 +336,7 @@ export type ProductOrderByWithAggregationInput = {
   seoSlug?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   affiliatePrice?: Prisma.SortOrder
+  affiliateCommissionRate?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ProductCountOrderByAggregateInput
   _avg?: Prisma.ProductAvgOrderByAggregateInput
   _max?: Prisma.ProductMaxOrderByAggregateInput
@@ -339,6 +357,7 @@ export type ProductScalarWhereWithAggregatesInput = {
   seoSlug?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   affiliatePrice?: Prisma.FloatWithAggregatesFilter<"Product"> | number
+  affiliateCommissionRate?: Prisma.FloatNullableWithAggregatesFilter<"Product"> | number | null
 }
 
 export type ProductCreateInput = {
@@ -349,6 +368,7 @@ export type ProductCreateInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
@@ -357,6 +377,7 @@ export type ProductCreateInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
   warrantiesAsProduct?: Prisma.WarrantyCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateInput = {
@@ -369,6 +390,7 @@ export type ProductUncheckedCreateInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
@@ -376,6 +398,7 @@ export type ProductUncheckedCreateInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
   warrantiesAsProduct?: Prisma.WarrantyUncheckedCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductUpdateInput = {
@@ -386,6 +409,7 @@ export type ProductUpdateInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
@@ -394,6 +418,7 @@ export type ProductUpdateInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
   warrantiesAsProduct?: Prisma.WarrantyUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateInput = {
@@ -406,6 +431,7 @@ export type ProductUncheckedUpdateInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
@@ -413,6 +439,7 @@ export type ProductUncheckedUpdateInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
   warrantiesAsProduct?: Prisma.WarrantyUncheckedUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyInput = {
@@ -425,6 +452,7 @@ export type ProductCreateManyInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
 }
 
 export type ProductUpdateManyMutationInput = {
@@ -435,6 +463,7 @@ export type ProductUpdateManyMutationInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
 }
 
 export type ProductUncheckedUpdateManyInput = {
@@ -447,6 +476,7 @@ export type ProductUncheckedUpdateManyInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
 }
 
 export type ProductListRelationFilter = {
@@ -469,12 +499,14 @@ export type ProductCountOrderByAggregateInput = {
   seoSlug?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   affiliatePrice?: Prisma.SortOrder
+  affiliateCommissionRate?: Prisma.SortOrder
 }
 
 export type ProductAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   affiliatePrice?: Prisma.SortOrder
+  affiliateCommissionRate?: Prisma.SortOrder
 }
 
 export type ProductMaxOrderByAggregateInput = {
@@ -487,6 +519,7 @@ export type ProductMaxOrderByAggregateInput = {
   seoSlug?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   affiliatePrice?: Prisma.SortOrder
+  affiliateCommissionRate?: Prisma.SortOrder
 }
 
 export type ProductMinOrderByAggregateInput = {
@@ -499,12 +532,14 @@ export type ProductMinOrderByAggregateInput = {
   seoSlug?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   affiliatePrice?: Prisma.SortOrder
+  affiliateCommissionRate?: Prisma.SortOrder
 }
 
 export type ProductSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   affiliatePrice?: Prisma.SortOrder
+  affiliateCommissionRate?: Prisma.SortOrder
 }
 
 export type ProductScalarRelationFilter = {
@@ -554,12 +589,34 @@ export type ProductUncheckedUpdateManyWithoutCategoryNestedInput = {
   deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
 }
 
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type NullableIntFieldUpdateOperationsInput = {
   set?: number | null
   increment?: number
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type ProductCreateNestedOneWithoutReviewsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutReviewsInput, Prisma.ProductUncheckedCreateWithoutReviewsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutReviewsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutReviewsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutReviewsInput, Prisma.ProductUncheckedCreateWithoutReviewsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutReviewsInput
+  upsert?: Prisma.ProductUpsertWithoutReviewsInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutReviewsInput, Prisma.ProductUpdateWithoutReviewsInput>, Prisma.ProductUncheckedUpdateWithoutReviewsInput>
 }
 
 export type ProductCreateNestedOneWithoutStocksInput = {
@@ -668,6 +725,7 @@ export type ProductCreateWithoutCategoryInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductCreateNestedManyWithoutProductInput
@@ -675,6 +733,7 @@ export type ProductCreateWithoutCategoryInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
   warrantiesAsProduct?: Prisma.WarrantyCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutCategoryInput = {
@@ -686,6 +745,7 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
@@ -693,6 +753,7 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
   warrantiesAsProduct?: Prisma.WarrantyUncheckedCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutCategoryInput = {
@@ -734,6 +795,101 @@ export type ProductScalarWhereInput = {
   seoSlug?: Prisma.StringNullableFilter<"Product"> | string | null
   isActive?: Prisma.BoolFilter<"Product"> | boolean
   affiliatePrice?: Prisma.FloatFilter<"Product"> | number
+  affiliateCommissionRate?: Prisma.FloatNullableFilter<"Product"> | number | null
+}
+
+export type ProductCreateWithoutReviewsInput = {
+  name: string
+  description?: string | null
+  googleLink?: string | null
+  createdAt?: Date | string
+  seoSlug?: string | null
+  isActive?: boolean
+  affiliatePrice?: number
+  affiliateCommissionRate?: number | null
+  orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
+  category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
+  images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
+  targetProducts?: Prisma.TargetProductCreateNestedManyWithoutProductInput
+  stocks?: Prisma.ProductStockCreateNestedManyWithoutProductInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  warrantiesAsProduct?: Prisma.WarrantyCreateNestedManyWithoutProductInput
+  affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutReviewsInput = {
+  id?: number
+  name: string
+  description?: string | null
+  googleLink?: string | null
+  categoryId?: number | null
+  createdAt?: Date | string
+  seoSlug?: string | null
+  isActive?: boolean
+  affiliatePrice?: number
+  affiliateCommissionRate?: number | null
+  orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
+  images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
+  targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
+  stocks?: Prisma.ProductStockUncheckedCreateNestedManyWithoutProductInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  warrantiesAsProduct?: Prisma.WarrantyUncheckedCreateNestedManyWithoutProductInput
+  affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutReviewsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutReviewsInput, Prisma.ProductUncheckedCreateWithoutReviewsInput>
+}
+
+export type ProductUpsertWithoutReviewsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutReviewsInput, Prisma.ProductUncheckedUpdateWithoutReviewsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutReviewsInput, Prisma.ProductUncheckedCreateWithoutReviewsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutReviewsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutReviewsInput, Prisma.ProductUncheckedUpdateWithoutReviewsInput>
+}
+
+export type ProductUpdateWithoutReviewsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
+  category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
+  images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
+  targetProducts?: Prisma.TargetProductUpdateManyWithoutProductNestedInput
+  stocks?: Prisma.ProductStockUpdateManyWithoutProductNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  warrantiesAsProduct?: Prisma.WarrantyUpdateManyWithoutProductNestedInput
+  affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutReviewsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
+  images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
+  targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
+  stocks?: Prisma.ProductStockUncheckedUpdateManyWithoutProductNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  warrantiesAsProduct?: Prisma.WarrantyUncheckedUpdateManyWithoutProductNestedInput
+  affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutStocksInput = {
@@ -744,6 +900,7 @@ export type ProductCreateWithoutStocksInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
@@ -751,6 +908,7 @@ export type ProductCreateWithoutStocksInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
   warrantiesAsProduct?: Prisma.WarrantyCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutStocksInput = {
@@ -763,12 +921,14 @@ export type ProductUncheckedCreateWithoutStocksInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
   warrantiesAsProduct?: Prisma.WarrantyUncheckedCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutStocksInput = {
@@ -795,6 +955,7 @@ export type ProductUpdateWithoutStocksInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
@@ -802,6 +963,7 @@ export type ProductUpdateWithoutStocksInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
   warrantiesAsProduct?: Prisma.WarrantyUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutStocksInput = {
@@ -814,12 +976,14 @@ export type ProductUncheckedUpdateWithoutStocksInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
   warrantiesAsProduct?: Prisma.WarrantyUncheckedUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutStockMovementsInput = {
@@ -830,6 +994,7 @@ export type ProductCreateWithoutStockMovementsInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
@@ -837,6 +1002,7 @@ export type ProductCreateWithoutStockMovementsInput = {
   stocks?: Prisma.ProductStockCreateNestedManyWithoutProductInput
   warrantiesAsProduct?: Prisma.WarrantyCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutStockMovementsInput = {
@@ -849,12 +1015,14 @@ export type ProductUncheckedCreateWithoutStockMovementsInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
   stocks?: Prisma.ProductStockUncheckedCreateNestedManyWithoutProductInput
   warrantiesAsProduct?: Prisma.WarrantyUncheckedCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutStockMovementsInput = {
@@ -881,6 +1049,7 @@ export type ProductUpdateWithoutStockMovementsInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
@@ -888,6 +1057,7 @@ export type ProductUpdateWithoutStockMovementsInput = {
   stocks?: Prisma.ProductStockUpdateManyWithoutProductNestedInput
   warrantiesAsProduct?: Prisma.WarrantyUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutStockMovementsInput = {
@@ -900,12 +1070,14 @@ export type ProductUncheckedUpdateWithoutStockMovementsInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
   stocks?: Prisma.ProductStockUncheckedUpdateManyWithoutProductNestedInput
   warrantiesAsProduct?: Prisma.WarrantyUncheckedUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutTargetProductsInput = {
@@ -916,6 +1088,7 @@ export type ProductCreateWithoutTargetProductsInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
@@ -923,6 +1096,7 @@ export type ProductCreateWithoutTargetProductsInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
   warrantiesAsProduct?: Prisma.WarrantyCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutTargetProductsInput = {
@@ -935,12 +1109,14 @@ export type ProductUncheckedCreateWithoutTargetProductsInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   stocks?: Prisma.ProductStockUncheckedCreateNestedManyWithoutProductInput
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
   warrantiesAsProduct?: Prisma.WarrantyUncheckedCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutTargetProductsInput = {
@@ -967,6 +1143,7 @@ export type ProductUpdateWithoutTargetProductsInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
@@ -974,6 +1151,7 @@ export type ProductUpdateWithoutTargetProductsInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
   warrantiesAsProduct?: Prisma.WarrantyUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutTargetProductsInput = {
@@ -986,12 +1164,14 @@ export type ProductUncheckedUpdateWithoutTargetProductsInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   stocks?: Prisma.ProductStockUncheckedUpdateManyWithoutProductNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
   warrantiesAsProduct?: Prisma.WarrantyUncheckedUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutImagesInput = {
@@ -1002,6 +1182,7 @@ export type ProductCreateWithoutImagesInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   targetProducts?: Prisma.TargetProductCreateNestedManyWithoutProductInput
@@ -1009,6 +1190,7 @@ export type ProductCreateWithoutImagesInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
   warrantiesAsProduct?: Prisma.WarrantyCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutImagesInput = {
@@ -1021,12 +1203,14 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
   stocks?: Prisma.ProductStockUncheckedCreateNestedManyWithoutProductInput
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
   warrantiesAsProduct?: Prisma.WarrantyUncheckedCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutImagesInput = {
@@ -1053,6 +1237,7 @@ export type ProductUpdateWithoutImagesInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   targetProducts?: Prisma.TargetProductUpdateManyWithoutProductNestedInput
@@ -1060,6 +1245,7 @@ export type ProductUpdateWithoutImagesInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
   warrantiesAsProduct?: Prisma.WarrantyUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutImagesInput = {
@@ -1072,12 +1258,14 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
   stocks?: Prisma.ProductStockUncheckedUpdateManyWithoutProductNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
   warrantiesAsProduct?: Prisma.WarrantyUncheckedUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutWarrantiesAsProductInput = {
@@ -1088,6 +1276,7 @@ export type ProductCreateWithoutWarrantiesAsProductInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
@@ -1095,6 +1284,7 @@ export type ProductCreateWithoutWarrantiesAsProductInput = {
   stocks?: Prisma.ProductStockCreateNestedManyWithoutProductInput
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutWarrantiesAsProductInput = {
@@ -1107,12 +1297,14 @@ export type ProductUncheckedCreateWithoutWarrantiesAsProductInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
   stocks?: Prisma.ProductStockUncheckedCreateNestedManyWithoutProductInput
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutWarrantiesAsProductInput = {
@@ -1139,6 +1331,7 @@ export type ProductUpdateWithoutWarrantiesAsProductInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
@@ -1146,6 +1339,7 @@ export type ProductUpdateWithoutWarrantiesAsProductInput = {
   stocks?: Prisma.ProductStockUpdateManyWithoutProductNestedInput
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutWarrantiesAsProductInput = {
@@ -1158,12 +1352,14 @@ export type ProductUncheckedUpdateWithoutWarrantiesAsProductInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
   stocks?: Prisma.ProductStockUncheckedUpdateManyWithoutProductNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutOrderItemsInput = {
@@ -1174,6 +1370,7 @@ export type ProductCreateWithoutOrderItemsInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductCreateNestedManyWithoutProductInput
@@ -1181,6 +1378,7 @@ export type ProductCreateWithoutOrderItemsInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
   warrantiesAsProduct?: Prisma.WarrantyCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutOrderItemsInput = {
@@ -1193,12 +1391,14 @@ export type ProductUncheckedCreateWithoutOrderItemsInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
   stocks?: Prisma.ProductStockUncheckedCreateNestedManyWithoutProductInput
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
   warrantiesAsProduct?: Prisma.WarrantyUncheckedCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutOrderItemsInput = {
@@ -1225,6 +1425,7 @@ export type ProductUpdateWithoutOrderItemsInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUpdateManyWithoutProductNestedInput
@@ -1232,6 +1433,7 @@ export type ProductUpdateWithoutOrderItemsInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
   warrantiesAsProduct?: Prisma.WarrantyUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutOrderItemsInput = {
@@ -1244,12 +1446,14 @@ export type ProductUncheckedUpdateWithoutOrderItemsInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
   stocks?: Prisma.ProductStockUncheckedUpdateManyWithoutProductNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
   warrantiesAsProduct?: Prisma.WarrantyUncheckedUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutAffiliateLinksInput = {
@@ -1260,6 +1464,7 @@ export type ProductCreateWithoutAffiliateLinksInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
@@ -1267,6 +1472,7 @@ export type ProductCreateWithoutAffiliateLinksInput = {
   stocks?: Prisma.ProductStockCreateNestedManyWithoutProductInput
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
   warrantiesAsProduct?: Prisma.WarrantyCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutAffiliateLinksInput = {
@@ -1279,12 +1485,14 @@ export type ProductUncheckedCreateWithoutAffiliateLinksInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
   stocks?: Prisma.ProductStockUncheckedCreateNestedManyWithoutProductInput
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
   warrantiesAsProduct?: Prisma.WarrantyUncheckedCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutAffiliateLinksInput = {
@@ -1311,6 +1519,7 @@ export type ProductUpdateWithoutAffiliateLinksInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
@@ -1318,6 +1527,7 @@ export type ProductUpdateWithoutAffiliateLinksInput = {
   stocks?: Prisma.ProductStockUpdateManyWithoutProductNestedInput
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
   warrantiesAsProduct?: Prisma.WarrantyUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutAffiliateLinksInput = {
@@ -1330,12 +1540,14 @@ export type ProductUncheckedUpdateWithoutAffiliateLinksInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
   stocks?: Prisma.ProductStockUncheckedUpdateManyWithoutProductNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
   warrantiesAsProduct?: Prisma.WarrantyUncheckedUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyCategoryInput = {
@@ -1347,6 +1559,7 @@ export type ProductCreateManyCategoryInput = {
   seoSlug?: string | null
   isActive?: boolean
   affiliatePrice?: number
+  affiliateCommissionRate?: number | null
 }
 
 export type ProductUpdateWithoutCategoryInput = {
@@ -1357,6 +1570,7 @@ export type ProductUpdateWithoutCategoryInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUpdateManyWithoutProductNestedInput
@@ -1364,6 +1578,7 @@ export type ProductUpdateWithoutCategoryInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
   warrantiesAsProduct?: Prisma.WarrantyUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutCategoryInput = {
@@ -1375,6 +1590,7 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
@@ -1382,6 +1598,7 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
   warrantiesAsProduct?: Prisma.WarrantyUncheckedUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutCategoryInput = {
@@ -1393,6 +1610,7 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
 }
 
 
@@ -1408,6 +1626,7 @@ export type ProductCountOutputType = {
   stockMovements: number
   warrantiesAsProduct: number
   affiliateLinks: number
+  reviews: number
 }
 
 export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1418,6 +1637,7 @@ export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   stockMovements?: boolean | ProductCountOutputTypeCountStockMovementsArgs
   warrantiesAsProduct?: boolean | ProductCountOutputTypeCountWarrantiesAsProductArgs
   affiliateLinks?: boolean | ProductCountOutputTypeCountAffiliateLinksArgs
+  reviews?: boolean | ProductCountOutputTypeCountReviewsArgs
 }
 
 /**
@@ -1479,6 +1699,13 @@ export type ProductCountOutputTypeCountAffiliateLinksArgs<ExtArgs extends runtim
   where?: Prisma.AffiliateLinkWhereInput
 }
 
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReviewWhereInput
+}
+
 
 export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1490,6 +1717,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   seoSlug?: boolean
   isActive?: boolean
   affiliatePrice?: boolean
+  affiliateCommissionRate?: boolean
   orderItems?: boolean | Prisma.Product$orderItemsArgs<ExtArgs>
   category?: boolean | Prisma.Product$categoryArgs<ExtArgs>
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
@@ -1498,6 +1726,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   stockMovements?: boolean | Prisma.Product$stockMovementsArgs<ExtArgs>
   warrantiesAsProduct?: boolean | Prisma.Product$warrantiesAsProductArgs<ExtArgs>
   affiliateLinks?: boolean | Prisma.Product$affiliateLinksArgs<ExtArgs>
+  reviews?: boolean | Prisma.Product$reviewsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
@@ -1511,6 +1740,7 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   seoSlug?: boolean
   isActive?: boolean
   affiliatePrice?: boolean
+  affiliateCommissionRate?: boolean
   category?: boolean | Prisma.Product$categoryArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
@@ -1524,6 +1754,7 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   seoSlug?: boolean
   isActive?: boolean
   affiliatePrice?: boolean
+  affiliateCommissionRate?: boolean
   category?: boolean | Prisma.Product$categoryArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
@@ -1537,9 +1768,10 @@ export type ProductSelectScalar = {
   seoSlug?: boolean
   isActive?: boolean
   affiliatePrice?: boolean
+  affiliateCommissionRate?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "googleLink" | "categoryId" | "createdAt" | "seoSlug" | "isActive" | "affiliatePrice", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "googleLink" | "categoryId" | "createdAt" | "seoSlug" | "isActive" | "affiliatePrice" | "affiliateCommissionRate", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orderItems?: boolean | Prisma.Product$orderItemsArgs<ExtArgs>
   category?: boolean | Prisma.Product$categoryArgs<ExtArgs>
@@ -1549,6 +1781,7 @@ export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   stockMovements?: boolean | Prisma.Product$stockMovementsArgs<ExtArgs>
   warrantiesAsProduct?: boolean | Prisma.Product$warrantiesAsProductArgs<ExtArgs>
   affiliateLinks?: boolean | Prisma.Product$affiliateLinksArgs<ExtArgs>
+  reviews?: boolean | Prisma.Product$reviewsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1569,6 +1802,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     stockMovements: Prisma.$StockMovementPayload<ExtArgs>[]
     warrantiesAsProduct: Prisma.$WarrantyPayload<ExtArgs>[]
     affiliateLinks: Prisma.$AffiliateLinkPayload<ExtArgs>[]
+    reviews: Prisma.$ReviewPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1580,6 +1814,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     seoSlug: string | null
     isActive: boolean
     affiliatePrice: number
+    affiliateCommissionRate: number | null
   }, ExtArgs["result"]["product"]>
   composites: {}
 }
@@ -1982,6 +2217,7 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
   stockMovements<T extends Prisma.Product$stockMovementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$stockMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   warrantiesAsProduct<T extends Prisma.Product$warrantiesAsProductArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$warrantiesAsProductArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WarrantyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   affiliateLinks<T extends Prisma.Product$affiliateLinksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$affiliateLinksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AffiliateLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reviews<T extends Prisma.Product$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2020,6 +2256,7 @@ export interface ProductFieldRefs {
   readonly seoSlug: Prisma.FieldRef<"Product", 'String'>
   readonly isActive: Prisma.FieldRef<"Product", 'Boolean'>
   readonly affiliatePrice: Prisma.FieldRef<"Product", 'Float'>
+  readonly affiliateCommissionRate: Prisma.FieldRef<"Product", 'Float'>
 }
     
 
@@ -2605,6 +2842,30 @@ export type Product$affiliateLinksArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.AffiliateLinkScalarFieldEnum | Prisma.AffiliateLinkScalarFieldEnum[]
+}
+
+/**
+ * Product.reviews
+ */
+export type Product$reviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Review
+   */
+  select?: Prisma.ReviewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Review
+   */
+  omit?: Prisma.ReviewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewInclude<ExtArgs> | null
+  where?: Prisma.ReviewWhereInput
+  orderBy?: Prisma.ReviewOrderByWithRelationInput | Prisma.ReviewOrderByWithRelationInput[]
+  cursor?: Prisma.ReviewWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReviewScalarFieldEnum | Prisma.ReviewScalarFieldEnum[]
 }
 
 /**

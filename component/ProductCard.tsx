@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ShoppingCart, Heart, Eye } from "lucide-react";
+import StarRating from "./StarRating";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import ProductModal from "./ProductModal";
@@ -16,6 +17,8 @@ export interface Product {
   badge: string | null;
   description?: string | null;
   seoSlug?: string | null;
+  averageRating?: number;
+  totalReviews?: number;
 }
 
 interface ProductCardProps {
@@ -88,6 +91,14 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
 
           <div className="p-4 text-center">
+            {(product.averageRating ?? 0) > 0 && (
+              <div className="flex items-center justify-center gap-1 mb-2">
+                <StarRating rating={product.averageRating ?? 0} size={14} />
+                <span className="text-xs text-gray-400 font-tajawal">
+                  ({product.totalReviews})
+                </span>
+              </div>
+            )}
             <h3 className="font-medium text-gray-dark mb-2 font-tajawal text-sm truncate">
               {product.name}
             </h3>

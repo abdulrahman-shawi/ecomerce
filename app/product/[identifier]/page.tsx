@@ -9,8 +9,11 @@ import Footer from "@/component/sections/Footer";
 import TopBanner from "@/component/sections/TopBanner";
 import CartDrawer from "@/component/CartDrawer";
 import { getProductBySlug } from "@/server/products";
+import { getProductReviews } from "@/server/reviews";
 import { Heart, ArrowLeft } from "lucide-react";
 import BuyNowButton from "@/component/BuyNowButton";
+import StarRating from "@/component/StarRating";
+import ProductReviews from "@/component/ProductReviews";
 
 interface ProductPageProps {
   params: { identifier: string };
@@ -75,6 +78,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
   if (!product) {
     notFound();
   }
+
+  const { reviews, averageRating, totalReviews } = await getProductReviews(
+    product.id
+  );
 
   const discountAmount = product.originalPrice
     ? Math.round(product.originalPrice - product.price)
@@ -177,9 +184,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
             {/* Details Section */}
             <div className="p-6 md:p-10 flex flex-col text-right">
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 font-tajawal leading-relaxed">
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2 font-tajawal leading-relaxed">
                 {product.name}
               </h1>
+
+              {/* Rating */}
+              {totalReviews > 0 && (
+                <div className="flex items-center gap-2 mb-4">
+                  <StarRating rating={averageRating} size={18} />
+                  <span className="text-sm text-gray-500 font-tajawal">
+                    {averageRating.toFixed(1)} ({totalReviews} تقييم)
+                  </span>
+                </div>
+              )}
 
               {/* Price */}
               <div className="flex items-center gap-4 mb-6">
@@ -242,6 +259,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
           </div>
         </div>
+
+        {/* Reviews */}
+        <ProductReviews
+          productId={product.id}
+          initialReviews={reviews}
+          initialAverageRating={averageRating}
+          initialTotalReviews={totalReviews}
+        />
 
         {/* Back Link */}
         <div className="mt-8">
