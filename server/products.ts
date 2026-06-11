@@ -43,10 +43,8 @@ export async function searchProducts(query: string): Promise<HomeProduct[]> {
       p.images[0]?.url ||
       "/images/products/placeholder.jpg";
 
-    const price = stock
-      ? stock.price * (1 - stock.discount / 100)
-      : p.affiliatePrice;
-    const originalPrice = stock && stock.discount > 0 ? stock.price : null;
+    const price = stock ? stock.discount : p.affiliatePrice;
+    const originalPrice = stock.price;
 
     return {
       id: p.id,
@@ -158,10 +156,8 @@ export async function getProductBySlug(
     product.images[0]?.url ||
     "/images/products/placeholder.jpg";
 
-  const price = stock
-    ? stock.price * (1 - stock.discount / 100)
-    : product.affiliatePrice;
-  const originalPrice = stock && stock.discount > 0 ? stock.price : null;
+  const price = stock ? stock.discount : product.affiliatePrice;
+  const originalPrice = stock.price;
 
   return {
     id: product.id,
