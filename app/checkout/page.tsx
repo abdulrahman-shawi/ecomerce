@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useCart } from "@/context/CartContext";
+import { useRegion } from "@/context/RegionContext";
 import { MapPin, User, ShoppingBag, ChevronLeft, CheckCircle } from "lucide-react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
@@ -49,11 +50,12 @@ const citiesByCountry: Record<string, string[]> = {
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, totalPrice, clearCart } = useCart();
+  const { country: regionCountry } = useRegion();
 
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    country: "",
+    country: regionCountry === "TR" ? "TR" : "SY",
     city: "",
     address: "",
     notes: "",
@@ -90,6 +92,15 @@ export default function CheckoutPage() {
     );
   }, []);
 
+  // Sync checkout country with the selected region
+  useEffect(() => {
+    setFormData((prev) => {
+      const nextCountry = regionCountry === "TR" ? "TR" : "SY";
+      if (prev.country === nextCountry) return prev;
+      return { ...prev, country: nextCountry, city: "" };
+    });
+  }, [regionCountry]);
+
   const validateStock = useCallback(async (country: string) => {
     if (!country || items.length === 0) {
       setStockErrors([]);
@@ -119,6 +130,13 @@ export default function CheckoutPage() {
       setCheckingStock(false);
     }
   }, [items]);
+
+  // Validate stock when country or items change
+  useEffect(() => {
+    if (formData.country) {
+      validateStock(formData.country);
+    }
+  }, [formData.country, items, validateStock]);
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
