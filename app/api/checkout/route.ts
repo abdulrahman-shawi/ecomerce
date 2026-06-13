@@ -130,7 +130,7 @@ export async function POST(request: NextRequest) {
       // ─── 4. Update customer status ───
       customer = await tx.customer.update({
         where: { id: customer.id },
-        data: { status: "تم البيع" },
+        data: { status: "المتجر" },
       });
 
       // ─── 5. Generate Google Maps link ───

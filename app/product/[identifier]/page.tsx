@@ -218,10 +218,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </div>
 
               {/* Description */}
-              <p className="text-gray-600 text-base mb-8 leading-relaxed font-tajawal">
-                {product.description ??
-                  "منتج عالي الجودة يوفر لكِ أفضل النتائج. تم اختياره بعناية لتلبية احتياجاتك اليومية في العناية بالبشرة والشعر."}
-              </p>
+              <div
+                className="text-gray-600 text-base mb-8 leading-relaxed font-tajawal product-description"
+                dangerouslySetInnerHTML={{
+                  __html:
+                    product.description ??
+                    "منتج عالي الجودة يوفر لكِ أفضل النتائج. تم اختياره بعناية لتلبية احتياجاتك اليومية في العناية بالبشرة والشعر.",
+                }}
+              />
 
               {/* Meta Info */}
               <div className="space-y-3 mb-8 text-sm text-gray-500 font-tajawal">
