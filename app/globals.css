@@ -92,14 +92,22 @@
   .product-description p {
     @apply mb-4 leading-relaxed;
   }
+  .product-description ul,
+  .product-description ol {
+    @apply mb-4 space-y-1 pr-5;
+  }
   .product-description ul {
-    @apply list-disc list-inside mb-4 space-y-1 pr-4;
+    @apply list-disc list-outside;
   }
   .product-description ol {
-    @apply list-decimal list-inside mb-4 space-y-1 pr-4;
+    @apply list-decimal list-outside;
   }
   .product-description li {
     @apply text-gray-600 leading-relaxed;
+  }
+  .product-description li > p,
+  .product-description li > div {
+    @apply inline mb-0;
   }
   .product-description strong,
   .product-description b {
