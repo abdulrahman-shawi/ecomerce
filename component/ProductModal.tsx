@@ -20,16 +20,22 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
 
   if (!isOpen || !product) return null;
 
+  const finalPrice = product.originalPrice
+    ? product.originalPrice - product.price
+    : product.price;
   const discount = product.originalPrice
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+    ? Math.round(((product.originalPrice - finalPrice) / product.originalPrice) * 100)
     : 0;
 
   const handleAddToCart = () => {
+    const finalPrice = product.originalPrice
+      ? product.originalPrice - product.price
+      : product.price;
     for (let i = 0; i < quantity; i++) {
       addToCart({
         id: product.id,
         name: product.name,
-        price: product.price,
+        price: finalPrice,
         image: product.image,
       });
     }
@@ -89,7 +95,7 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
             {/* Price */}
             <div className="flex items-center gap-3 mb-4">
               <span className="text-2xl font-bold text-pink-dark font-tajawal">
-                {product.price} $
+                {finalPrice} $
               </span>
               {product.originalPrice && (
                 <span className="text-lg text-gray-400 line-through font-tajawal">
@@ -98,7 +104,7 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
               )}
               {discount > 0 && (
                 <span className="text-sm bg-green-100 text-green-700 px-2 py-1 rounded-md font-tajawal">
-                  وفّر {product.originalPrice! - product.price} $
+                  وفّر {product.price} $
                 </span>
               )}
             </div>
@@ -132,7 +138,7 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
             <div className="flex items-center justify-between mb-6 pb-6 border-b border-gray-100">
               <span className="text-gray-600 font-tajawal">الإجمالي:</span>
               <span className="text-xl font-bold text-gray-800 font-tajawal">
-                {product.price * quantity} $
+                {finalPrice * quantity} $
               </span>
             </div>
 

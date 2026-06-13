@@ -9,6 +9,7 @@ interface BuyNowButtonProps {
     id: number;
     name: string;
     price: number;
+    originalPrice?: number | null;
     image: string;
   };
 }
@@ -18,10 +19,13 @@ export default function BuyNowButton({ product }: BuyNowButtonProps) {
   const { addToCart } = useCart();
 
   const handleBuyNow = () => {
+    const finalPrice = product.originalPrice
+      ? product.originalPrice - product.price
+      : product.price;
     addToCart({
       id: product.id,
       name: product.name,
-      price: product.price,
+      price: finalPrice,
       image: product.image,
     });
     router.push("/checkout");

@@ -203,7 +203,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               {/* Price */}
               <div className="flex items-center gap-4 mb-6">
                 <span className="text-3xl font-bold text-pink-dark font-tajawal">
-                  {product.price} $
+                  {discountAmount} $
                 </span>
                 {product.originalPrice && (
                   <span className="text-xl text-gray-400 line-through font-tajawal">
@@ -212,7 +212,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 )}
                 {hasDiscount && (
                   <span className="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-md font-tajawal">
-                    وفّر {discountAmount} $
+                    وفّر {product.price} $
                   </span>
                 )}
               </div>
@@ -252,6 +252,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   id: product.id,
                   name: product.name,
                   price: product.price,
+                  originalPrice: product.originalPrice,
                   image: product.image,
                 }} />
                 <button className="w-14 h-14 rounded-full border-2 border-gray-200 flex items-center justify-center transition-all duration-300 hover:border-red-300 hover:text-red-500 text-gray-400">
