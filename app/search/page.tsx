@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { searchProducts } from "@/server/products";
+import { getServerCountry } from "@/lib/region";
 import ProductCard from "@/component/ProductCard";
 import { Search, ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -18,7 +19,8 @@ export async function generateMetadata({ searchParams }: SearchPageProps) {
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
   const query = searchParams.q || "";
-  const products = query ? await searchProducts(query) : [];
+  const country = getServerCountry();
+  const products = query ? await searchProducts(query, country) : [];
 
   return (
     <div className="min-h-screen bg-gray-light font-tajawal">

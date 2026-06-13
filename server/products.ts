@@ -1,10 +1,16 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { getWarehouseIdsByCountry, type CountryCode } from "@/lib/region";
 import { HomeProduct } from "./home";
 
-export async function searchProducts(query: string): Promise<HomeProduct[]> {
+export async function searchProducts(
+  query: string,
+  country?: string
+): Promise<HomeProduct[]> {
   const trimmed = query.trim();
+  const activeCountry: CountryCode = country === "TR" ? "TR" : "SY";
+  const warehouseIds = await getWarehouseIdsByCountry(activeCountry);
 
   if (!trimmed) {
     return [];
@@ -13,6 +19,11 @@ export async function searchProducts(query: string): Promise<HomeProduct[]> {
   const products = await prisma.product.findMany({
     where: {
       isActive: true,
+      stocks: {
+        some: {
+          warehouseId: { in: warehouseIds },
+        },
+      },
       OR: [
         { name: { contains: trimmed, mode: "insensitive" } },
         { description: { contains: trimmed, mode: "insensitive" } },
@@ -29,6 +40,9 @@ export async function searchProducts(query: string): Promise<HomeProduct[]> {
       category: true,
       images: true,
       stocks: {
+        where: {
+          warehouseId: { in: warehouseIds },
+        },
         orderBy: { price: "asc" },
         take: 1,
       },
@@ -45,7 +59,7 @@ export async function searchProducts(query: string): Promise<HomeProduct[]> {
       "/images/products/placeholder.jpg";
 
     const price = stock ? stock.discount : p.affiliatePrice;
-    const originalPrice = stock.price;
+    const originalPrice = stock?.price ?? null;
     const { averageRating, totalReviews } = getRatingInfo(p.reviews);
 
     return {
@@ -65,8 +79,11 @@ export async function searchProducts(query: string): Promise<HomeProduct[]> {
 }
 
 export async function getProductsByCategory(
-  slug: string
+  slug: string,
+  country?: string
 ): Promise<{ categoryName: string; products: HomeProduct[] } | null> {
+  const activeCountry: CountryCode = country === "TR" ? "TR" : "SY";
+
   const category = await prisma.category.findUnique({
     where: { slug },
   });
@@ -77,23 +94,36 @@ export async function getProductsByCategory(
       where: { id: parseInt(slug) || 0 },
     });
     if (!catById) return null;
-    return fetchCategoryProducts(catById);
+    return fetchCategoryProducts(catById, activeCountry);
   }
 
-  return fetchCategoryProducts(category);
+  return fetchCategoryProducts(category, activeCountry);
 }
 
-async function fetchCategoryProducts(category: { id: number; name: string }) {
+async function fetchCategoryProducts(
+  category: { id: number; name: string },
+  activeCountry: CountryCode = "SY"
+) {
+  const warehouseIds = await getWarehouseIdsByCountry(activeCountry);
+
   const products = await prisma.product.findMany({
     where: {
       isActive: true,
       categoryId: category.id,
+      stocks: {
+        some: {
+          warehouseId: { in: warehouseIds },
+        },
+      },
     },
     orderBy: { createdAt: "desc" },
     include: {
       category: true,
       images: true,
       stocks: {
+        where: {
+          warehouseId: { in: warehouseIds },
+        },
         orderBy: { price: "asc" },
         take: 1,
       },
@@ -109,10 +139,8 @@ async function fetchCategoryProducts(category: { id: number; name: string }) {
       p.images[0]?.url ||
       "/images/products/placeholder.jpg";
 
-    const price = stock
-      ? stock.discount
-      : p.affiliatePrice;
-    const originalPrice = stock.price;
+    const price = stock ? stock.discount : p.affiliatePrice;
+    const originalPrice = stock?.price ?? null;
     const { averageRating, totalReviews } = getRatingInfo(p.reviews);
 
     return {
@@ -134,8 +162,12 @@ async function fetchCategoryProducts(category: { id: number; name: string }) {
 }
 
 export async function getProductBySlug(
-  identifier: string
-): Promise<HomeProduct & { seoSlug: string | null; categorySlug: string | null } | null> {
+  identifier: string,
+  country?: string
+): Promise<(HomeProduct & { seoSlug: string | null; categorySlug: string | null }) | null> {
+  const activeCountry: CountryCode = country === "TR" ? "TR" : "SY";
+  const warehouseIds = await getWarehouseIdsByCountry(activeCountry);
+
   const whereClause = isNaN(Number(identifier))
     ? { seoSlug: identifier }
     : { id: Number(identifier) };
@@ -144,11 +176,19 @@ export async function getProductBySlug(
     where: {
       ...whereClause,
       isActive: true,
+      stocks: {
+        some: {
+          warehouseId: { in: warehouseIds },
+        },
+      },
     },
     include: {
       category: true,
       images: true,
       stocks: {
+        where: {
+          warehouseId: { in: warehouseIds },
+        },
         orderBy: { price: "asc" },
         take: 1,
       },
@@ -166,7 +206,7 @@ export async function getProductBySlug(
     "/images/products/placeholder.jpg";
 
   const price = stock ? stock.discount : product.affiliatePrice;
-  const originalPrice = stock.price;
+  const originalPrice = stock?.price ?? null;
   const { averageRating, totalReviews } = getRatingInfo(product.reviews);
 
   return {

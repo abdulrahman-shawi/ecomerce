@@ -9,6 +9,7 @@ import Footer from "@/component/sections/Footer";
 import TopBanner from "@/component/sections/TopBanner";
 import CartDrawer from "@/component/CartDrawer";
 import { getProductBySlug } from "@/server/products";
+import { getServerCountry } from "@/lib/region";
 import { getProductReviews } from "@/server/reviews";
 import { Heart, ArrowLeft } from "lucide-react";
 import BuyNowButton from "@/component/BuyNowButton";
@@ -22,7 +23,7 @@ interface ProductPageProps {
 export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
-  const product = await getProductBySlug(params.identifier);
+  const product = await getProductBySlug(params.identifier, getServerCountry());
 
   if (!product) {
     return {
@@ -73,7 +74,8 @@ export async function generateMetadata({
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const product = await getProductBySlug(params.identifier);
+  const country = getServerCountry();
+  const product = await getProductBySlug(params.identifier, country);
 
   if (!product) {
     notFound();

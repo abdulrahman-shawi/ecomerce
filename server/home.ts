@@ -1,6 +1,7 @@
 "use server"
 
 import { prisma } from "@/lib/prisma";
+import { getWarehouseIdsByCountry, type CountryCode } from "@/lib/region";
 
 export interface HomeProduct {
   id: number;
@@ -23,22 +24,35 @@ export interface HomeCategory {
   image: string;
 }
 
-export async function getHomePageData() {
+export async function getHomePageData(country?: string) {
+  const activeCountry: CountryCode = country === "TR" ? "TR" : "SY";
+  const warehouseIds = await getWarehouseIdsByCountry(activeCountry);
+
   // Fetch categories
   const categories = await prisma.category.findMany({
     take: 6,
     orderBy: { createdAt: "desc" },
   });
 
-  // Fetch featured products (latest 8 active products with images & stock)
+  // Fetch featured products available in warehouses matching the selected country
   const products = await prisma.product.findMany({
-    where: { isActive: true },
+    where: {
+      isActive: true,
+      stocks: {
+        some: {
+          warehouseId: { in: warehouseIds },
+        },
+      },
+    },
     take: 12,
     orderBy: { createdAt: "desc" },
     include: {
       category: true,
       images: true,
       stocks: {
+        where: {
+          warehouseId: { in: warehouseIds },
+        },
         orderBy: { price: "asc" },
         take: 1,
       },
@@ -55,7 +69,7 @@ export async function getHomePageData() {
       || "/images/products/placeholder.jpg";
 
     const price = stock ? stock.discount : p.affiliatePrice;
-    const originalPrice = stock.price;
+    const originalPrice = stock?.price ?? null;
 
     const approvedReviews = p.reviews ?? [];
     const totalReviews = approvedReviews.length;

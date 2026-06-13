@@ -8,13 +8,14 @@ import TopBanner from "@/component/sections/TopBanner";
 import CartDrawer from "@/component/CartDrawer";
 import ProductCard from "@/component/ProductCard";
 import { getProductsByCategory } from "@/server/products";
+import { getServerCountry } from "@/lib/region";
 
 interface CategoryPageProps {
   params: { slug: string };
 }
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
-  const data = await getProductsByCategory(params.slug);
+  const data = await getProductsByCategory(params.slug, getServerCountry());
   
   if (!data) {
     return {
@@ -55,7 +56,8 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { slug } = params;
-  const data = await getProductsByCategory(slug);
+  const country = getServerCountry();
+  const data = await getProductsByCategory(slug, country);
 
   if (!data) {
     notFound();
