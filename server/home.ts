@@ -15,6 +15,7 @@ export interface HomeProduct {
   seoSlug?: string | null;
   averageRating?: number;
   totalReviews?: number;
+  stock: number;
 }
 
 export interface HomeCategory {
@@ -54,7 +55,6 @@ export async function getHomePageData(country?: string) {
           warehouseId: { in: warehouseIds },
         },
         orderBy: { price: "asc" },
-        take: 1,
       },
       orderItems: true,
       reviews: { where: { isApproved: true } },
@@ -70,6 +70,7 @@ export async function getHomePageData(country?: string) {
 
     const price = stock ? stock.discount : p.affiliatePrice;
     const originalPrice = stock?.price ?? null;
+    const totalStock = p.stocks.reduce((sum, s) => sum + s.quantity, 0);
 
     const approvedReviews = p.reviews ?? [];
     const totalReviews = approvedReviews.length;
@@ -90,6 +91,7 @@ export async function getHomePageData(country?: string) {
       seoSlug: p.seoSlug,
       averageRating: totalReviews > 0 ? Math.round(averageRating * 10) / 10 : undefined,
       totalReviews: totalReviews > 0 ? totalReviews : undefined,
+      stock: totalStock,
     };
   });
 

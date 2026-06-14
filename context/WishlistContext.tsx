@@ -18,6 +18,7 @@ export interface WishlistItem {
   badge: string | null;
   description?: string | null;
   seoSlug?: string | null;
+  stock?: number;
 }
 
 interface WishlistContextType {

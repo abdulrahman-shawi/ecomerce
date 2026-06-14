@@ -44,7 +44,6 @@ export async function searchProducts(
           warehouseId: { in: warehouseIds },
         },
         orderBy: { price: "asc" },
-        take: 1,
       },
       orderItems: true,
       reviews: { where: { isApproved: true } },
@@ -60,6 +59,7 @@ export async function searchProducts(
 
     const price = stock ? stock.discount : p.affiliatePrice;
     const originalPrice = stock?.price ?? null;
+    const totalStock = p.stocks.reduce((sum, s) => sum + s.quantity, 0);
     const { averageRating, totalReviews } = getRatingInfo(p.reviews);
 
     return {
@@ -74,6 +74,7 @@ export async function searchProducts(
       seoSlug: p.seoSlug,
       averageRating,
       totalReviews,
+      stock: totalStock,
     };
   });
 }
@@ -125,7 +126,6 @@ async function fetchCategoryProducts(
           warehouseId: { in: warehouseIds },
         },
         orderBy: { price: "asc" },
-        take: 1,
       },
       orderItems: true,
       reviews: { where: { isApproved: true } },
@@ -141,6 +141,7 @@ async function fetchCategoryProducts(
 
     const price = stock ? stock.discount : p.affiliatePrice;
     const originalPrice = stock?.price ?? null;
+    const totalStock = p.stocks.reduce((sum, s) => sum + s.quantity, 0);
     const { averageRating, totalReviews } = getRatingInfo(p.reviews);
 
     return {
@@ -155,6 +156,7 @@ async function fetchCategoryProducts(
       seoSlug: p.seoSlug,
       averageRating,
       totalReviews,
+      stock: totalStock,
     };
   });
 
@@ -190,7 +192,6 @@ export async function getProductBySlug(
           warehouseId: { in: warehouseIds },
         },
         orderBy: { price: "asc" },
-        take: 1,
       },
       orderItems: true,
       reviews: { where: { isApproved: true } },
@@ -207,6 +208,7 @@ export async function getProductBySlug(
 
   const price = stock ? stock.discount : product.affiliatePrice;
   const originalPrice = stock?.price ?? null;
+  const totalStock = product.stocks.reduce((sum, s) => sum + s.quantity, 0);
   const { averageRating, totalReviews } = getRatingInfo(product.reviews);
 
   return {
@@ -222,6 +224,7 @@ export async function getProductBySlug(
     categorySlug: product.category?.slug ?? null,
     averageRating,
     totalReviews,
+    stock: totalStock,
   };
 }
 

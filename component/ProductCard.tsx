@@ -19,6 +19,7 @@ export interface Product {
   seoSlug?: string | null;
   averageRating?: number;
   totalReviews?: number;
+  stock?: number;
 }
 
 interface ProductCardProps {
@@ -113,6 +114,20 @@ export default function ProductCard({ product }: ProductCardProps) {
                 </span>
               )}
             </div>
+            {typeof product.stock === "number" && (
+              <p className="text-xs text-gray-500 font-tajawal mb-2">
+                متبقي في المخزون:{" "}
+                <span
+                  className={
+                    product.stock <= 5
+                      ? "text-red-500 font-bold"
+                      : "text-green-600 font-bold"
+                  }
+                >
+                  {product.stock}
+                </span>
+              </p>
+            )}
           </div>
         </Link>
 
