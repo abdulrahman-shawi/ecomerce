@@ -14,11 +14,15 @@ import Newsletter from "@/component/sections/Newsletter";
 import Footer from "@/component/sections/Footer";
 import CartDrawer from "@/component/CartDrawer";
 import { getHomePageData } from "@/server/home";
+import { getRecentReviews } from "@/server/reviews";
 import { getServerCountry } from "@/lib/region";
 
 export default async function Home() {
   const country = getServerCountry();
-  const { featuredProducts, bestSellers, categories } = await getHomePageData(country);
+  const [{ featuredProducts, bestSellers, categories }, testimonials] = await Promise.all([
+    getHomePageData(country),
+    getRecentReviews(5),
+  ]);
 
   return (
     <div dir="rtl" className="font-tajawal min-h-screen bg-white">
@@ -32,7 +36,7 @@ export default async function Home() {
         <DualOffers />
         <BestSellers products={bestSellers} />
         <LimitedOffer />
-        <Testimonials />
+        <Testimonials testimonials={testimonials} />
         <Newsletter />
       </main>
       <Footer />

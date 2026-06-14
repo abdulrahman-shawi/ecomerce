@@ -12,6 +12,29 @@ export interface ReviewWithUser {
   user: { username: string } | null;
 }
 
+export interface RecentReview {
+  id: string;
+  name: string;
+  rating: number;
+  comment: string | null;
+}
+
+export async function getRecentReviews(limit: number = 5): Promise<RecentReview[]> {
+  const reviews = await prisma.review.findMany({
+    where: { isApproved: true, comment: { not: null } },
+    orderBy: { createdAt: "desc" },
+    take: limit,
+    select: {
+      id: true,
+      name: true,
+      rating: true,
+      comment: true,
+    },
+  });
+
+  return reviews;
+}
+
 export async function getProductReviews(productId: number): Promise<{
   reviews: ReviewWithUser[];
   averageRating: number;

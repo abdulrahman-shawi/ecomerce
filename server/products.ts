@@ -170,33 +170,95 @@ export async function getProductBySlug(
   const activeCountry: CountryCode = country === "TR" ? "TR" : "SY";
   const warehouseIds = await getWarehouseIdsByCountry(activeCountry);
 
-  const whereClause = isNaN(Number(identifier))
-    ? { seoSlug: identifier }
-    : { id: Number(identifier) };
+  // Ensure the identifier is URL-decoded so Arabic slugs match the database value.
+  let decodedIdentifier = identifier;
+  try {
+    decodedIdentifier = decodeURIComponent(identifier);
+  } catch {
+    // If decoding fails, use the raw identifier.
+  }
 
-  const product = await prisma.product.findFirst({
-    where: {
-      ...whereClause,
-      isActive: true,
-      stocks: {
-        some: {
-          warehouseId: { in: warehouseIds },
+  const numericId = Number(decodedIdentifier);
+  const isNumeric = !isNaN(numericId) && decodedIdentifier.trim() !== "";
+
+  let product = null;
+
+  if (isNumeric) {
+    product = await prisma.product.findFirst({
+      where: {
+        id: numericId,
+        isActive: true,
+        stocks: {
+          some: {
+            warehouseId: { in: warehouseIds },
+          },
         },
       },
-    },
-    include: {
-      category: true,
-      images: true,
-      stocks: {
+      include: {
+        category: true,
+        images: true,
+        stocks: {
+          where: {
+            warehouseId: { in: warehouseIds },
+          },
+          orderBy: { price: "asc" },
+        },
+        orderItems: true,
+        reviews: { where: { isApproved: true } },
+      },
+    });
+  } else {
+    product = await prisma.product.findFirst({
+      where: {
+        seoSlug: decodedIdentifier,
+        isActive: true,
+        stocks: {
+          some: {
+            warehouseId: { in: warehouseIds },
+          },
+        },
+      },
+      include: {
+        category: true,
+        images: true,
+        stocks: {
+          where: {
+            warehouseId: { in: warehouseIds },
+          },
+          orderBy: { price: "asc" },
+        },
+        orderItems: true,
+        reviews: { where: { isApproved: true } },
+      },
+    });
+
+    // Fallback: search by product name if no seoSlug match.
+    if (!product) {
+      product = await prisma.product.findFirst({
         where: {
-          warehouseId: { in: warehouseIds },
+          name: { equals: decodedIdentifier, mode: "insensitive" },
+          isActive: true,
+          stocks: {
+            some: {
+              warehouseId: { in: warehouseIds },
+            },
+          },
         },
-        orderBy: { price: "asc" },
-      },
-      orderItems: true,
-      reviews: { where: { isApproved: true } },
-    },
-  });
+        include: {
+          category: true,
+          images: true,
+          stocks: {
+            where: {
+              warehouseId: { in: warehouseIds },
+            },
+            orderBy: { price: "asc" },
+          },
+          orderItems: true,
+          reviews: { where: { isApproved: true } },
+        },
+      });
+    }
+  }
 
   if (!product) return null;
 
