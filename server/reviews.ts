@@ -19,7 +19,7 @@ export interface RecentReview {
   comment: string | null;
 }
 
-export async function getRecentReviews(limit: number = 5): Promise<RecentReview[]> {
+export async function getRecentReviews(limit: number = 6): Promise<RecentReview[]> {
   const reviews = await prisma.review.findMany({
     where: { isApproved: true, comment: { not: null } },
     orderBy: { createdAt: "desc" },

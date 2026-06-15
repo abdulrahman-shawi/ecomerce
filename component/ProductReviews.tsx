@@ -93,10 +93,43 @@ export default function ProductReviews({
         </div>
       </div>
 
+      {/* Reviews List */}
+      <div className="space-y-6 mb-10">
+        {reviews.length === 0 ? (
+          <p className="text-gray-500 text-center py-8 font-tajawal">
+            لا توجد تقييمات بعد. كن أول من يقيم هذا المنتج.
+          </p>
+        ) : (
+          reviews.map((review) => (
+            <div
+              key={review.id}
+              className="border-b border-gray-100 last:border-0 pb-6 last:pb-0"
+            >
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-3">
+                  <span className="font-bold text-gray-700 font-tajawal">
+                    {review.name}
+                  </span>
+                  <StarRating rating={review.rating} size={14} />
+                </div>
+                <span className="text-xs text-gray-400 font-tajawal">
+                  {new Date(review.createdAt).toLocaleDateString("ar-SY")}
+                </span>
+              </div>
+              {review.comment && (
+                <p className="text-gray-600 text-sm leading-relaxed font-tajawal">
+                  {review.comment}
+                </p>
+              )}
+            </div>
+          ))
+        )}
+      </div>
+
       {/* Review Form */}
       <form
         onSubmit={handleSubmit}
-        className="mb-10 p-5 border border-gray-100 rounded-xl bg-gray-light"
+        className="p-5 border border-gray-100 rounded-xl bg-gray-light"
       >
         <h3 className="font-bold text-gray-700 mb-4 font-tajawal">
           أضف تقييمك
@@ -154,39 +187,6 @@ export default function ProductReviews({
           {submitting ? "جاري الإرسال..." : "إرسال التقييم"}
         </button>
       </form>
-
-      {/* Reviews List */}
-      <div className="space-y-6">
-        {reviews.length === 0 ? (
-          <p className="text-gray-500 text-center py-8 font-tajawal">
-            لا توجد تقييمات بعد. كن أول من يقيم هذا المنتج.
-          </p>
-        ) : (
-          reviews.map((review) => (
-            <div
-              key={review.id}
-              className="border-b border-gray-100 last:border-0 pb-6 last:pb-0"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-3">
-                  <span className="font-bold text-gray-700 font-tajawal">
-                    {review.name}
-                  </span>
-                  <StarRating rating={review.rating} size={14} />
-                </div>
-                <span className="text-xs text-gray-400 font-tajawal">
-                  {new Date(review.createdAt).toLocaleDateString("ar-SY")}
-                </span>
-              </div>
-              {review.comment && (
-                <p className="text-gray-600 text-sm leading-relaxed font-tajawal">
-                  {review.comment}
-                </p>
-              )}
-            </div>
-          ))
-        )}
-      </div>
     </div>
   );
 }
