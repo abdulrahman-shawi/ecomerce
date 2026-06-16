@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import { useSettings } from "@/context/SettingsContext";
+import { formatPrice } from "@/lib/currency";
 
 interface ProductCardProps {
   id: number;
@@ -20,6 +22,7 @@ export default function ProductCard({
   image,
   category = "أدوات تجميل",
 }: ProductCardProps) {
+  const { siteCurrency } = useSettings();
   const badgeColor =
     badge === "خصم"
       ? "bg-[#ef837b]"
@@ -78,10 +81,10 @@ export default function ProductCard({
           {name}
         </h3>
         <div className="flex items-center gap-2 pt-1">
-          <span className="text-base font-bold text-[#c96]">${price.toFixed(2)}</span>
+          <span className="text-base font-bold text-[#c96]">{formatPrice(price, siteCurrency)}</span>
           {oldPrice && (
             <span className="text-sm text-gray-400 line-through">
-              ${oldPrice.toFixed(2)}
+              {formatPrice(oldPrice, siteCurrency)}
             </span>
           )}
         </div>

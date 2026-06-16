@@ -11,6 +11,8 @@ import CartDrawer from "@/component/CartDrawer";
 import { getProductBySlug } from "@/server/products";
 import { getServerCountry } from "@/lib/region";
 import { getProductReviews } from "@/server/reviews";
+import { getGeneralSettings } from "@/server/settings";
+import { formatPrice, getCurrencySymbol } from "@/lib/currency";
 import { Heart, ArrowLeft } from "lucide-react";
 import BuyNowButton from "@/component/BuyNowButton";
 import StarRating from "@/component/StarRating";
@@ -75,7 +77,10 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const country = getServerCountry();
-  const product = await getProductBySlug(params.identifier, country);
+  const [product, settings] = await Promise.all([
+    getProductBySlug(params.identifier, country),
+    getGeneralSettings(),
+  ]);
 
   if (!product) {
     notFound();
@@ -84,6 +89,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const { reviews, averageRating, totalReviews } = await getProductReviews(
     product.id
   );
+
+  const currencySymbol = getCurrencySymbol(settings.siteCurrency);
 
   const discountAmount = product.originalPrice
     ? Math.round(product.originalPrice - product.price)
@@ -108,7 +115,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     offers: {
       "@type": "Offer",
       url: productUrl,
-      priceCurrency: "USD",
+      priceCurrency: settings.siteCurrency,
       price: product.price.toString(),
       availability: "https://schema.org/InStock",
       ...(product.originalPrice && {
@@ -179,7 +186,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               )}
               {hasDiscount && (
                 <span className="absolute top-4 right-4 mt-8 bg-pink text-white text-xs font-bold px-3 py-1.5 rounded-lg font-tajawal">
-                  -{product.price} $
+                  -{formatPrice(product.price, settings.siteCurrency)}
                 </span>
               )}
             </div>
@@ -203,16 +210,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
               {/* Price */}
               <div className="flex items-center gap-4 mb-6">
                 <span className="text-3xl font-bold text-pink-dark font-tajawal">
-                  {discountAmount} $
+                  {formatPrice(discountAmount, settings.siteCurrency)}
                 </span>
                 {product.originalPrice && (
                   <span className="text-xl text-gray-400 line-through font-tajawal">
-                    {product.originalPrice} $
+                    {formatPrice(product.originalPrice, settings.siteCurrency)}
                   </span>
                 )}
                 {hasDiscount && (
                   <span className="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-md font-tajawal">
-                    وفّر {product.price} $
+                    وفّر {formatPrice(product.price, settings.siteCurrency)}
                   </span>
                 )}
               </div>

@@ -2,10 +2,13 @@
 
 import { X, Plus, Minus, ShoppingBag, Trash2 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { useSettings } from '@/context/SettingsContext';
+import { formatPrice } from '@/lib/currency';
 import Link from 'next/link';
 
 export default function CartDrawer() {
   const { items, isOpen, setIsOpen, updateQuantity, removeFromCart, totalPrice } = useCart();
+  const { siteCurrency } = useSettings();
 
   if (!isOpen) return null;
 
@@ -54,7 +57,7 @@ export default function CartDrawer() {
                       {item.name}
                     </h4>
                     <p className="text-pink-dark font-bold font-tajawal mb-2">
-                      {item.price} $
+                      {formatPrice(item.price, siteCurrency)}
                     </p>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 bg-white rounded-full px-2 py-1">
@@ -94,7 +97,7 @@ export default function CartDrawer() {
             <div className="flex items-center justify-between">
               <span className="text-gray-600 font-tajawal">الإجمالي:</span>
               <span className="text-2xl font-bold text-pink-dark font-tajawal">
-                {totalPrice} $
+                {formatPrice(totalPrice, siteCurrency)}
               </span>
             </div>
             <Link

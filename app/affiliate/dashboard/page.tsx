@@ -23,6 +23,8 @@ import {
   BarChart3,
   Link as LinkIcon,
 } from "lucide-react";
+import { useSettings } from "@/context/SettingsContext";
+import { formatPrice } from "@/lib/currency";
 
 interface DashboardData {
   totalClicks: number;
@@ -36,6 +38,7 @@ interface DashboardData {
 
 export default function AffiliateDashboardPage() {
   const router = useRouter();
+  const { siteCurrency } = useSettings();
   const [user, setUser] = useState<AffiliateUser | null>(null);
   const [dashboard, setDashboard] = useState<DashboardData | null>(null);
   const [commissions, setCommissions] = useState<any[]>([]);
@@ -157,13 +160,13 @@ export default function AffiliateDashboardPage() {
             <StatCard
               icon={<DollarSign size={20} />}
               label="إجمالي العمولات"
-              value={`$${dashboard.totalCommissions}`}
+              value={formatPrice(dashboard.totalCommissions, siteCurrency)}
               color="pink"
             />
             <StatCard
               icon={<Clock size={20} />}
               label="معلقة"
-              value={`$${dashboard.pendingCommissions}`}
+              value={formatPrice(dashboard.pendingCommissions, siteCurrency)}
               color="orange"
             />
           </div>
@@ -255,7 +258,7 @@ export default function AffiliateDashboardPage() {
                     <tr key={c.id} className="border-b border-gray-50 hover:bg-gray-50">
                       <td className="py-3 px-2">{c.order?.orderNumber ?? "—"}</td>
                       <td className="py-3 px-2">{c.affiliateLink?.product?.name ?? "—"}</td>
-                      <td className="py-3 px-2 font-bold">${c.amount}</td>
+                      <td className="py-3 px-2 font-bold">{formatPrice(c.amount, siteCurrency)}</td>
                       <td className="py-3 px-2">
                         <StatusBadge status={c.status} />
                       </td>

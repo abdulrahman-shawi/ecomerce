@@ -4,6 +4,8 @@ import { useState } from "react";
 import { X, ShoppingCart, Heart, Plus, Minus, Check } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
+import { useSettings } from "@/context/SettingsContext";
+import { formatPrice } from "@/lib/currency";
 import type { Product } from "./ProductCard";
 
 interface ProductModalProps {
@@ -15,6 +17,7 @@ interface ProductModalProps {
 export default function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
   const { addToCart } = useCart();
   const { toggleWishlist, isWishlisted } = useWishlist();
+  const { siteCurrency } = useSettings();
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
 
@@ -95,16 +98,16 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
             {/* Price */}
             <div className="flex items-center gap-3 mb-4">
               <span className="text-2xl font-bold text-pink-dark font-tajawal">
-                {finalPrice} $
+                {formatPrice(finalPrice, siteCurrency)}
               </span>
               {product.originalPrice && (
                 <span className="text-lg text-gray-400 line-through font-tajawal">
-                  {product.originalPrice} $
+                  {formatPrice(product.originalPrice, siteCurrency)}
                 </span>
               )}
               {discount > 0 && (
                 <span className="text-sm bg-green-100 text-green-700 px-2 py-1 rounded-md font-tajawal">
-                  وفّر {product.price} $
+                  وفّر {formatPrice(product.price, siteCurrency)}
                 </span>
               )}
             </div>
@@ -143,7 +146,7 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
             <div className="flex items-center justify-between mb-6 pb-6 border-b border-gray-100">
               <span className="text-gray-600 font-tajawal">الإجمالي:</span>
               <span className="text-xl font-bold text-gray-800 font-tajawal">
-                {finalPrice * quantity} $
+                {formatPrice(finalPrice * quantity, siteCurrency)}
               </span>
             </div>
 

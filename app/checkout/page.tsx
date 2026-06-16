@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useCart } from "@/context/CartContext";
 import { useRegion } from "@/context/RegionContext";
+import { useSettings } from "@/context/SettingsContext";
+import { formatPrice } from "@/lib/currency";
 import { MapPin, User, ShoppingBag, ChevronLeft, CheckCircle } from "lucide-react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
@@ -51,6 +53,7 @@ export default function CheckoutPage() {
   const router = useRouter();
   const { items, totalPrice, clearCart } = useCart();
   const { country: regionCountry } = useRegion();
+  const { siteCurrency } = useSettings();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -462,7 +465,7 @@ export default function CheckoutPage() {
                         الكمية: {item.quantity}
                       </p>
                       <p className="text-pink-dark font-bold text-sm mt-1">
-                        {item.price * item.quantity} $
+                        {formatPrice(item.price * item.quantity, siteCurrency)}
                       </p>
                     </div>
                   </div>
@@ -479,7 +482,7 @@ export default function CheckoutPage() {
                 <div className="flex items-center justify-between">
                   <span className="text-gray-600 font-tajawal">الإجمالي</span>
                   <span className="text-2xl font-bold text-pink-dark font-tajawal">
-                    {totalPrice} $
+                    {formatPrice(totalPrice, siteCurrency)}
                   </span>
                 </div>
               </div>

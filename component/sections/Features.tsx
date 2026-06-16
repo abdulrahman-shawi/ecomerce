@@ -1,31 +1,41 @@
 "use client";
 
 import { Truck, ShieldCheck, CreditCard, Headphones } from 'lucide-react';
+import { useSettings } from "@/context/SettingsContext";
+import { getCurrencySymbol } from "@/lib/currency";
 
-const features = [
+const baseFeatures = [
   {
     icon: Truck,
     title: 'شحن مجاني',
-    desc: 'للطلبات فوق 299$',
+    descTemplate: 'للطلبات فوق 299{{currency}}',
   },
   {
     icon: ShieldCheck,
     title: 'منتجات أصلية',
-    desc: '100% مضمونة',
+    descTemplate: '100% مضمونة',
   },
   {
     icon: CreditCard,
     title: 'دفع آمن',
-    desc: 'طرق دفع متعددة',
+    descTemplate: 'طرق دفع متعددة',
   },
   {
     icon: Headphones,
     title: 'خدمة عملاء',
-    desc: 'متاحة 24/7',
+    descTemplate: 'متاحة 24/7',
   },
 ];
 
 export default function Features() {
+  const { siteCurrency } = useSettings();
+  const currencySymbol = getCurrencySymbol(siteCurrency);
+
+  const features = baseFeatures.map((feature) => ({
+    ...feature,
+    desc: feature.descTemplate.replace('{{currency}}', currencySymbol),
+  }));
+
   return (
     <section className="py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4">
