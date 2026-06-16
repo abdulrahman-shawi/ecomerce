@@ -1,8 +1,32 @@
 "use client";
 
-import { Phone, MessageCircle } from 'lucide-react';
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { Phone, MessageCircle } from "lucide-react";
+
+interface FooterPage {
+  id: string;
+  slug: string;
+  title: string;
+}
+
+const quickLinks = [
+  { label: "الرئيسية", href: "/" },
+  { label: "منتجاتنا", href: "/#products" },
+  { label: "العروض", href: "/#offers" },
+  { label: "من نحن", href: "/about" },
+];
 
 export default function Footer() {
+  const [pages, setPages] = useState<FooterPage[]>([]);
+
+  useEffect(() => {
+    fetch("/api/pages")
+      .then((res) => res.json())
+      .then((data: FooterPage[]) => setPages(data))
+      .catch(() => setPages([]));
+  }, []);
+
   return (
     <footer id="footer" className="bg-gray-dark text-white pt-16 pb-6">
       <div className="max-w-7xl mx-auto px-4">
@@ -19,25 +43,31 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-4 font-tajawal">روابط سريعة</h4>
             <ul className="space-y-3">
-              {['الرئيسية', 'منتجاتنا', 'العروض', 'من نحن'].map((link) => (
-                <li key={link}>
-                  <button className="text-gray-400 hover:text-pink transition-colors text-sm font-tajawal">
-                    {link}
-                  </button>
+              {quickLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-gray-400 hover:text-pink transition-colors text-sm font-tajawal"
+                  >
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Customer Service */}
+          {/* Customer Service / Static Pages */}
           <div>
             <h4 className="font-bold text-lg mb-4 font-tajawal">خدمة العملاء</h4>
             <ul className="space-y-3">
-              {['الشحن والتوصيل', 'سياسة الإرجاع', 'الأسئلة الشائعة', 'الشروط والأحكام'].map((link) => (
-                <li key={link}>
-                  <button className="text-gray-400 hover:text-pink transition-colors text-sm font-tajawal">
-                    {link}
-                  </button>
+              {pages.map((page) => (
+                <li key={page.id}>
+                  <Link
+                    href={`/${page.slug}`}
+                    className="text-gray-400 hover:text-pink transition-colors text-sm font-tajawal"
+                  >
+                    {page.title}
+                  </Link>
                 </li>
               ))}
             </ul>
