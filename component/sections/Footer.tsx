@@ -22,7 +22,7 @@ const quickLinks = [
   { label: "الرئيسية", href: "/" },
   { label: "منتجاتنا", href: "/#products" },
   { label: "العروض", href: "/#offers" },
-  { label: "من نحن", href: "/about" },
+  { label: "من نحن", href: "/من-نحن" },
 ];
 
 export default function Footer() {
