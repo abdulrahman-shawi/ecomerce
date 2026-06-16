@@ -3,6 +3,7 @@
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Link from "next/link";
 import { User, LogOut, Package, Heart, MapPin, Phone } from "lucide-react";
 import Header from "@/component/sections/Header";
 import Footer from "@/component/sections/Footer";
@@ -41,7 +42,10 @@ export default function AccountPage() {
 
           {/* Menu */}
           <div className="p-6 grid gap-3">
-            <button className="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 transition-colors border border-gray-100 text-right">
+            <Link
+              href="/account/orders"
+              className="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 transition-colors border border-gray-100 text-right"
+            >
               <div className="w-10 h-10 bg-pink/10 rounded-full flex items-center justify-center text-pink">
                 <Package size={20} />
               </div>
@@ -49,9 +53,9 @@ export default function AccountPage() {
                 <h3 className="font-medium text-gray-800 font-tajawal">طلباتي</h3>
                 <p className="text-sm text-gray-400 font-tajawal">عرض سجل الطلبات</p>
               </div>
-            </button>
+            </Link>
 
-            <button className="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 transition-colors border border-gray-100 text-right">
+            <a href="/wishlist" className="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 transition-colors border border-gray-100 text-right">
               <div className="w-10 h-10 bg-pink/10 rounded-full flex items-center justify-center text-pink">
                 <Heart size={20} />
               </div>
@@ -59,9 +63,9 @@ export default function AccountPage() {
                 <h3 className="font-medium text-gray-800 font-tajawal">المفضلة</h3>
                 <p className="text-sm text-gray-400 font-tajawal">المنتجات المحفوظة</p>
               </div>
-            </button>
+            </a>
 
-            <button className="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 transition-colors border border-gray-100 text-right">
+            <a className="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 transition-colors border border-gray-100 text-right">
               <div className="w-10 h-10 bg-pink/10 rounded-full flex items-center justify-center text-pink">
                 <MapPin size={20} />
               </div>
@@ -69,7 +73,7 @@ export default function AccountPage() {
                 <h3 className="font-medium text-gray-800 font-tajawal">عناويني</h3>
                 <p className="text-sm text-gray-400 font-tajawal">إدارة عناوين التوصيل</p>
               </div>
-            </button>
+            </a>
 
             <button
               onClick={() => {
