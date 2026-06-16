@@ -93,7 +93,7 @@ export default function Footer() {
               {pages.map((page) => (
                 <li key={page.id}>
                   <Link
-                    href={`/${page.slug}`}
+                    href={`/${encodeURIComponent(page.slug)}`}
                     className="text-gray-400 hover:text-pink transition-colors text-sm font-tajawal"
                   >
                     {page.title}
