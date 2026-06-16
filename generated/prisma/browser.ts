@@ -118,6 +118,11 @@ export type OrderItem = Prisma.OrderItemModel
  */
 export type TrakingCompany = Prisma.TrakingCompanyModel
 /**
+ * Model Page
+ * 
+ */
+export type Page = Prisma.PageModel
+/**
  * Model GeneralSetting
  * 
  */

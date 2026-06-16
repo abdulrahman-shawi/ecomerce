@@ -71,6 +71,7 @@ export const ModelName = {
   shipping: 'shipping',
   OrderItem: 'OrderItem',
   TrakingCompany: 'TrakingCompany',
+  Page: 'Page',
   GeneralSetting: 'GeneralSetting',
   EmployeeSalaryAdjustment: 'EmployeeSalaryAdjustment',
   AffiliateLink: 'AffiliateLink',
@@ -152,6 +153,10 @@ export const PermissionScalarFieldEnum = {
   editPermissions: 'editPermissions',
   addPermissions: 'addPermissions',
   deletePermissions: 'deletePermissions',
+  viewPages: 'viewPages',
+  addPages: 'addPages',
+  editPages: 'editPages',
+  deletePages: 'deletePages',
   accessSyria: 'accessSyria',
   accessTurkey: 'accessTurkey'
 } as const
@@ -437,6 +442,21 @@ export const TrakingCompanyScalarFieldEnum = {
 } as const
 
 export type TrakingCompanyScalarFieldEnum = (typeof TrakingCompanyScalarFieldEnum)[keyof typeof TrakingCompanyScalarFieldEnum]
+
+
+export const PageScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  slug: 'slug',
+  content: 'content',
+  metaTitle: 'metaTitle',
+  metaDescription: 'metaDescription',
+  isPublished: 'isPublished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PageScalarFieldEnum = (typeof PageScalarFieldEnum)[keyof typeof PageScalarFieldEnum]
 
 
 export const GeneralSettingScalarFieldEnum = {
