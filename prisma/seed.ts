@@ -84,6 +84,19 @@ async function main() {
     });
   }
   console.log("✅ Default static pages seeded successfully.");
+
+  await prisma.generalSetting.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      siteName: "SKYNOVA",
+      companyEmail: "support@skynova.store",
+      companyPhone: "+966500000000",
+      siteCurrency: "USD",
+      usdToTryRate: 0,
+    },
+  });
+  console.log("✅ Default general settings seeded successfully.");
 }
 
 main()
