@@ -6,10 +6,17 @@ import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
 import { useAuth } from '@/context/AuthContext';
 import { useRegion } from '@/context/RegionContext';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+import Link from 'next/link';
 import AuthModal from '@/component/AuthModal';
 
-const navItems = ['الرئيسية', 'منتجاتنا', 'الفئات', 'العروض', 'من نحن'];
+const navItems = [
+  { label: 'الرئيسية', href: '/' },
+  { label: 'منتجاتنا', href: '/#products' },
+  { label: 'الفئات', href: '/#categories' },
+  { label: 'العروض', href: '/#offers' },
+  { label: 'من نحن', href: '/about' },
+];
 
 export default function Header() {
   const { totalItems, setIsOpen } = useCart();
@@ -17,6 +24,7 @@ export default function Header() {
   const { isLoggedIn } = useAuth();
   const { country, setCountry } = useRegion();
   const router = useRouter();
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -43,17 +51,16 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [regionOpen]);
 
-  const scrollToSection = (item: string) => {
-    const sectionMap: Record<string, string> = {
-      'الرئيسية': 'hero',
-      'منتجاتنا': 'products',
-      'الفئات': 'categories',
-      'العروض': 'offers',
-      'من نحن': 'footer',
-    };
-    const id = sectionMap[item];
-    if (id) {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  const handleNavClick = (href: string) => {
+    if (href.startsWith('/#')) {
+      const id = href.replace('/#', '');
+      if (pathname === '/') {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        router.push(`/?section=${id}`);
+      }
+    } else {
+      router.push(href);
     }
     setMobileMenuOpen(false);
   };
@@ -91,7 +98,7 @@ export default function Header() {
 
         {/* Logo */}
         <div className="flex items-center shrink-0">
-          <h1 className="text-3xl font-bold text-pink font-tajawal tracking-tight cursor-pointer" onClick={() => scrollToSection('الرئيسية')}>
+          <h1 className="text-3xl font-bold text-pink font-tajawal tracking-tight cursor-pointer" onClick={() => handleNavClick('/')}>
             SKYNOVA
           </h1>
         </div>
@@ -99,14 +106,20 @@ export default function Header() {
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-8">
           {navItems.map((item) => (
-            <button
-              key={item}
-              onClick={() => scrollToSection(item)}
+            <Link
+              key={item.label}
+              href={item.href}
+              onClick={(e) => {
+                if (item.href.startsWith('/#')) {
+                  e.preventDefault();
+                  handleNavClick(item.href);
+                }
+              }}
               className="text-gray-dark hover:text-pink font-medium transition-colors relative group font-tajawal"
             >
-              {item}
+              {item.label}
               <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-pink transition-all duration-300 group-hover:w-full" />
-            </button>
+            </Link>
           ))}
         </nav>
 
@@ -220,13 +233,19 @@ export default function Header() {
         <div className="lg:hidden bg-white border-t border-gray-100 animate-in slide-in-from-top">
           <nav className="flex flex-col p-4">
             {navItems.map((item) => (
-              <button
-                key={item}
-                onClick={() => scrollToSection(item)}
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={(e) => {
+                  if (item.href.startsWith('/#')) {
+                    e.preventDefault();
+                    handleNavClick(item.href);
+                  }
+                }}
                 className="py-3 px-4 text-right hover:bg-pink-50 hover:text-pink rounded-xl transition-colors font-tajawal font-medium"
               >
-                {item}
-              </button>
+                {item.label}
+              </Link>
             ))}
           </nav>
           {/* Mobile Search */}
