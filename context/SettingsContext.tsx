@@ -53,13 +53,51 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     fetch("/api/settings")
       .then((res) => res.json())
       .then((data: Partial<Settings>) => {
-        setSettings({ ...defaultSettings, ...data });
+        const merged = { ...defaultSettings, ...data };
+        setSettings(merged);
+        applyThemeColors(merged.primaryColor, merged.secondaryColor);
       })
       .catch(() => {
         setSettings(defaultSettings);
+        applyThemeColors(defaultSettings.primaryColor, defaultSettings.secondaryColor);
       })
       .finally(() => setLoading(false));
   }, []);
+
+  function applyThemeColors(primary: string, secondary: string) {
+    if (typeof document === "undefined") return;
+    const root = document.documentElement;
+    root.style.setProperty("--theme-primary", primary);
+    root.style.setProperty("--theme-secondary", secondary);
+    root.style.setProperty("--theme-primary-light", lighten(primary, 20));
+    root.style.setProperty("--theme-primary-dark", darken(primary, 15));
+    root.style.setProperty("--theme-primary-50", lighten(primary, 45));
+    root.style.setProperty("--theme-primary-100", lighten(primary, 35));
+  }
+
+  function lighten(color: string, percent: number) {
+    const num = parseInt(color.replace("#", ""), 16);
+    const amt = Math.round(2.55 * percent);
+    const R = Math.min(255, (num >> 16) + amt);
+    const G = Math.min(255, ((num >> 8) & 0x00ff) + amt);
+    const B = Math.min(255, (num & 0x0000ff) + amt);
+    return (
+      "#" +
+      (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1)
+    );
+  }
+
+  function darken(color: string, percent: number) {
+    const num = parseInt(color.replace("#", ""), 16);
+    const amt = Math.round(2.55 * percent);
+    const R = Math.max(0, (num >> 16) - amt);
+    const G = Math.max(0, ((num >> 8) & 0x00ff) - amt);
+    const B = Math.max(0, (num & 0x0000ff) - amt);
+    return (
+      "#" +
+      (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1)
+    );
+  }
 
   return (
     <SettingsContext.Provider value={{ ...settings, loading }}>

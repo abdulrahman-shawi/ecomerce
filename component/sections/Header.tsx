@@ -7,6 +7,7 @@ import { useWishlist } from '@/context/WishlistContext';
 import { useAuth } from '@/context/AuthContext';
 import { useRegion } from '@/context/RegionContext';
 import { useSettings } from '@/context/SettingsContext';
+import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import AuthModal from '@/component/AuthModal';
@@ -24,7 +25,7 @@ export default function Header() {
   const { wishlistCount } = useWishlist();
   const { isLoggedIn } = useAuth();
   const { country, setCountry } = useRegion();
-  const { siteName } = useSettings();
+  const { siteName, logo } = useSettings();
   const router = useRouter();
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -99,10 +100,14 @@ export default function Header() {
         </button>
 
         {/* Logo */}
-        <div className="flex items-center shrink-0">
-          <h1 className="text-3xl font-bold text-pink font-tajawal tracking-tight cursor-pointer" onClick={() => handleNavClick('/')}>
-            {siteName || 'SKYNOVA'}
-          </h1>
+        <div className="flex items-center shrink-0 cursor-pointer" onClick={() => handleNavClick('/')}>
+          {logo ? (
+            <Image src={logo} alt={siteName || 'SKYNOVA'} width={140} height={48} className="h-12 w-auto object-contain" />
+          ) : (
+            <h1 className="text-3xl font-bold text-pink font-tajawal tracking-tight">
+              {siteName || 'SKYNOVA'}
+            </h1>
+          )}
         </div>
 
         {/* Desktop Nav */}

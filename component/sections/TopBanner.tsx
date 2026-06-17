@@ -3,21 +3,20 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import { useSettings } from "@/context/SettingsContext";
-import { getCurrencySymbol } from "@/lib/currency";
 
 export default function TopBanner() {
   const [isVisible, setIsVisible] = useState(true);
-  const { siteCurrency, topBannerText } = useSettings();
-  const currencySymbol = getCurrencySymbol(siteCurrency);
+  const { topBannerText } = useSettings();
 
-  if (!isVisible) return null;
-
-  const defaultText = `شحن مجاني للطلبات فوق 299${currencySymbol} | توصيل سريع خلال 2-5 أيام`;
+  if (!isVisible || !topBannerText) return null;
 
   return (
-    <div className="bg-pink text-white h-10 flex items-center justify-center relative animate-in slide-in-from-top duration-500">
+    <div
+      className="text-white h-10 flex items-center justify-center relative animate-in slide-in-from-top duration-500"
+      style={{ backgroundColor: "var(--theme-primary)" }}
+    >
       <p className="text-sm font-medium font-tajawal px-8 text-center">
-        {topBannerText || defaultText}
+        {topBannerText}
       </p>
       <button
         onClick={() => setIsVisible(false)}

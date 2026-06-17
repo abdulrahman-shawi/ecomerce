@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Phone, MessageCircle, Mail } from "lucide-react";
+import Image from "next/image";
 
 interface FooterPage {
   id: string;
@@ -79,9 +80,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* About */}
           <div>
-            <h3 className="text-3xl font-bold text-pink mb-4 font-tajawal">
-              {settings.siteName}
-            </h3>
+            {settings.logo ? (
+              <Image src={settings.logo} alt={settings.siteName} width={160} height={56} className="h-14 w-auto object-contain mb-4" />
+            ) : (
+              <h3 className="text-3xl font-bold text-pink mb-4 font-tajawal">
+                {settings.siteName}
+              </h3>
+            )}
             <p className="text-gray-400 leading-relaxed text-sm font-tajawal">
               وجهتك الأولى لمنتجات العناية بالبشرة والشعر. نقدم لكِ أفضل المنتجات
               الأصلية بأسعار مميزة مع توصيل سريع لجميع أنحاء المملكة.

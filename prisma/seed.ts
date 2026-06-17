@@ -94,6 +94,9 @@ async function main() {
       companyPhone: "+966500000000",
       siteCurrency: "USD",
       usdToTryRate: 0,
+      topBannerText: "شحن مجاني للطلبات فوق 299$ | توصيل سريع خلال 2-5 أيام",
+      primaryColor: "#A4C8A0",
+      secondaryColor: "#7DAF7A",
     },
   });
   console.log("✅ Default general settings seeded successfully.");

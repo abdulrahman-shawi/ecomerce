@@ -14,11 +14,14 @@ const config: Config = {
       },
       colors: {
         pink: {
-          DEFAULT: "#A4C8A0",
-          light: "#C5E0C2",
-          dark: "#7DAF7A",
-          50: "#F0F7EF",
-          100: "#E0F0DE",
+          DEFAULT: "var(--theme-primary, #A4C8A0)",
+          light: "var(--theme-primary-light, #C5E0C2)",
+          dark: "var(--theme-primary-dark, #7DAF7A)",
+          50: "var(--theme-primary-50, #F0F7EF)",
+          100: "var(--theme-primary-100, #E0F0DE)",
+        },
+        teal: {
+          DEFAULT: "var(--theme-secondary, #0f766e)",
         },
         gray: {
           dark: "#2d2d2d",
