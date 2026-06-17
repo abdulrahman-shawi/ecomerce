@@ -50,18 +50,36 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/settings")
-      .then((res) => res.json())
-      .then((data: Partial<Settings>) => {
-        const merged = { ...defaultSettings, ...data };
-        setSettings(merged);
-        applyThemeColors(merged.primaryColor, merged.secondaryColor);
-      })
-      .catch(() => {
-        setSettings(defaultSettings);
-        applyThemeColors(defaultSettings.primaryColor, defaultSettings.secondaryColor);
-      })
-      .finally(() => setLoading(false));
+    const loadSettings = () => {
+      fetch("/api/settings", { cache: "no-store" })
+        .then((res) => res.json())
+        .then((data: Partial<Settings>) => {
+          const merged = { ...defaultSettings, ...data };
+          setSettings(merged);
+          applyThemeColors(merged.primaryColor, merged.secondaryColor);
+        })
+        .catch(() => {
+          setSettings(defaultSettings);
+          applyThemeColors(defaultSettings.primaryColor, defaultSettings.secondaryColor);
+        })
+        .finally(() => setLoading(false));
+    };
+
+    loadSettings();
+
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible") {
+        loadSettings();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibility);
+    window.addEventListener("focus", loadSettings);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibility);
+      window.removeEventListener("focus", loadSettings);
+    };
   }, []);
 
   function applyThemeColors(primary: string, secondary: string) {
