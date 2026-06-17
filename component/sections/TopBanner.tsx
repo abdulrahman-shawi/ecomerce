@@ -7,15 +7,17 @@ import { getCurrencySymbol } from "@/lib/currency";
 
 export default function TopBanner() {
   const [isVisible, setIsVisible] = useState(true);
-  const { siteCurrency } = useSettings();
+  const { siteCurrency, topBannerText } = useSettings();
   const currencySymbol = getCurrencySymbol(siteCurrency);
 
   if (!isVisible) return null;
 
+  const defaultText = `شحن مجاني للطلبات فوق 299${currencySymbol} | توصيل سريع خلال 2-5 أيام`;
+
   return (
     <div className="bg-pink text-white h-10 flex items-center justify-center relative animate-in slide-in-from-top duration-500">
-      <p className="text-sm font-medium font-tajawal">
-        شحن مجاني للطلبات فوق 299{currencySymbol} | توصيل سريع خلال 2-5 أيام
+      <p className="text-sm font-medium font-tajawal px-8 text-center">
+        {topBannerText || defaultText}
       </p>
       <button
         onClick={() => setIsVisible(false)}

@@ -3,6 +3,7 @@ import { Tajawal } from "next/font/google";
 import "./globals.css";
 import ClientProviders from "@/component/ClientProviders";
 import AffiliateTracker from "@/component/AffiliateTracker";
+import { getGeneralSettings } from "@/server/settings";
 
 const tajawal = Tajawal({
   subsets: ["arabic"],
@@ -10,58 +11,62 @@ const tajawal = Tajawal({
   variable: "--font-tajawal",
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: "SKYNOVA | متجر العناية بالبشرة والشعر",
-    template: "%s | SKYNOVA",
-  },
-  description:
-    "وجهتك الأولى لمنتجات العناية بالبشرة والشعر. نقدم لكِ أفضل المنتجات الأصلية بأسعار مميزة مع توصيل سريع.",
-  keywords: [
-    "عناية بالبشرة",
-    "عناية بالشعر",
-    "منتجات تجميل",
-    "مكياج",
-    "عناية شخصية",
-    "SKYNOVA",
-  ],
-  authors: [{ name: "SKYNOVA" }],
-  creator: "SKYNOVA",
-  publisher: "SKYNOVA",
-  metadataBase: new URL("https://skynova.store"),
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: "SKYNOVA | متجر العناية بالبشرة والشعر",
-    description:
-      "وجهتك الأولى لمنتجات العناية بالبشرة والشعر. نقدم لكِ أفضل المنتجات الأصلية بأسعار مميزة مع توصيل سريع.",
-    url: "https://skynova.store",
-    siteName: "SKYNOVA",
-    locale: "ar_AR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "SKYNOVA | متجر العناية بالبشرة والشعر",
-    description:
-      "وجهتك الأولى لمنتجات العناية بالبشرة والشعر. نقدم لكِ أفضل المنتجات الأصلية بأسعار مميزة مع توصيل سريع.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getGeneralSettings();
+  const siteName = settings.siteName || "SKYNOVA";
+  const title = `${siteName} | متجر العناية بالبشرة والشعر`;
+  const description = "وجهتك الأولى لمنتجات العناية بالبشرة والشعر. نقدم لكِ أفضل المنتجات الأصلية بأسعار مميزة مع توصيل سريع.";
+
+  return {
+    title: {
+      default: title,
+      template: `%s | ${siteName}`,
+    },
+    description,
+    keywords: [
+      "عناية بالبشرة",
+      "عناية بالشعر",
+      "منتجات تجميل",
+      "مكياج",
+      "عناية شخصية",
+      siteName,
+    ],
+    authors: [{ name: siteName }],
+    creator: siteName,
+    publisher: siteName,
+    metadataBase: new URL("https://skynova.store"),
+    alternates: {
+      canonical: "/",
+    },
+    openGraph: {
+      title,
+      description,
+      url: "https://skynova.store",
+      siteName,
+      locale: "ar_AR",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+    robots: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
-  },
-  verification: {
-    google: "YOUR_GOOGLE_VERIFICATION_CODE", // استبدلي هذا بكود التحقق من Google Search Console
-  },
-};
+    verification: {
+      google: "YOUR_GOOGLE_VERIFICATION_CODE", // استبدلي هذا بكود التحقق من Google Search Console
+    },
+  };
+}
 
 export default function RootLayout({
   children,

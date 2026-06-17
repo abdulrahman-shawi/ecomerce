@@ -6,6 +6,7 @@ import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
 import { useAuth } from '@/context/AuthContext';
 import { useRegion } from '@/context/RegionContext';
+import { useSettings } from '@/context/SettingsContext';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import AuthModal from '@/component/AuthModal';
@@ -15,7 +16,7 @@ const navItems = [
   { label: 'منتجاتنا', href: '/#products' },
   { label: 'الفئات', href: '/#categories' },
   { label: 'العروض', href: '/#offers' },
-  { label: 'من نحن', href: '/about' },
+  { label: 'من نحن', href: '/من-نحن' },
 ];
 
 export default function Header() {
@@ -23,6 +24,7 @@ export default function Header() {
   const { wishlistCount } = useWishlist();
   const { isLoggedIn } = useAuth();
   const { country, setCountry } = useRegion();
+  const { siteName } = useSettings();
   const router = useRouter();
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -99,7 +101,7 @@ export default function Header() {
         {/* Logo */}
         <div className="flex items-center shrink-0">
           <h1 className="text-3xl font-bold text-pink font-tajawal tracking-tight cursor-pointer" onClick={() => handleNavClick('/')}>
-            SKYNOVA
+            {settings.siteName || 'SKYNOVA'}
           </h1>
         </div>
 

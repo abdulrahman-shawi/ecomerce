@@ -119,6 +119,31 @@ export async function getHomePageData(country?: string) {
   };
 }
 
+export interface HeroSlideItem {
+  id: string;
+  title: string | null;
+  subtitle: string | null;
+  image: string;
+  buttonText: string | null;
+  buttonLink: string | null;
+}
+
+export async function getHeroSlides(): Promise<HeroSlideItem[]> {
+  const slides = await prisma.heroSlide.findMany({
+    where: { isActive: true },
+    orderBy: { sortOrder: "asc" },
+  });
+
+  return slides.map((slide) => ({
+    id: slide.id,
+    title: slide.title,
+    subtitle: slide.subtitle,
+    image: slide.image,
+    buttonText: slide.buttonText,
+    buttonLink: slide.buttonLink,
+  }));
+}
+
 function getBadge(product: {
   orderItems: unknown[];
   createdAt: Date;

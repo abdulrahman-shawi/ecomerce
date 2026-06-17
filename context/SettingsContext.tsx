@@ -14,6 +14,12 @@ interface Settings {
   companyPhone: string;
   siteCurrency: string;
   usdToTryRate: number;
+  facebookUrl: string;
+  instagramUrl: string;
+  logo: string;
+  primaryColor: string;
+  secondaryColor: string;
+  topBannerText: string;
 }
 
 interface SettingsContextValue extends Settings {
@@ -26,6 +32,12 @@ const defaultSettings: Settings = {
   companyPhone: "",
   siteCurrency: "USD",
   usdToTryRate: 0,
+  facebookUrl: "",
+  instagramUrl: "",
+  logo: "",
+  primaryColor: "#10b981",
+  secondaryColor: "#0f766e",
+  topBannerText: "",
 };
 
 const SettingsContext = createContext<SettingsContextValue>({

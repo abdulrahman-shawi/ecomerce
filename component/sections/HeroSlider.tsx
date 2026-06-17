@@ -2,29 +2,50 @@
 
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 
-const slides = [
+interface HeroSlideItem {
+  id: string;
+  title: string | null;
+  subtitle: string | null;
+  image: string;
+  buttonText: string | null;
+  buttonLink: string | null;
+}
+
+const defaultSlides: HeroSlideItem[] = [
   {
-    welcome: 'مجموعة العناية الفاخرة',
+    id: 'default-1',
+    subtitle: 'مجموعة العناية الفاخرة',
     title: 'اكتشفي سر الجمال الطبيعي',
-    desc: 'منتجات طبيعية 100% للعناية ببشرتك وشعرك',
     image: '/images/hero/hero1.jpg',
+    buttonText: 'تسوقي الآن',
+    buttonLink: '/#products',
   },
   {
-    welcome: 'عرض محدود',
+    id: 'default-2',
+    subtitle: 'عرض محدود',
     title: 'خصم 30% على جميع المنتجات',
-    desc: 'استخدمي كود: GLAM30',
     image: '/images/hero/hero2.jpg',
+    buttonText: 'تسوقي الآن',
+    buttonLink: '/#products',
   },
   {
-    welcome: 'منتجات جديدة',
+    id: 'default-3',
+    subtitle: 'منتجات جديدة',
     title: 'وصل حديثاً - تشكيلة الربيع',
-    desc: 'اكتشفي أحدث منتجات العناية بالبشرة',
     image: '/images/hero/hero3.jpg',
+    buttonText: 'تسوقي الآن',
+    buttonLink: '/#products',
   },
 ];
 
-export default function HeroSlider() {
+interface HeroSliderProps {
+  slides?: HeroSlideItem[];
+}
+
+export default function HeroSlider({ slides: propSlides }: HeroSliderProps) {
+  const slides = propSlides && propSlides.length > 0 ? propSlides : defaultSlides;
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
@@ -32,7 +53,7 @@ export default function HeroSlider() {
       setCurrent((prev) => (prev + 1) % slides.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [slides.length]);
 
   const goTo = (index: number) => setCurrent(index);
   const next = () => setCurrent((prev) => (prev + 1) % slides.length);
@@ -45,7 +66,7 @@ export default function HeroSlider() {
 
       {slides.map((slide, index) => (
         <div
-          key={index}
+          key={slide.id}
           className={`absolute inset-0 transition-opacity duration-700 ${
             index === current ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
@@ -60,18 +81,28 @@ export default function HeroSlider() {
                     : 'translate-x-10 opacity-0'
                 }`}
               >
-                <span className="text-pink-dark font-medium text-sm md:text-base mb-3 block font-tajawal">
-                  {slide.welcome}
-                </span>
+                {slide.subtitle && (
+                  <span className="text-pink-dark font-medium text-sm md:text-base mb-3 block font-tajawal">
+                    {slide.subtitle}
+                  </span>
+                )}
                 <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-gray-dark leading-tight mb-4 font-tajawal">
                   {slide.title}
                 </h2>
-                <p className="text-gray-500 text-base md:text-lg mb-8 font-tajawal">
-                  {slide.desc}
-                </p>
-                <button className="bg-pink text-white px-8 py-3.5 rounded-full font-bold hover:bg-pink-dark transition-all duration-300 hover:shadow-lg hover:shadow-pink/30 font-tajawal">
-                  تسوقي الآن
-                </button>
+                <div className="mt-6">
+                  {slide.buttonLink ? (
+                    <Link
+                      href={slide.buttonLink}
+                      className="inline-block bg-pink text-white px-8 py-3.5 rounded-full font-bold hover:bg-pink-dark transition-all duration-300 hover:shadow-lg hover:shadow-pink/30 font-tajawal"
+                    >
+                      {slide.buttonText || 'تسوقي الآن'}
+                    </Link>
+                  ) : (
+                    <button className="bg-pink text-white px-8 py-3.5 rounded-full font-bold hover:bg-pink-dark transition-all duration-300 hover:shadow-lg hover:shadow-pink/30 font-tajawal">
+                      {slide.buttonText || 'تسوقي الآن'}
+                    </button>
+                  )}
+                </div>
               </div>
 
               {/* Image */}
@@ -84,7 +115,7 @@ export default function HeroSlider() {
               >
                 <img
                   src={slide.image}
-                  alt={slide.title}
+                  alt={slide.title || 'شريحة'}
                   className="w-full h-[450px] object-cover rounded-3xl shadow-2xl"
                 />
               </div>

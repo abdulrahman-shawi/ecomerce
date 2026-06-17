@@ -26,6 +26,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
+  // Published content pages
+  const pages = await prisma.page.findMany({
+    where: { isPublished: true },
+    select: { slug: true, updatedAt: true },
+  });
+
+  const contentPages: MetadataRoute.Sitemap = pages.map((page) => ({
+    url: `${baseUrl}/${page.slug}`,
+    lastModified: page.updatedAt,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
   // Active categories
   const categories = await prisma.category.findMany({
     select: { slug: true, id: true, createdAt: true },
@@ -53,5 +66,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
   }));
 
-  return [...staticPages, ...categoryPages, ...productPages];
+  return [...staticPages, ...contentPages, ...categoryPages, ...productPages];
 }

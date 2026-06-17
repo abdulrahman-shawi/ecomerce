@@ -13,6 +13,12 @@ export async function GET() {
         companyPhone: "",
         siteCurrency: "USD",
         usdToTryRate: 0,
+        facebookUrl: "",
+        instagramUrl: "",
+        logo: "",
+        primaryColor: "#10b981",
+        secondaryColor: "#0f766e",
+        topBannerText: "",
       },
       { status: 500 }
     );
