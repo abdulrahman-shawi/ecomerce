@@ -405,6 +405,7 @@ export const ModelName = {
   OrderItem: 'OrderItem',
   TrakingCompany: 'TrakingCompany',
   Page: 'Page',
+  HeroSlide: 'HeroSlide',
   GeneralSetting: 'GeneralSetting',
   EmployeeSalaryAdjustment: 'EmployeeSalaryAdjustment',
   AffiliateLink: 'AffiliateLink',
@@ -424,7 +425,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "permission" | "category" | "product" | "review" | "warehouse" | "productStock" | "stockMovement" | "userTarget" | "userActivityTarget" | "targetProduct" | "productImage" | "customer" | "warranty" | "message" | "order" | "expense" | "shipping" | "orderItem" | "trakingCompany" | "page" | "generalSetting" | "employeeSalaryAdjustment" | "affiliateLink" | "commission"
+    modelProps: "user" | "permission" | "category" | "product" | "review" | "warehouse" | "productStock" | "stockMovement" | "userTarget" | "userActivityTarget" | "targetProduct" | "productImage" | "customer" | "warranty" | "message" | "order" | "expense" | "shipping" | "orderItem" | "trakingCompany" | "page" | "heroSlide" | "generalSetting" | "employeeSalaryAdjustment" | "affiliateLink" | "commission"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1982,6 +1983,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    HeroSlide: {
+      payload: Prisma.$HeroSlidePayload<ExtArgs>
+      fields: Prisma.HeroSlideFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HeroSlideFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HeroSlideFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload>
+        }
+        findFirst: {
+          args: Prisma.HeroSlideFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HeroSlideFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload>
+        }
+        findMany: {
+          args: Prisma.HeroSlideFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload>[]
+        }
+        create: {
+          args: Prisma.HeroSlideCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload>
+        }
+        createMany: {
+          args: Prisma.HeroSlideCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HeroSlideCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload>[]
+        }
+        delete: {
+          args: Prisma.HeroSlideDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload>
+        }
+        update: {
+          args: Prisma.HeroSlideUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload>
+        }
+        deleteMany: {
+          args: Prisma.HeroSlideDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HeroSlideUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HeroSlideUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload>[]
+        }
+        upsert: {
+          args: Prisma.HeroSlideUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload>
+        }
+        aggregate: {
+          args: Prisma.HeroSlideAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHeroSlide>
+        }
+        groupBy: {
+          args: Prisma.HeroSlideGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HeroSlideGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HeroSlideCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HeroSlideCountAggregateOutputType> | number
+        }
+      }
+    }
     GeneralSetting: {
       payload: Prisma.$GeneralSettingPayload<ExtArgs>
       fields: Prisma.GeneralSettingFieldRefs
@@ -2682,6 +2757,22 @@ export const PageScalarFieldEnum = {
 export type PageScalarFieldEnum = (typeof PageScalarFieldEnum)[keyof typeof PageScalarFieldEnum]
 
 
+export const HeroSlideScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  subtitle: 'subtitle',
+  image: 'image',
+  buttonText: 'buttonText',
+  buttonLink: 'buttonLink',
+  sortOrder: 'sortOrder',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HeroSlideScalarFieldEnum = (typeof HeroSlideScalarFieldEnum)[keyof typeof HeroSlideScalarFieldEnum]
+
+
 export const GeneralSettingScalarFieldEnum = {
   id: 'id',
   siteName: 'siteName',
@@ -2690,6 +2781,12 @@ export const GeneralSettingScalarFieldEnum = {
   siteCurrency: 'siteCurrency',
   usdToTryRate: 'usdToTryRate',
   createdAt: 'createdAt',
+  logo: 'logo',
+  facebookUrl: 'facebookUrl',
+  instagramUrl: 'instagramUrl',
+  topBannerText: 'topBannerText',
+  primaryColor: 'primaryColor',
+  secondaryColor: 'secondaryColor',
   updatedAt: 'updatedAt'
 } as const
 
@@ -3084,6 +3181,7 @@ export type GlobalOmitConfig = {
   orderItem?: Prisma.OrderItemOmit
   trakingCompany?: Prisma.TrakingCompanyOmit
   page?: Prisma.PageOmit
+  heroSlide?: Prisma.HeroSlideOmit
   generalSetting?: Prisma.GeneralSettingOmit
   employeeSalaryAdjustment?: Prisma.EmployeeSalaryAdjustmentOmit
   affiliateLink?: Prisma.AffiliateLinkOmit

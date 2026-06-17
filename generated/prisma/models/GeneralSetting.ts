@@ -44,6 +44,12 @@ export type GeneralSettingMinAggregateOutputType = {
   siteCurrency: string | null
   usdToTryRate: number | null
   createdAt: Date | null
+  logo: string | null
+  facebookUrl: string | null
+  instagramUrl: string | null
+  topBannerText: string | null
+  primaryColor: string | null
+  secondaryColor: string | null
   updatedAt: Date | null
 }
 
@@ -55,6 +61,12 @@ export type GeneralSettingMaxAggregateOutputType = {
   siteCurrency: string | null
   usdToTryRate: number | null
   createdAt: Date | null
+  logo: string | null
+  facebookUrl: string | null
+  instagramUrl: string | null
+  topBannerText: string | null
+  primaryColor: string | null
+  secondaryColor: string | null
   updatedAt: Date | null
 }
 
@@ -66,6 +78,12 @@ export type GeneralSettingCountAggregateOutputType = {
   siteCurrency: number
   usdToTryRate: number
   createdAt: number
+  logo: number
+  facebookUrl: number
+  instagramUrl: number
+  topBannerText: number
+  primaryColor: number
+  secondaryColor: number
   updatedAt: number
   _all: number
 }
@@ -89,6 +107,12 @@ export type GeneralSettingMinAggregateInputType = {
   siteCurrency?: true
   usdToTryRate?: true
   createdAt?: true
+  logo?: true
+  facebookUrl?: true
+  instagramUrl?: true
+  topBannerText?: true
+  primaryColor?: true
+  secondaryColor?: true
   updatedAt?: true
 }
 
@@ -100,6 +124,12 @@ export type GeneralSettingMaxAggregateInputType = {
   siteCurrency?: true
   usdToTryRate?: true
   createdAt?: true
+  logo?: true
+  facebookUrl?: true
+  instagramUrl?: true
+  topBannerText?: true
+  primaryColor?: true
+  secondaryColor?: true
   updatedAt?: true
 }
 
@@ -111,6 +141,12 @@ export type GeneralSettingCountAggregateInputType = {
   siteCurrency?: true
   usdToTryRate?: true
   createdAt?: true
+  logo?: true
+  facebookUrl?: true
+  instagramUrl?: true
+  topBannerText?: true
+  primaryColor?: true
+  secondaryColor?: true
   updatedAt?: true
   _all?: true
 }
@@ -209,6 +245,12 @@ export type GeneralSettingGroupByOutputType = {
   siteCurrency: string | null
   usdToTryRate: number | null
   createdAt: Date
+  logo: string | null
+  facebookUrl: string | null
+  instagramUrl: string | null
+  topBannerText: string | null
+  primaryColor: string | null
+  secondaryColor: string | null
   updatedAt: Date
   _count: GeneralSettingCountAggregateOutputType | null
   _avg: GeneralSettingAvgAggregateOutputType | null
@@ -243,6 +285,12 @@ export type GeneralSettingWhereInput = {
   siteCurrency?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
   usdToTryRate?: Prisma.FloatNullableFilter<"GeneralSetting"> | number | null
   createdAt?: Prisma.DateTimeFilter<"GeneralSetting"> | Date | string
+  logo?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
+  facebookUrl?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
+  instagramUrl?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
+  topBannerText?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
+  primaryColor?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
+  secondaryColor?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
   updatedAt?: Prisma.DateTimeFilter<"GeneralSetting"> | Date | string
 }
 
@@ -254,6 +302,12 @@ export type GeneralSettingOrderByWithRelationInput = {
   siteCurrency?: Prisma.SortOrderInput | Prisma.SortOrder
   usdToTryRate?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  logo?: Prisma.SortOrderInput | Prisma.SortOrder
+  facebookUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  instagramUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  topBannerText?: Prisma.SortOrderInput | Prisma.SortOrder
+  primaryColor?: Prisma.SortOrderInput | Prisma.SortOrder
+  secondaryColor?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -268,6 +322,12 @@ export type GeneralSettingWhereUniqueInput = Prisma.AtLeast<{
   siteCurrency?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
   usdToTryRate?: Prisma.FloatNullableFilter<"GeneralSetting"> | number | null
   createdAt?: Prisma.DateTimeFilter<"GeneralSetting"> | Date | string
+  logo?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
+  facebookUrl?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
+  instagramUrl?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
+  topBannerText?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
+  primaryColor?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
+  secondaryColor?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
   updatedAt?: Prisma.DateTimeFilter<"GeneralSetting"> | Date | string
 }, "id">
 
@@ -279,6 +339,12 @@ export type GeneralSettingOrderByWithAggregationInput = {
   siteCurrency?: Prisma.SortOrderInput | Prisma.SortOrder
   usdToTryRate?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  logo?: Prisma.SortOrderInput | Prisma.SortOrder
+  facebookUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  instagramUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  topBannerText?: Prisma.SortOrderInput | Prisma.SortOrder
+  primaryColor?: Prisma.SortOrderInput | Prisma.SortOrder
+  secondaryColor?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.GeneralSettingCountOrderByAggregateInput
   _avg?: Prisma.GeneralSettingAvgOrderByAggregateInput
@@ -298,6 +364,12 @@ export type GeneralSettingScalarWhereWithAggregatesInput = {
   siteCurrency?: Prisma.StringNullableWithAggregatesFilter<"GeneralSetting"> | string | null
   usdToTryRate?: Prisma.FloatNullableWithAggregatesFilter<"GeneralSetting"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"GeneralSetting"> | Date | string
+  logo?: Prisma.StringNullableWithAggregatesFilter<"GeneralSetting"> | string | null
+  facebookUrl?: Prisma.StringNullableWithAggregatesFilter<"GeneralSetting"> | string | null
+  instagramUrl?: Prisma.StringNullableWithAggregatesFilter<"GeneralSetting"> | string | null
+  topBannerText?: Prisma.StringNullableWithAggregatesFilter<"GeneralSetting"> | string | null
+  primaryColor?: Prisma.StringNullableWithAggregatesFilter<"GeneralSetting"> | string | null
+  secondaryColor?: Prisma.StringNullableWithAggregatesFilter<"GeneralSetting"> | string | null
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"GeneralSetting"> | Date | string
 }
 
@@ -308,6 +380,12 @@ export type GeneralSettingCreateInput = {
   siteCurrency?: string | null
   usdToTryRate?: number | null
   createdAt?: Date | string
+  logo?: string | null
+  facebookUrl?: string | null
+  instagramUrl?: string | null
+  topBannerText?: string | null
+  primaryColor?: string | null
+  secondaryColor?: string | null
   updatedAt?: Date | string
 }
 
@@ -319,6 +397,12 @@ export type GeneralSettingUncheckedCreateInput = {
   siteCurrency?: string | null
   usdToTryRate?: number | null
   createdAt?: Date | string
+  logo?: string | null
+  facebookUrl?: string | null
+  instagramUrl?: string | null
+  topBannerText?: string | null
+  primaryColor?: string | null
+  secondaryColor?: string | null
   updatedAt?: Date | string
 }
 
@@ -329,6 +413,12 @@ export type GeneralSettingUpdateInput = {
   siteCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usdToTryRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  topBannerText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -340,6 +430,12 @@ export type GeneralSettingUncheckedUpdateInput = {
   siteCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usdToTryRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  topBannerText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -351,6 +447,12 @@ export type GeneralSettingCreateManyInput = {
   siteCurrency?: string | null
   usdToTryRate?: number | null
   createdAt?: Date | string
+  logo?: string | null
+  facebookUrl?: string | null
+  instagramUrl?: string | null
+  topBannerText?: string | null
+  primaryColor?: string | null
+  secondaryColor?: string | null
   updatedAt?: Date | string
 }
 
@@ -361,6 +463,12 @@ export type GeneralSettingUpdateManyMutationInput = {
   siteCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usdToTryRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  topBannerText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -372,6 +480,12 @@ export type GeneralSettingUncheckedUpdateManyInput = {
   siteCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usdToTryRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  topBannerText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -383,6 +497,12 @@ export type GeneralSettingCountOrderByAggregateInput = {
   siteCurrency?: Prisma.SortOrder
   usdToTryRate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  logo?: Prisma.SortOrder
+  facebookUrl?: Prisma.SortOrder
+  instagramUrl?: Prisma.SortOrder
+  topBannerText?: Prisma.SortOrder
+  primaryColor?: Prisma.SortOrder
+  secondaryColor?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -399,6 +519,12 @@ export type GeneralSettingMaxOrderByAggregateInput = {
   siteCurrency?: Prisma.SortOrder
   usdToTryRate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  logo?: Prisma.SortOrder
+  facebookUrl?: Prisma.SortOrder
+  instagramUrl?: Prisma.SortOrder
+  topBannerText?: Prisma.SortOrder
+  primaryColor?: Prisma.SortOrder
+  secondaryColor?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -410,6 +536,12 @@ export type GeneralSettingMinOrderByAggregateInput = {
   siteCurrency?: Prisma.SortOrder
   usdToTryRate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  logo?: Prisma.SortOrder
+  facebookUrl?: Prisma.SortOrder
+  instagramUrl?: Prisma.SortOrder
+  topBannerText?: Prisma.SortOrder
+  primaryColor?: Prisma.SortOrder
+  secondaryColor?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -428,6 +560,12 @@ export type GeneralSettingSelect<ExtArgs extends runtime.Types.Extensions.Intern
   siteCurrency?: boolean
   usdToTryRate?: boolean
   createdAt?: boolean
+  logo?: boolean
+  facebookUrl?: boolean
+  instagramUrl?: boolean
+  topBannerText?: boolean
+  primaryColor?: boolean
+  secondaryColor?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["generalSetting"]>
 
@@ -439,6 +577,12 @@ export type GeneralSettingSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   siteCurrency?: boolean
   usdToTryRate?: boolean
   createdAt?: boolean
+  logo?: boolean
+  facebookUrl?: boolean
+  instagramUrl?: boolean
+  topBannerText?: boolean
+  primaryColor?: boolean
+  secondaryColor?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["generalSetting"]>
 
@@ -450,6 +594,12 @@ export type GeneralSettingSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   siteCurrency?: boolean
   usdToTryRate?: boolean
   createdAt?: boolean
+  logo?: boolean
+  facebookUrl?: boolean
+  instagramUrl?: boolean
+  topBannerText?: boolean
+  primaryColor?: boolean
+  secondaryColor?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["generalSetting"]>
 
@@ -461,10 +611,16 @@ export type GeneralSettingSelectScalar = {
   siteCurrency?: boolean
   usdToTryRate?: boolean
   createdAt?: boolean
+  logo?: boolean
+  facebookUrl?: boolean
+  instagramUrl?: boolean
+  topBannerText?: boolean
+  primaryColor?: boolean
+  secondaryColor?: boolean
   updatedAt?: boolean
 }
 
-export type GeneralSettingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "siteName" | "companyEmail" | "companyPhone" | "siteCurrency" | "usdToTryRate" | "createdAt" | "updatedAt", ExtArgs["result"]["generalSetting"]>
+export type GeneralSettingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "siteName" | "companyEmail" | "companyPhone" | "siteCurrency" | "usdToTryRate" | "createdAt" | "logo" | "facebookUrl" | "instagramUrl" | "topBannerText" | "primaryColor" | "secondaryColor" | "updatedAt", ExtArgs["result"]["generalSetting"]>
 
 export type $GeneralSettingPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "GeneralSetting"
@@ -477,6 +633,12 @@ export type $GeneralSettingPayload<ExtArgs extends runtime.Types.Extensions.Inte
     siteCurrency: string | null
     usdToTryRate: number | null
     createdAt: Date
+    logo: string | null
+    facebookUrl: string | null
+    instagramUrl: string | null
+    topBannerText: string | null
+    primaryColor: string | null
+    secondaryColor: string | null
     updatedAt: Date
   }, ExtArgs["result"]["generalSetting"]>
   composites: {}
@@ -908,6 +1070,12 @@ export interface GeneralSettingFieldRefs {
   readonly siteCurrency: Prisma.FieldRef<"GeneralSetting", 'String'>
   readonly usdToTryRate: Prisma.FieldRef<"GeneralSetting", 'Float'>
   readonly createdAt: Prisma.FieldRef<"GeneralSetting", 'DateTime'>
+  readonly logo: Prisma.FieldRef<"GeneralSetting", 'String'>
+  readonly facebookUrl: Prisma.FieldRef<"GeneralSetting", 'String'>
+  readonly instagramUrl: Prisma.FieldRef<"GeneralSetting", 'String'>
+  readonly topBannerText: Prisma.FieldRef<"GeneralSetting", 'String'>
+  readonly primaryColor: Prisma.FieldRef<"GeneralSetting", 'String'>
+  readonly secondaryColor: Prisma.FieldRef<"GeneralSetting", 'String'>
   readonly updatedAt: Prisma.FieldRef<"GeneralSetting", 'DateTime'>
 }
     

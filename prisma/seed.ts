@@ -97,6 +97,44 @@ async function main() {
     },
   });
   console.log("✅ Default general settings seeded successfully.");
+
+  const heroCount = await prisma.heroSlide.count();
+  if (heroCount === 0) {
+    await prisma.heroSlide.createMany({
+      data: [
+        {
+          title: "اكتشفي سر الجمال الطبيعي",
+          subtitle: "مجموعة العناية الفاخرة",
+          image: "/images/hero/hero1.jpg",
+          buttonText: "تسوقي الآن",
+          buttonLink: "/#products",
+          sortOrder: 1,
+          isActive: true,
+        },
+        {
+          title: "خصم 30% على جميع المنتجات",
+          subtitle: "عرض محدود",
+          image: "/images/hero/hero2.jpg",
+          buttonText: "تسوقي الآن",
+          buttonLink: "/#products",
+          sortOrder: 2,
+          isActive: true,
+        },
+        {
+          title: "وصل حديثاً - تشكيلة الربيع",
+          subtitle: "منتجات جديدة",
+          image: "/images/hero/hero3.jpg",
+          buttonText: "تسوقي الآن",
+          buttonLink: "/#products",
+          sortOrder: 3,
+          isActive: true,
+        },
+      ],
+    });
+    console.log("✅ Default hero slides seeded successfully.");
+  } else {
+    console.log("ℹ️ Hero slides already exist, skipping.");
+  }
 }
 
 main()

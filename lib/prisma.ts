@@ -14,7 +14,15 @@ const globalForPrisma = globalThis as unknown as {
   pgPool: Pool | undefined;
 };
 
-const pool = globalForPrisma.pgPool ?? new Pool({ connectionString, ssl: { rejectUnauthorized: false } });
+const pool =
+  globalForPrisma.pgPool ??
+  new Pool({
+    connectionString,
+    ssl: { rejectUnauthorized: false },
+    max: 10,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 5000,
+  });
 if (!globalForPrisma.pgPool) {
   globalForPrisma.pgPool = pool;
 }

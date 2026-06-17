@@ -101,7 +101,7 @@ export default function Header() {
         {/* Logo */}
         <div className="flex items-center shrink-0">
           <h1 className="text-3xl font-bold text-pink font-tajawal tracking-tight cursor-pointer" onClick={() => handleNavClick('/')}>
-            {settings.siteName || 'SKYNOVA'}
+            {siteName || 'SKYNOVA'}
           </h1>
         </div>
 

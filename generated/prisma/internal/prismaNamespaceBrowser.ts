@@ -72,6 +72,7 @@ export const ModelName = {
   OrderItem: 'OrderItem',
   TrakingCompany: 'TrakingCompany',
   Page: 'Page',
+  HeroSlide: 'HeroSlide',
   GeneralSetting: 'GeneralSetting',
   EmployeeSalaryAdjustment: 'EmployeeSalaryAdjustment',
   AffiliateLink: 'AffiliateLink',
@@ -459,6 +460,22 @@ export const PageScalarFieldEnum = {
 export type PageScalarFieldEnum = (typeof PageScalarFieldEnum)[keyof typeof PageScalarFieldEnum]
 
 
+export const HeroSlideScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  subtitle: 'subtitle',
+  image: 'image',
+  buttonText: 'buttonText',
+  buttonLink: 'buttonLink',
+  sortOrder: 'sortOrder',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HeroSlideScalarFieldEnum = (typeof HeroSlideScalarFieldEnum)[keyof typeof HeroSlideScalarFieldEnum]
+
+
 export const GeneralSettingScalarFieldEnum = {
   id: 'id',
   siteName: 'siteName',
@@ -467,6 +484,12 @@ export const GeneralSettingScalarFieldEnum = {
   siteCurrency: 'siteCurrency',
   usdToTryRate: 'usdToTryRate',
   createdAt: 'createdAt',
+  logo: 'logo',
+  facebookUrl: 'facebookUrl',
+  instagramUrl: 'instagramUrl',
+  topBannerText: 'topBannerText',
+  primaryColor: 'primaryColor',
+  secondaryColor: 'secondaryColor',
   updatedAt: 'updatedAt'
 } as const
 

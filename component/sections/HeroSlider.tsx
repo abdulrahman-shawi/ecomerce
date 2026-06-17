@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
-interface HeroSlideItem {
+export interface HeroSlideItem {
   id: string;
   title: string | null;
   subtitle: string | null;
@@ -13,40 +14,17 @@ interface HeroSlideItem {
   buttonLink: string | null;
 }
 
-const defaultSlides: HeroSlideItem[] = [
-  {
-    id: 'default-1',
-    subtitle: 'مجموعة العناية الفاخرة',
-    title: 'اكتشفي سر الجمال الطبيعي',
-    image: '/images/hero/hero1.jpg',
-    buttonText: 'تسوقي الآن',
-    buttonLink: '/#products',
-  },
-  {
-    id: 'default-2',
-    subtitle: 'عرض محدود',
-    title: 'خصم 30% على جميع المنتجات',
-    image: '/images/hero/hero2.jpg',
-    buttonText: 'تسوقي الآن',
-    buttonLink: '/#products',
-  },
-  {
-    id: 'default-3',
-    subtitle: 'منتجات جديدة',
-    title: 'وصل حديثاً - تشكيلة الربيع',
-    image: '/images/hero/hero3.jpg',
-    buttonText: 'تسوقي الآن',
-    buttonLink: '/#products',
-  },
-];
-
 interface HeroSliderProps {
   slides?: HeroSlideItem[];
 }
 
 export default function HeroSlider({ slides: propSlides }: HeroSliderProps) {
-  const slides = propSlides && propSlides.length > 0 ? propSlides : defaultSlides;
+  const slides = propSlides ?? [];
   const [current, setCurrent] = useState(0);
+
+  if (slides.length === 0) {
+    return null;
+  }
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -113,10 +91,13 @@ export default function HeroSlider({ slides: propSlides }: HeroSliderProps) {
                     : '-translate-x-10 opacity-0'
                 }`}
               >
-                <img
+                <Image
                   src={slide.image}
                   alt={slide.title || 'شريحة'}
+                  width={800}
+                  height={450}
                   className="w-full h-[450px] object-cover rounded-3xl shadow-2xl"
+                  priority={index === current}
                 />
               </div>
             </div>

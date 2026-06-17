@@ -123,6 +123,11 @@ export type TrakingCompany = Prisma.TrakingCompanyModel
  */
 export type Page = Prisma.PageModel
 /**
+ * Model HeroSlide
+ * 
+ */
+export type HeroSlide = Prisma.HeroSlideModel
+/**
  * Model GeneralSetting
  * 
  */

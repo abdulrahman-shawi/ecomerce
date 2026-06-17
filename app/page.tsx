@@ -13,7 +13,8 @@ import Testimonials from "@/component/sections/Testimonials";
 import Newsletter from "@/component/sections/Newsletter";
 import Footer from "@/component/sections/Footer";
 import CartDrawer from "@/component/CartDrawer";
-import { getHomePageData, getHeroSlides } from "@/server/home";
+import { getHomePageData } from "@/server/home";
+import { getHeroSlides } from "@/server/hero-slides";
 import { getRecentReviews } from "@/server/reviews";
 import { getServerCountry } from "@/lib/region";
 
