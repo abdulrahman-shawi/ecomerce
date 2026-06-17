@@ -22,12 +22,15 @@ export async function generateMetadata({ params }: LandingPageProps): Promise<Me
     };
   }
 
+  const title = product.landingPage?.heroTitle || product.name;
+  const description = product.landingPage?.heroDescription || product.description || `احصل على ${product.name} بأفضل سعر مع توصيل سريع ودفع عند الاستلام.`;
+
   return {
-    title: `${product.name} - عرض خاص | SKYNOVA`,
-    description: product.description ?? `احصل على ${product.name} بأفضل سعر مع توصيل سريع ودفع عند الاستلام.`,
+    title: `${title} - عرض خاص | SKYNOVA`,
+    description,
     openGraph: {
-      title: `${product.name} - عرض خاص | SKYNOVA`,
-      description: product.description ?? `احصل على ${product.name} بأفضل سعر مع توصيل سريع ودفع عند الاستلام.`,
+      title: `${title} - عرض خاص | SKYNOVA`,
+      description,
       images: [{ url: product.image, width: 800, height: 800, alt: product.name }],
       type: "website",
       locale: "ar_AR",
@@ -61,6 +64,8 @@ export default async function LandingPage({ params }: LandingPageProps) {
         averageRating: reviewsData.averageRating || product.averageRating,
         totalReviews: reviewsData.totalReviews || product.totalReviews,
         stock: product.stock,
+        showInAds: product.showInAds,
+        landingPage: product.landingPage,
       }}
       reviews={reviewsData.reviews}
       siteName={settings.siteName}

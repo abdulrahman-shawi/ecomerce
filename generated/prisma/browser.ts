@@ -38,6 +38,11 @@ export type Category = Prisma.CategoryModel
  */
 export type Product = Prisma.ProductModel
 /**
+ * Model ProductLandingPage
+ * 
+ */
+export type ProductLandingPage = Prisma.ProductLandingPageModel
+/**
  * Model Review
  * 
  */

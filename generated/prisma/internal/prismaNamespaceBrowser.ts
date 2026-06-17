@@ -55,6 +55,7 @@ export const ModelName = {
   Permission: 'Permission',
   Category: 'Category',
   Product: 'Product',
+  ProductLandingPage: 'ProductLandingPage',
   Review: 'Review',
   Warehouse: 'Warehouse',
   ProductStock: 'ProductStock',
@@ -185,11 +186,34 @@ export const ProductScalarFieldEnum = {
   createdAt: 'createdAt',
   seoSlug: 'seoSlug',
   isActive: 'isActive',
+  showInAds: 'showInAds',
   affiliatePrice: 'affiliatePrice',
   affiliateCommissionRate: 'affiliateCommissionRate'
 } as const
 
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const ProductLandingPageScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  heroTitle: 'heroTitle',
+  heroSubtitle: 'heroSubtitle',
+  heroDescription: 'heroDescription',
+  badgeText: 'badgeText',
+  discountPercent: 'discountPercent',
+  features: 'features',
+  showReviews: 'showReviews',
+  showGuarantee: 'showGuarantee',
+  guaranteeTitle: 'guaranteeTitle',
+  guaranteeText: 'guaranteeText',
+  ctaText: 'ctaText',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProductLandingPageScalarFieldEnum = (typeof ProductLandingPageScalarFieldEnum)[keyof typeof ProductLandingPageScalarFieldEnum]
 
 
 export const ReviewScalarFieldEnum = {
@@ -543,6 +567,14 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -557,4 +589,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

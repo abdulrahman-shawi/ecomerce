@@ -290,6 +290,11 @@ export async function getProductBySlug(
   };
 }
 
+export interface LandingFeature {
+  title: string;
+  description: string;
+}
+
 export interface LandingProduct {
   id: number;
   name: string;
@@ -303,6 +308,21 @@ export interface LandingProduct {
   stock: number;
   categoryName: string | null;
   seoSlug: string | null;
+  showInAds: boolean;
+  landingPage: {
+    heroTitle: string | null;
+    heroSubtitle: string | null;
+    heroDescription: string | null;
+    badgeText: string | null;
+    discountPercent: number | null;
+    features: LandingFeature[];
+    showReviews: boolean;
+    showGuarantee: boolean;
+    guaranteeTitle: string | null;
+    guaranteeText: string | null;
+    ctaText: string | null;
+    isActive: boolean;
+  } | null;
 }
 
 export async function getLandingProduct(
@@ -330,6 +350,7 @@ export async function getLandingProduct(
       orderBy: { price: "asc" as const },
     },
     reviews: { where: { isApproved: true } },
+    landingPage: true,
   };
 
   let product = await prisma.product.findFirst({
@@ -337,11 +358,13 @@ export async function getLandingProduct(
       ? {
           id: numericId,
           isActive: true,
+          showInAds: true,
           stocks: { some: { warehouseId: { in: warehouseIds } } },
         }
       : {
           seoSlug: decodedIdentifier,
           isActive: true,
+          showInAds: true,
           stocks: { some: { warehouseId: { in: warehouseIds } } },
         },
     include,
@@ -352,6 +375,7 @@ export async function getLandingProduct(
       where: {
         name: { equals: decodedIdentifier, mode: "insensitive" },
         isActive: true,
+        showInAds: true,
         stocks: { some: { warehouseId: { in: warehouseIds } } },
       },
       include,
@@ -372,6 +396,12 @@ export async function getLandingProduct(
   const totalStock = product.stocks.reduce((sum: number, s: any) => sum + s.quantity, 0);
   const { averageRating, totalReviews } = getRatingInfo(product.reviews);
 
+  const lp = product.landingPage;
+  const rawFeatures = (lp?.features as any) ?? [];
+  const features: LandingFeature[] = Array.isArray(rawFeatures)
+    ? rawFeatures.map((f: any) => ({ title: String(f.title ?? ""), description: String(f.description ?? "") }))
+    : [];
+
   return {
     id: product.id,
     name: product.name,
@@ -385,6 +415,23 @@ export async function getLandingProduct(
     stock: totalStock,
     categoryName: product.category?.name ?? null,
     seoSlug: product.seoSlug,
+    showInAds: product.showInAds,
+    landingPage: lp
+      ? {
+          heroTitle: lp.heroTitle,
+          heroSubtitle: lp.heroSubtitle,
+          heroDescription: lp.heroDescription,
+          badgeText: lp.badgeText,
+          discountPercent: lp.discountPercent,
+          features,
+          showReviews: lp.showReviews,
+          showGuarantee: lp.showGuarantee,
+          guaranteeTitle: lp.guaranteeTitle,
+          guaranteeText: lp.guaranteeText,
+          ctaText: lp.ctaText,
+          isActive: lp.isActive,
+        }
+      : null,
   };
 }
 

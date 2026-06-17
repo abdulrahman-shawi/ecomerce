@@ -388,6 +388,7 @@ export const ModelName = {
   Permission: 'Permission',
   Category: 'Category',
   Product: 'Product',
+  ProductLandingPage: 'ProductLandingPage',
   Review: 'Review',
   Warehouse: 'Warehouse',
   ProductStock: 'ProductStock',
@@ -425,7 +426,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "permission" | "category" | "product" | "review" | "warehouse" | "productStock" | "stockMovement" | "userTarget" | "userActivityTarget" | "targetProduct" | "productImage" | "customer" | "warranty" | "message" | "order" | "expense" | "shipping" | "orderItem" | "trakingCompany" | "page" | "heroSlide" | "generalSetting" | "employeeSalaryAdjustment" | "affiliateLink" | "commission"
+    modelProps: "user" | "permission" | "category" | "product" | "productLandingPage" | "review" | "warehouse" | "productStock" | "stockMovement" | "userTarget" | "userActivityTarget" | "targetProduct" | "productImage" | "customer" | "warranty" | "message" | "order" | "expense" | "shipping" | "orderItem" | "trakingCompany" | "page" | "heroSlide" | "generalSetting" | "employeeSalaryAdjustment" | "affiliateLink" | "commission"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -722,6 +723,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ProductCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ProductCountAggregateOutputType> | number
+        }
+      }
+    }
+    ProductLandingPage: {
+      payload: Prisma.$ProductLandingPagePayload<ExtArgs>
+      fields: Prisma.ProductLandingPageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProductLandingPageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductLandingPagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProductLandingPageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductLandingPagePayload>
+        }
+        findFirst: {
+          args: Prisma.ProductLandingPageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductLandingPagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProductLandingPageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductLandingPagePayload>
+        }
+        findMany: {
+          args: Prisma.ProductLandingPageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductLandingPagePayload>[]
+        }
+        create: {
+          args: Prisma.ProductLandingPageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductLandingPagePayload>
+        }
+        createMany: {
+          args: Prisma.ProductLandingPageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProductLandingPageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductLandingPagePayload>[]
+        }
+        delete: {
+          args: Prisma.ProductLandingPageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductLandingPagePayload>
+        }
+        update: {
+          args: Prisma.ProductLandingPageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductLandingPagePayload>
+        }
+        deleteMany: {
+          args: Prisma.ProductLandingPageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProductLandingPageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProductLandingPageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductLandingPagePayload>[]
+        }
+        upsert: {
+          args: Prisma.ProductLandingPageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductLandingPagePayload>
+        }
+        aggregate: {
+          args: Prisma.ProductLandingPageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProductLandingPage>
+        }
+        groupBy: {
+          args: Prisma.ProductLandingPageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProductLandingPageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProductLandingPageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProductLandingPageCountAggregateOutputType> | number
         }
       }
     }
@@ -2482,11 +2557,34 @@ export const ProductScalarFieldEnum = {
   createdAt: 'createdAt',
   seoSlug: 'seoSlug',
   isActive: 'isActive',
+  showInAds: 'showInAds',
   affiliatePrice: 'affiliatePrice',
   affiliateCommissionRate: 'affiliateCommissionRate'
 } as const
 
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const ProductLandingPageScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  heroTitle: 'heroTitle',
+  heroSubtitle: 'heroSubtitle',
+  heroDescription: 'heroDescription',
+  badgeText: 'badgeText',
+  discountPercent: 'discountPercent',
+  features: 'features',
+  showReviews: 'showReviews',
+  showGuarantee: 'showGuarantee',
+  guaranteeTitle: 'guaranteeTitle',
+  guaranteeText: 'guaranteeText',
+  ctaText: 'ctaText',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProductLandingPageScalarFieldEnum = (typeof ProductLandingPageScalarFieldEnum)[keyof typeof ProductLandingPageScalarFieldEnum]
 
 
 export const ReviewScalarFieldEnum = {
@@ -2840,6 +2938,14 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -2854,6 +2960,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -2936,6 +3051,20 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -3164,6 +3293,7 @@ export type GlobalOmitConfig = {
   permission?: Prisma.PermissionOmit
   category?: Prisma.CategoryOmit
   product?: Prisma.ProductOmit
+  productLandingPage?: Prisma.ProductLandingPageOmit
   review?: Prisma.ReviewOmit
   warehouse?: Prisma.WarehouseOmit
   productStock?: Prisma.ProductStockOmit

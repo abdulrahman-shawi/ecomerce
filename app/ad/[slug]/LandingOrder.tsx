@@ -29,6 +29,11 @@ interface Review {
   createdAt: Date;
 }
 
+interface LandingFeature {
+  title: string;
+  description: string;
+}
+
 interface LandingProduct {
   id: number;
   name: string;
@@ -41,6 +46,21 @@ interface LandingProduct {
   averageRating?: number;
   totalReviews?: number;
   stock: number;
+  showInAds: boolean;
+  landingPage: {
+    heroTitle: string | null;
+    heroSubtitle: string | null;
+    heroDescription: string | null;
+    badgeText: string | null;
+    discountPercent: number | null;
+    features: LandingFeature[];
+    showReviews: boolean;
+    showGuarantee: boolean;
+    guaranteeTitle: string | null;
+    guaranteeText: string | null;
+    ctaText: string | null;
+    isActive: boolean;
+  } | null;
 }
 
 interface LandingOrderProps {
@@ -49,18 +69,18 @@ interface LandingOrderProps {
   siteName: string;
 }
 
-const trustBadges = [
+const defaultTrustBadges = [
   { icon: Truck, text: "توصيل سريع لجميع المناطق" },
   { icon: CreditCard, text: "دفع عند الاستلام" },
   { icon: ShieldCheck, text: "ضمان جودة المنتج" },
   { icon: Clock, text: "استلام خلال 2-5 أيام" },
 ];
 
-const features = [
-  { title: "جودة عالية", desc: "منتج أصلي 100% مختبر ومعتمد." },
-  { title: "نتائج فورية", desc: "شاهدي الفرق من أول استخدام." },
-  { title: "تركيبة آمنة", desc: "مناسب لجميع أنواع البشرة والشعر." },
-  { title: "عبوة اقتصادية", desc: "كمية تكفي معكِ لفترة طويلة." },
+const defaultFeatures = [
+  { title: "جودة عالية", description: "منتج أصلي 100% مختبر ومعتمد." },
+  { title: "نتائج فورية", description: "شاهدي الفرق من أول استخدام." },
+  { title: "تركيبة آمنة", description: "مناسب لجميع أنواع البشرة والشعر." },
+  { title: "عبوة اقتصادية", description: "كمية تكفي معكِ لفترة طويلة." },
 ];
 
 export default function LandingOrder({ product, reviews, siteName }: LandingOrderProps) {
@@ -80,10 +100,25 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
 
   const currencySymbol = getCurrencySymbol(product.currency);
   const totalPrice = product.price * quantity;
+  const lp = product.landingPage;
+  const heroTitle = lp?.heroTitle || product.name;
+  const heroSubtitle = lp?.heroSubtitle || null;
+  const heroDescription = lp?.heroDescription || product.description;
+  const badgeText = lp?.badgeText || "عرض محدود";
+  const ctaText = lp?.ctaText || `اطلب الآن`;
+  const guaranteeTitle = lp?.guaranteeTitle || "ضمان استرجاع خلال 14 يوماً";
+  const guaranteeText =
+    lp?.guaranteeText ||
+    "إذا لم تكوني راضية عن المنتج، يمكنكِ استرجاعه واسترداد قيمته خلال 14 يوماً من تاريخ الاستلام.";
+  const features = lp?.features?.length ? lp.features : defaultFeatures;
+  const showReviews = lp?.showReviews ?? true;
+  const showGuarantee = lp?.showGuarantee ?? true;
+
   const hasDiscount = product.originalPrice && product.originalPrice > product.price;
-  const discountPercent = hasDiscount
+  const computedDiscountPercent = hasDiscount
     ? Math.round(((product.originalPrice! - product.price) / product.originalPrice!) * 100)
     : 0;
+  const discountPercent = lp?.discountPercent ?? computedDiscountPercent;
 
   useEffect(() => {
     setSelectedImage(product.image);
@@ -244,7 +279,7 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
         className="w-full bg-pink hover:bg-pink-dark text-white py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:shadow-lg hover:shadow-pink/30 font-tajawal disabled:opacity-60 flex items-center justify-center gap-2"
       >
         {loading ? <Loader2 className="animate-spin" size={20} /> : null}
-        {loading ? "جاري إرسال الطلب..." : `اطلب الآن - ${formatPrice(totalPrice, product.currency)}`}
+        {loading ? "جاري إرسال الطلب..." : `${ctaText} - ${formatPrice(totalPrice, product.currency)}`}
       </button>
 
       {!inModal && (
@@ -284,7 +319,7 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
     <div className="min-h-screen bg-white" dir="rtl">
       {/* Top Bar */}
       <div className="bg-gray-900 text-white py-2.5 text-center text-sm font-tajawal">
-        عرض محدود — شحن مجاني للطلبات فوق 299{currencySymbol}
+        {badgeText} — شحن مجاني للطلبات فوق 299{currencySymbol}
       </div>
 
       {/* Hero Section */}
@@ -294,7 +329,7 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
             {/* Product Visual */}
             <div className="order-1 lg:order-2">
               <div className="relative">
-                {hasDiscount && (
+                {discountPercent > 0 && (
                   <div className="absolute -top-4 -right-4 z-10 bg-red-500 text-white font-bold px-4 py-2 rounded-full shadow-lg font-tajawal">
                     خصم {discountPercent}%
                   </div>
@@ -335,14 +370,18 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
                 {product.averageRating ? `${product.averageRating} (${product.totalReviews} تقييم)` : "منتج مميز"}
               </div>
 
+              {heroSubtitle && (
+                <p className="text-pink-dark font-medium text-lg mb-2 font-tajawal">{heroSubtitle}</p>
+              )}
+
               <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4 font-tajawal leading-tight">
-                {product.name}
+                {heroTitle}
               </h1>
 
-              {product.description && (
+              {heroDescription && (
                 <div
                   className="text-gray-600 text-lg mb-6 leading-relaxed font-tajawal"
-                  dangerouslySetInnerHTML={{ __html: product.description }}
+                  dangerouslySetInnerHTML={{ __html: heroDescription }}
                 />
               )}
 
@@ -359,7 +398,7 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
 
               {/* Trust Badges */}
               <div className="grid grid-cols-2 gap-3 mb-8">
-                {trustBadges.map((badge, idx) => (
+                {defaultTrustBadges.map((badge, idx) => (
                   <div
                     key={idx}
                     className="flex items-center gap-2 bg-white rounded-xl px-4 py-3 shadow-sm border border-gray-100"
@@ -374,7 +413,7 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
                 onClick={() => setShowForm(true)}
                 className="hidden lg:inline-flex bg-pink hover:bg-pink-dark text-white px-10 py-4 rounded-full font-bold text-xl transition-all duration-300 hover:shadow-xl hover:shadow-pink/30 font-tajawal items-center gap-2"
               >
-                اطلب الآن بخصم {discountPercent || 20}%
+                {ctaText}
                 <ChevronLeft size={24} />
               </button>
             </div>
@@ -412,7 +451,7 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
                   <CheckCircle className="text-pink" size={24} />
                 </div>
                 <h3 className="font-bold text-gray-800 mb-2 font-tajawal">{feature.title}</h3>
-                <p className="text-sm text-gray-500 font-tajawal">{feature.desc}</p>
+                <p className="text-sm text-gray-500 font-tajawal">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -424,7 +463,7 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
         <div className="max-w-4xl mx-auto px-4">
           <div className="bg-white rounded-3xl shadow-xl p-8 md:p-10 border border-pink-100">
             <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-2 font-tajawal">
-              اطلبي {product.name} الآن
+              {ctaText} الآن
             </h2>
             <p className="text-center text-gray-500 mb-8 font-tajawal">
               املئي النموذج وسنتواصل معكِ خلال دقائق لتأكيد الطلب
@@ -435,7 +474,7 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
       </section>
 
       {/* Reviews */}
-      {reviews.length > 0 && (
+      {showReviews && reviews.length > 0 && (
         <section className="py-16 bg-white">
           <div className="max-w-6xl mx-auto px-4">
             <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-10 font-tajawal">
@@ -462,15 +501,15 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
       )}
 
       {/* Guarantee */}
-      <section className="py-16 bg-gray-900 text-white">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <ShieldCheck className="w-16 h-16 text-pink mx-auto mb-4" />
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 font-tajawal">ضمان استرجاع خلال 14 يوماً</h2>
-          <p className="text-gray-300 text-lg font-tajawal">
-            إذا لم تكوني راضية عن المنتج، يمكنكِ استرجاعه واسترداد قيمته خلال 14 يوماً من تاريخ الاستلام.
-          </p>
-        </div>
-      </section>
+      {showGuarantee && (
+        <section className="py-16 bg-gray-900 text-white">
+          <div className="max-w-4xl mx-auto px-4 text-center">
+            <ShieldCheck className="w-16 h-16 text-pink mx-auto mb-4" />
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 font-tajawal">{guaranteeTitle}</h2>
+            <p className="text-gray-300 text-lg font-tajawal">{guaranteeText}</p>
+          </div>
+        </section>
+      )}
 
       {/* Footer */}
       <footer className="bg-white border-t border-gray-100 py-8 text-center">
