@@ -290,6 +290,104 @@ export async function getProductBySlug(
   };
 }
 
+export interface LandingProduct {
+  id: number;
+  name: string;
+  description: string | null;
+  image: string;
+  images: string[];
+  price: number;
+  originalPrice: number | null;
+  averageRating?: number;
+  totalReviews?: number;
+  stock: number;
+  categoryName: string | null;
+  seoSlug: string | null;
+}
+
+export async function getLandingProduct(
+  identifier: string,
+  country?: string
+): Promise<LandingProduct | null> {
+  const activeCountry: CountryCode = country === "TR" ? "TR" : "SY";
+  const warehouseIds = await getWarehouseIdsByCountry(activeCountry);
+
+  let decodedIdentifier = identifier;
+  try {
+    decodedIdentifier = decodeURIComponent(identifier);
+  } catch {
+    // ignore
+  }
+
+  const numericId = Number(decodedIdentifier);
+  const isNumeric = !isNaN(numericId) && decodedIdentifier.trim() !== "";
+
+  const include = {
+    category: true,
+    images: true,
+    stocks: {
+      where: { warehouseId: { in: warehouseIds } },
+      orderBy: { price: "asc" as const },
+    },
+    reviews: { where: { isApproved: true } },
+  };
+
+  let product = await prisma.product.findFirst({
+    where: isNumeric
+      ? {
+          id: numericId,
+          isActive: true,
+          stocks: { some: { warehouseId: { in: warehouseIds } } },
+        }
+      : {
+          seoSlug: decodedIdentifier,
+          isActive: true,
+          stocks: { some: { warehouseId: { in: warehouseIds } } },
+        },
+    include,
+  });
+
+  if (!product && !isNumeric) {
+    product = await prisma.product.findFirst({
+      where: {
+        name: { equals: decodedIdentifier, mode: "insensitive" },
+        isActive: true,
+        stocks: { some: { warehouseId: { in: warehouseIds } } },
+      },
+      include,
+    });
+  }
+
+  if (!product) return null;
+
+  const stock = product.stocks[0];
+  const images = product.images
+    .slice()
+    .sort((a: any, b: any) => (a.type === "main" ? -1 : b.type === "main" ? 1 : 0))
+    .map((img: any) => img.url);
+
+  const mainImage = images[0] || "/images/products/placeholder.jpg";
+  const price = stock ? stock.discount : product.affiliatePrice;
+  const originalPrice = stock?.price ?? null;
+  const totalStock = product.stocks.reduce((sum: number, s: any) => sum + s.quantity, 0);
+  const { averageRating, totalReviews } = getRatingInfo(product.reviews);
+
+  return {
+    id: product.id,
+    name: product.name,
+    description: product.description,
+    image: mainImage,
+    images,
+    price: Math.round(price),
+    originalPrice: originalPrice ? Math.round(originalPrice) : null,
+    averageRating,
+    totalReviews,
+    stock: totalStock,
+    categoryName: product.category?.name ?? null,
+    seoSlug: product.seoSlug,
+  };
+}
+
 function getRatingInfo(reviews: { rating: number }[]): {
   averageRating?: number;
   totalReviews?: number;
