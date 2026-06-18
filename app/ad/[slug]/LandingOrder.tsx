@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { formatPrice, getCurrencySymbol } from "@/lib/currency";
+import { citiesByCountry } from "@/lib/cities";
 import { createLandingOrder } from "@/server/landing-order";
 import StarRating from "@/component/StarRating";
 import {
@@ -197,7 +198,7 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
           <label className="block text-sm font-medium text-gray-700 mb-1 font-tajawal">الدولة *</label>
           <select
             value={form.country}
-            onChange={(e) => setForm({ ...form, country: e.target.value as "SY" | "TR" })}
+            onChange={(e) => setForm({ ...form, country: e.target.value as "SY" | "TR", city: "" })}
             className="w-full border border-gray-200 rounded-xl px-3 py-3 focus:outline-none focus:ring-2 focus:ring-pink focus:border-transparent font-tajawal bg-gray-50"
           >
             <option value="SY">سوريا</option>
@@ -206,14 +207,19 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1 font-tajawal">المدينة *</label>
-          <input
-            type="text"
+          <select
             required
             value={form.city}
             onChange={(e) => setForm({ ...form, city: e.target.value })}
             className="w-full border border-gray-200 rounded-xl px-3 py-3 focus:outline-none focus:ring-2 focus:ring-pink focus:border-transparent font-tajawal bg-gray-50"
-            placeholder="المدينة"
-          />
+          >
+            <option value="">اختر المدينة</option>
+            {(citiesByCountry[form.country] || []).map((city) => (
+              <option key={city} value={city}>
+                {city}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 

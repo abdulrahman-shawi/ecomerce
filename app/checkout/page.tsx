@@ -7,47 +7,12 @@ import { useCart } from "@/context/CartContext";
 import { useRegion } from "@/context/RegionContext";
 import { useSettings } from "@/context/SettingsContext";
 import { formatPrice } from "@/lib/currency";
+import { countries, citiesByCountry } from "@/lib/cities";
 import { MapPin, User, ShoppingBag, ChevronLeft, CheckCircle } from "lucide-react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 
 const MapPicker = dynamic(() => import("@/component/MapPicker"), { ssr: false });
-
-const countries = [
-  { code: "SY", name: "سوريا" },
-  { code: "TR", name: "تركيا" },
-];
-
-const citiesByCountry: Record<string, string[]> = {
-  SY: [
-    "دمشق",
-    "حلب",
-    "حمص",
-    "اللاذقية",
-    "طرطوس",
-    "حماة",
-    "دير الزور",
-    "الرقة",
-    "الحسكة",
-    "السويداء",
-    "درعا",
-    "إدلب",
-    "القنيطرة",
-    "ريف دمشق",
-  ],
-  TR: [
-    "إسطنبول",
-    "أنقرة",
-    "إزمير",
-    "بورصة",
-    "أنطاليا",
-    "أضنة",
-    "غازي عنتاب",
-    "قونيا",
-    "مرسين",
-    "ديار بكر",
-  ],
-};
 
 export default function CheckoutPage() {
   const router = useRouter();
