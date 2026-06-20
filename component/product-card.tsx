@@ -22,7 +22,7 @@ export default function ProductCard({
   image,
   category = "أدوات تجميل",
 }: ProductCardProps) {
-  const { siteCurrency } = useSettings();
+  const { siteCurrency, usdToTryRate } = useSettings();
   const badgeColor =
     badge === "خصم"
       ? "bg-[#ef837b]"
@@ -81,10 +81,10 @@ export default function ProductCard({
           {name}
         </h3>
         <div className="flex items-center gap-2 pt-1">
-          <span className="text-base font-bold text-[#c96]">{formatPrice(price, siteCurrency)}</span>
+          <span className="text-base font-bold text-[#c96]">{formatPrice(price, siteCurrency, usdToTryRate)}</span>
           {oldPrice && (
             <span className="text-sm text-gray-400 line-through">
-              {formatPrice(oldPrice, siteCurrency)}
+              {formatPrice(oldPrice, siteCurrency, usdToTryRate)}
             </span>
           )}
         </div>

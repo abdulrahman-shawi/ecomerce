@@ -18,7 +18,7 @@ export default function CheckoutPage() {
   const router = useRouter();
   const { items, totalPrice, clearCart } = useCart();
   const { country: regionCountry } = useRegion();
-  const { siteCurrency } = useSettings();
+  const { siteCurrency, usdToTryRate } = useSettings();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -430,7 +430,7 @@ export default function CheckoutPage() {
                         الكمية: {item.quantity}
                       </p>
                       <p className="text-pink-dark font-bold text-sm mt-1">
-                        {formatPrice(item.price * item.quantity, siteCurrency)}
+                        {formatPrice(item.price * item.quantity, siteCurrency, usdToTryRate)}
                       </p>
                     </div>
                   </div>
@@ -447,7 +447,7 @@ export default function CheckoutPage() {
                 <div className="flex items-center justify-between">
                   <span className="text-gray-600 font-tajawal">الإجمالي</span>
                   <span className="text-2xl font-bold text-pink-dark font-tajawal">
-                    {formatPrice(totalPrice, siteCurrency)}
+                    {formatPrice(totalPrice, siteCurrency, usdToTryRate)}
                   </span>
                 </div>
               </div>

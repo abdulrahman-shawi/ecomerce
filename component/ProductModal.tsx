@@ -5,7 +5,7 @@ import { X, ShoppingCart, Heart, Plus, Minus, Check } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useSettings } from "@/context/SettingsContext";
-import { formatPrice } from "@/lib/currency";
+import { convertPrice, formatPrice } from "@/lib/currency";
 import type { Product } from "./ProductCard";
 
 interface ProductModalProps {
@@ -17,7 +17,7 @@ interface ProductModalProps {
 export default function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
   const { addToCart } = useCart();
   const { toggleWishlist, isWishlisted } = useWishlist();
-  const { siteCurrency } = useSettings();
+  const { siteCurrency, usdToTryRate } = useSettings();
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
 
@@ -34,11 +34,12 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
     const finalPrice = product.originalPrice
       ? product.originalPrice - product.price
       : product.price;
+    const cartPrice = convertPrice(finalPrice, siteCurrency, usdToTryRate);
     for (let i = 0; i < quantity; i++) {
       addToCart({
         id: product.id,
         name: product.name,
-        price: finalPrice,
+        price: cartPrice,
         image: product.image,
       });
     }
@@ -98,16 +99,16 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
             {/* Price */}
             <div className="flex items-center gap-3 mb-4">
               <span className="text-2xl font-bold text-pink-dark font-tajawal">
-                {formatPrice(finalPrice, siteCurrency)}
+                {formatPrice(finalPrice, siteCurrency, usdToTryRate)}
               </span>
               {product.originalPrice && (
                 <span className="text-lg text-gray-400 line-through font-tajawal">
-                  {formatPrice(product.originalPrice, siteCurrency)}
+                  {formatPrice(product.originalPrice, siteCurrency, usdToTryRate)}
                 </span>
               )}
               {discount > 0 && (
                 <span className="text-sm bg-green-100 text-green-700 px-2 py-1 rounded-md font-tajawal">
-                  وفّر {formatPrice(product.price, siteCurrency)}
+                  وفّر {formatPrice(product.price, siteCurrency, usdToTryRate)}
                 </span>
               )}
             </div>
@@ -146,7 +147,7 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
             <div className="flex items-center justify-between mb-6 pb-6 border-b border-gray-100">
               <span className="text-gray-600 font-tajawal">الإجمالي:</span>
               <span className="text-xl font-bold text-gray-800 font-tajawal">
-                {formatPrice(finalPrice * quantity, siteCurrency)}
+                {formatPrice(finalPrice * quantity, siteCurrency, usdToTryRate)}
               </span>
             </div>
 

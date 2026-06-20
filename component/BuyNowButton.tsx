@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation";
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useSettings } from "@/context/SettingsContext";
+import { convertPrice } from "@/lib/currency";
 
 interface BuyNowButtonProps {
   product: {
@@ -17,6 +19,7 @@ interface BuyNowButtonProps {
 export default function BuyNowButton({ product }: BuyNowButtonProps) {
   const router = useRouter();
   const { addToCart } = useCart();
+  const { siteCurrency, usdToTryRate } = useSettings();
 
   const handleBuyNow = () => {
     const finalPrice = product.originalPrice
@@ -25,7 +28,7 @@ export default function BuyNowButton({ product }: BuyNowButtonProps) {
     addToCart({
       id: product.id,
       name: product.name,
-      price: finalPrice,
+      price: convertPrice(finalPrice, siteCurrency, usdToTryRate),
       image: product.image,
     });
     router.push("/checkout");

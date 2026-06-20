@@ -62,7 +62,7 @@ const statusColors: Record<string, string> = {
 
 export default function OrdersPage() {
   const { user, isLoggedIn } = useAuth();
-  const { siteCurrency } = useSettings();
+  const { siteCurrency, usdToTryRate } = useSettings();
   const router = useRouter();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
@@ -194,7 +194,7 @@ export default function OrdersPage() {
                                 الكمية: {item.quantity}
                               </p>
                               <p className="text-pink-dark font-bold text-sm font-tajawal">
-                                {formatPrice(item.price, siteCurrency)}
+                                {formatPrice(item.price, siteCurrency, usdToTryRate)}
                               </p>
                             </div>
                           </div>
@@ -241,7 +241,7 @@ export default function OrdersPage() {
                       <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
                         <span className="text-gray-600 font-tajawal">الإجمالي:</span>
                         <span className="text-xl font-bold text-pink-dark font-tajawal">
-                          {formatPrice(order.finalAmount, siteCurrency)}
+                          {formatPrice(order.finalAmount, siteCurrency, usdToTryRate)}
                         </span>
                       </div>
                     </div>

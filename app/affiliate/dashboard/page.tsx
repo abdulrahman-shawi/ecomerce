@@ -38,7 +38,7 @@ interface DashboardData {
 
 export default function AffiliateDashboardPage() {
   const router = useRouter();
-  const { siteCurrency } = useSettings();
+  const { siteCurrency, usdToTryRate } = useSettings();
   const [user, setUser] = useState<AffiliateUser | null>(null);
   const [dashboard, setDashboard] = useState<DashboardData | null>(null);
   const [commissions, setCommissions] = useState<any[]>([]);
@@ -160,13 +160,13 @@ export default function AffiliateDashboardPage() {
             <StatCard
               icon={<DollarSign size={20} />}
               label="إجمالي العمولات"
-              value={formatPrice(dashboard.totalCommissions, siteCurrency)}
+              value={formatPrice(dashboard.totalCommissions, siteCurrency, usdToTryRate)}
               color="pink"
             />
             <StatCard
               icon={<Clock size={20} />}
               label="معلقة"
-              value={formatPrice(dashboard.pendingCommissions, siteCurrency)}
+              value={formatPrice(dashboard.pendingCommissions, siteCurrency, usdToTryRate)}
               color="orange"
             />
           </div>
@@ -258,7 +258,7 @@ export default function AffiliateDashboardPage() {
                     <tr key={c.id} className="border-b border-gray-50 hover:bg-gray-50">
                       <td className="py-3 px-2">{c.order?.orderNumber ?? "—"}</td>
                       <td className="py-3 px-2">{c.affiliateLink?.product?.name ?? "—"}</td>
-                      <td className="py-3 px-2 font-bold">{formatPrice(c.amount, siteCurrency)}</td>
+                      <td className="py-3 px-2 font-bold">{formatPrice(c.amount, siteCurrency, usdToTryRate)}</td>
                       <td className="py-3 px-2">
                         <StatusBadge status={c.status} />
                       </td>

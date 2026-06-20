@@ -2,6 +2,8 @@
 
 import { useWishlist } from "@/context/WishlistContext";
 import { useCart } from "@/context/CartContext";
+import { useSettings } from "@/context/SettingsContext";
+import { convertPrice } from "@/lib/currency";
 import Header from "@/component/sections/Header";
 import Footer from "@/component/sections/Footer";
 import ProductCard from "@/component/ProductCard";
@@ -11,6 +13,7 @@ import Link from "next/link";
 export default function WishlistPage() {
   const { wishlistItems, wishlistCount } = useWishlist();
   const { addToCart } = useCart();
+  const { siteCurrency, usdToTryRate } = useSettings();
 
   const handleAddAllToCart = () => {
     wishlistItems.forEach((item) => {
@@ -20,7 +23,7 @@ export default function WishlistPage() {
       addToCart({
         id: item.id,
         name: item.name,
-        price: finalPrice,
+        price: convertPrice(finalPrice, siteCurrency, usdToTryRate),
         image: item.image,
       });
     });
