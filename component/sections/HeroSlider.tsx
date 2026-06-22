@@ -85,7 +85,7 @@ export default function HeroSlider({ slides: propSlides }: HeroSliderProps) {
 
               {/* Image */}
               <div
-                className={`hidden md:block transition-all duration-700 delay-200 ${
+                className={`block transition-all duration-700 delay-200 ${
                   index === current
                     ? 'translate-x-0 opacity-100'
                     : '-translate-x-10 opacity-0'
