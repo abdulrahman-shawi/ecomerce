@@ -469,9 +469,6 @@ export async function getOfferProducts(
   offerId: string,
   country?: string,
 ): Promise<OfferProductsPageData | null> {
-  const activeCountry: CountryCode = country === "TR" ? "TR" : "SY";
-  const warehouseIds = await getWarehouseIdsByCountry(activeCountry);
-
   const offer = await prisma.offer.findUnique({
     where: { id: offerId },
     include: {
@@ -496,12 +493,6 @@ export async function getOfferProducts(
     ? await prisma.product.findMany({
         where: {
           isActive: true,
-          stocks: {
-            some: {
-              warehouseId: { in: warehouseIds },
-              quantity: { gt: 0 },
-            },
-          },
           id: { in: productIds },
         },
         orderBy: { createdAt: "desc" },
@@ -509,9 +500,6 @@ export async function getOfferProducts(
           category: true,
           images: true,
           stocks: {
-            where: {
-              warehouseId: { in: warehouseIds },
-            },
             orderBy: { price: "asc" },
           },
           orderItems: true,
