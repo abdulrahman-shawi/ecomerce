@@ -467,16 +467,25 @@ export async function getLimitedOffer(country?: string): Promise<HomeLimitedOffe
 
 export async function getOfferProducts(
   offerId: string,
-  country?: string,
 ): Promise<OfferProductsPageData | null> {
   const offer = await prisma.offer.findUnique({
     where: { id: offerId },
     include: {
       discounts: {
         where: { isActive: true },
-        select: {
-          productId: true,
-          categoryId: true,
+        orderBy: { createdAt: "desc" },
+        include: {
+          product: {
+            include: {
+              category: true,
+              images: true,
+              stocks: {
+                orderBy: { price: "asc" },
+              },
+              orderItems: true,
+              reviews: { where: { isApproved: true } },
+            },
+          },
         },
       },
     },
@@ -484,29 +493,9 @@ export async function getOfferProducts(
 
   if (!offer) return null;
 
-  const productIds = Array.from(
-    new Set(offer.discounts.map((discount) => discount.productId).filter((value): value is number => value != null))
-  );
-
-  const hasTargets = productIds.length > 0;
-  const products = hasTargets
-    ? await prisma.product.findMany({
-        where: {
-          isActive: true,
-          id: { in: productIds },
-        },
-        orderBy: { createdAt: "desc" },
-        include: {
-          category: true,
-          images: true,
-          stocks: {
-            orderBy: { price: "asc" },
-          },
-          orderItems: true,
-          reviews: { where: { isApproved: true } },
-        },
-      })
-    : [];
+  const products = offer.discounts
+    .map((discount) => discount.product)
+    .filter((product): product is NonNullable<typeof product> => product != null);
 
   return {
     id: offer.id,
