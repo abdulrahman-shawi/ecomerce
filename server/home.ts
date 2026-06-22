@@ -490,11 +490,8 @@ export async function getOfferProducts(
   const productIds = Array.from(
     new Set(offer.discounts.map((discount) => discount.productId).filter((value): value is number => value != null))
   );
-  const categoryIds = Array.from(
-    new Set(offer.discounts.map((discount) => discount.categoryId).filter((value): value is number => value != null))
-  );
 
-  const hasTargets = productIds.length > 0 || categoryIds.length > 0;
+  const hasTargets = productIds.length > 0;
   const products = hasTargets
     ? await prisma.product.findMany({
         where: {
@@ -505,10 +502,7 @@ export async function getOfferProducts(
               quantity: { gt: 0 },
             },
           },
-          OR: [
-            ...(productIds.length > 0 ? [{ id: { in: productIds } }] : []),
-            ...(categoryIds.length > 0 ? [{ categoryId: { in: categoryIds } }] : []),
-          ],
+          id: { in: productIds },
         },
         orderBy: { createdAt: "desc" },
         include: {
