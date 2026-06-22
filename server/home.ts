@@ -47,6 +47,15 @@ export interface HomeLimitedOffer {
   countdownEndsAt: string | null;
 }
 
+export interface OfferProductsPageData {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  badge: string;
+  products: HomeProduct[];
+}
+
 function resolveOfferHref(rawHref: string | null | undefined, fallbackTerm: string) {
   const value = rawHref?.trim();
 
@@ -61,35 +70,53 @@ function resolveOfferHref(rawHref: string | null | undefined, fallbackTerm: stri
   return `/search?q=${encodeURIComponent(value)}`;
 }
 
-function resolveOfferTargetHref(
-  rawHref: string | null | undefined,
-  fallbackTerm: string,
-  discount?: {
-    product?: {
-      id: number;
-      seoSlug: string | null;
-      showInAds: boolean;
-      stocks: { id: number }[];
-    } | null;
-    category?: { id: number; slug: string | null; name: string } | null;
-  } | null,
-) {
-  const value = rawHref?.trim();
+function mapProductsToHomeProducts(
+  products: Array<{
+    id: number;
+    name: string;
+    description: string | null;
+    affiliatePrice: number;
+    seoSlug: string | null;
+    createdAt: Date;
+    category: { name: string } | null;
+    images: { url: string; type: string }[];
+    stocks: { quantity: number; price: number; discount: number }[];
+    orderItems: unknown[];
+    reviews: { rating: number }[];
+  }>
+): HomeProduct[] {
+  return products.map((p) => {
+    const stock = p.stocks[0];
+    const image =
+      p.images.find((img) => img.type === "main")?.url ||
+      p.images[0]?.url ||
+      "/images/products/placeholder.jpg";
 
-  if (value && (value.startsWith("/") || value.startsWith("http://") || value.startsWith("https://"))) {
-    return value;
-  }
+    const price = stock ? stock.discount : p.affiliatePrice;
+    const originalPrice = stock?.price ?? null;
+    const totalStock = p.stocks.reduce((sum, s) => sum + s.quantity, 0);
+    const approvedReviews = p.reviews ?? [];
+    const totalReviews = approvedReviews.length;
+    const averageRating =
+      totalReviews > 0
+        ? approvedReviews.reduce((sum, r) => sum + r.rating, 0) / totalReviews
+        : 0;
 
-  if (discount?.product && discount.product.stocks.length > 0) {
-    const identifier = discount.product.seoSlug ?? String(discount.product.id);
-    return discount.product.showInAds ? `/ad/${identifier}` : `/product/${identifier}`;
-  }
-
-  if (discount?.category) {
-    return `/category/${discount.category.slug ?? discount.category.id}`;
-  }
-
-  return resolveOfferHref(rawHref, fallbackTerm);
+    return {
+      id: p.id,
+      name: p.name,
+      description: p.description,
+      image,
+      price: Math.round(price),
+      originalPrice: originalPrice ? Math.round(originalPrice) : null,
+      badge: getBadge(p),
+      categoryName: p.category?.name ?? null,
+      seoSlug: p.seoSlug,
+      averageRating: totalReviews > 0 ? Math.round(averageRating * 10) / 10 : undefined,
+      totalReviews: totalReviews > 0 ? totalReviews : undefined,
+      stock: totalStock,
+    };
+  });
 }
 
 export async function getHomePageData(country?: string) {
@@ -303,11 +330,7 @@ export async function getDualOffers(country?: string): Promise<HomeDualOffer[]> 
         title: offer.title || "عرض مميز",
         subtitle,
         cta: offer.ctaText || "اكتشفي المزيد",
-        href: resolveOfferTargetHref(
-          offer.ctaLink,
-          offer.title || offer.subtitle || "عرض",
-          discount,
-        ),
+        href: `/offers/${offer.id}`,
       };
     });
   } catch (error) {
@@ -433,17 +456,85 @@ export async function getLimitedOffer(country?: string): Promise<HomeLimitedOffe
         "لا تفوتي الفرصة! احصلي على منتجاتك المفضلة بأسعار خيالية",
       image: offer.image || "/images/products/gift-set.jpg",
       cta: offer.ctaText || "تسوقي الآن",
-      href: resolveOfferTargetHref(
-        offer.ctaLink,
-        offer.title || offer.subtitle || "عرض محدود",
-        discount,
-      ),
+      href: `/offers/${offer.id}`,
       countdownEndsAt: offer.countdownEndsAt ? offer.countdownEndsAt.toISOString() : null,
     };
   } catch (error) {
     console.error("getLimitedOffer failed:", error);
     return null;
   }
+}
+
+export async function getOfferProducts(
+  offerId: string,
+  country?: string,
+): Promise<OfferProductsPageData | null> {
+  const activeCountry: CountryCode = country === "TR" ? "TR" : "SY";
+  const warehouseIds = await getWarehouseIdsByCountry(activeCountry);
+
+  const offer = await prisma.offer.findUnique({
+    where: { id: offerId },
+    include: {
+      discounts: {
+        where: { isActive: true },
+        select: {
+          productId: true,
+          categoryId: true,
+        },
+      },
+    },
+  });
+
+  if (!offer) return null;
+
+  const productIds = Array.from(
+    new Set(offer.discounts.map((discount) => discount.productId).filter((value): value is number => value != null))
+  );
+  const categoryIds = Array.from(
+    new Set(offer.discounts.map((discount) => discount.categoryId).filter((value): value is number => value != null))
+  );
+
+  const hasTargets = productIds.length > 0 || categoryIds.length > 0;
+  const products = hasTargets
+    ? await prisma.product.findMany({
+        where: {
+          isActive: true,
+          stocks: {
+            some: {
+              warehouseId: { in: warehouseIds },
+              quantity: { gt: 0 },
+            },
+          },
+          OR: [
+            ...(productIds.length > 0 ? [{ id: { in: productIds } }] : []),
+            ...(categoryIds.length > 0 ? [{ categoryId: { in: categoryIds } }] : []),
+          ],
+        },
+        orderBy: { createdAt: "desc" },
+        include: {
+          category: true,
+          images: true,
+          stocks: {
+            where: {
+              warehouseId: { in: warehouseIds },
+            },
+            orderBy: { price: "asc" },
+          },
+          orderItems: true,
+          reviews: { where: { isApproved: true } },
+        },
+      })
+    : [];
+
+  return {
+    id: offer.id,
+    title: offer.title || "منتجات العرض",
+    description:
+      offer.description || offer.subtitle || "تصفحي كل المنتجات المرتبطة بهذا العرض.",
+    image: offer.image || "/images/hero/hero1.jpg",
+    badge: offer.badgeText || "عرض خاص",
+    products: mapProductsToHomeProducts(products),
+  };
 }
 
 function getBadge(product: {
