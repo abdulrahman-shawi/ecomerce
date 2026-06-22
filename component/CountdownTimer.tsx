@@ -9,7 +9,28 @@ interface TimeLeft {
   seconds: number;
 }
 
-export default function CountdownTimer() {
+interface CountdownTimerProps {
+  targetDate?: string | null;
+}
+
+function getDiff(targetDate: string): TimeLeft {
+  const now = new Date().getTime();
+  const target = new Date(targetDate).getTime();
+  const distance = target - now;
+
+  if (Number.isNaN(target) || distance <= 0) {
+    return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+  }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  return { days, hours, minutes, seconds };
+}
+
+export default function CountdownTimer({ targetDate }: CountdownTimerProps) {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
     days: 2,
     hours: 14,
@@ -18,7 +39,16 @@ export default function CountdownTimer() {
   });
 
   useEffect(() => {
+    if (targetDate) {
+      setTimeLeft(getDiff(targetDate));
+    }
+
     const timer = setInterval(() => {
+      if (targetDate) {
+        setTimeLeft(getDiff(targetDate));
+        return;
+      }
+
       setTimeLeft((prev) => {
         let { days, hours, minutes, seconds } = prev;
         seconds--;
@@ -45,7 +75,7 @@ export default function CountdownTimer() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [targetDate]);
 
   const formatNum = (n: number) => n.toString().padStart(2, '0');
 

@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 interface DualOfferItem {
-  id: number;
+  id: string;
   image: string;
   alt: string;
   badge: string;
@@ -17,7 +17,7 @@ interface DualOffersProps {
 
 const fallbackOffers: DualOfferItem[] = [
   {
-    id: 1,
+    id: "fallback-1",
     image: "/images/hero/hero1.jpg",
     alt: "مجموعة العناية بالبشرة",
     badge: "عرض خاص",
@@ -27,7 +27,7 @@ const fallbackOffers: DualOfferItem[] = [
     href: "/search",
   },
   {
-    id: 2,
+    id: "fallback-2",
     image: "/images/hero/hero3.jpg",
     alt: "أدوات التجميل الاحترافية",
     badge: "تشكيلة جديدة",

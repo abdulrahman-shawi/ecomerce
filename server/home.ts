@@ -26,7 +26,7 @@ export interface HomeCategory {
 }
 
 export interface HomeDualOffer {
-  id: number;
+  id: string;
   image: string;
   alt: string;
   badge: string;
@@ -34,6 +34,17 @@ export interface HomeDualOffer {
   subtitle: string;
   cta: string;
   href: string;
+}
+
+export interface HomeLimitedOffer {
+  id: string;
+  badge: string;
+  title: string;
+  description: string;
+  image: string;
+  cta: string;
+  href: string;
+  countdownEndsAt: string | null;
 }
 
 export async function getHomePageData(country?: string) {
@@ -130,63 +141,120 @@ export async function getHomePageData(country?: string) {
   };
 }
 
-export async function getDualOffers(country?: string): Promise<HomeDualOffer[]> {
-  const activeCountry: CountryCode = country === "TR" ? "TR" : "SY";
-  const warehouseIds = await getWarehouseIdsByCountry(activeCountry);
-
-  const products = await prisma.product.findMany({
+export async function getDualOffers(): Promise<HomeDualOffer[]> {
+  const now = new Date();
+  const offers = await prisma.offer.findMany({
     where: {
       isActive: true,
-      showInAds: true,
-      landingPage: {
-        is: {
-          isActive: true,
+      AND: [
+        {
+          OR: [{ startsAt: null }, { startsAt: { lte: now } }],
         },
-      },
-      stocks: {
-        some: {
-          warehouseId: { in: warehouseIds },
+        {
+          OR: [{ endsAt: null }, { endsAt: { gte: now } }],
         },
-      },
+      ],
     },
+    orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
     take: 2,
-    orderBy: { createdAt: "desc" },
     include: {
-      images: true,
-      stocks: {
+      discounts: {
         where: {
-          warehouseId: { in: warehouseIds },
+          isActive: true,
+          AND: [
+            {
+              OR: [{ startsAt: null }, { startsAt: { lte: now } }],
+            },
+            {
+              OR: [{ endsAt: null }, { endsAt: { gte: now } }],
+            },
+          ],
         },
-        orderBy: { price: "asc" },
+        orderBy: { createdAt: "desc" },
       },
-      landingPage: true,
     },
   });
 
-  return products.map((product) => {
-    const stock = product.stocks[0];
-    const image =
-      product.images.find((img) => img.type === "main")?.url ||
-      product.images[0]?.url ||
-      "/images/products/placeholder.jpg";
-
-    const discountPercent =
-      product.landingPage?.discountPercent ??
-      (stock?.price && stock.price > 0
-        ? Math.round(((stock.price - stock.discount) / stock.price) * 100)
-        : null);
+  return offers.map((offer) => {
+    const discount = offer.discounts[0];
+    let subtitle = offer.subtitle || "اكتشفي الآن";
+    if (discount?.discountValue) {
+      subtitle =
+        discount.discountType === "PERCENTAGE"
+          ? `خصم ${Math.round(discount.discountValue)}%`
+          : `خصم ${Math.round(discount.discountValue)}`;
+    }
 
     return {
-      id: product.id,
-      image,
-      alt: product.name,
-      badge: product.landingPage?.badgeText || "عرض خاص",
-      title: product.landingPage?.heroTitle || product.name,
-      subtitle: discountPercent && discountPercent > 0 ? `خصم ${discountPercent}%` : "اكتشفي الآن",
-      cta: product.landingPage?.ctaText || "اكتشفي المزيد",
-      href: `/ad/${product.seoSlug ?? product.id}`,
+      id: offer.id,
+      image: offer.image || "/images/hero/hero1.jpg",
+      alt: offer.title || "عرض مميز",
+      badge: offer.badgeText || "عرض خاص",
+      title: offer.title || "عرض مميز",
+      subtitle,
+      cta: offer.ctaText || "اكتشفي المزيد",
+      href: offer.ctaLink || "/search",
     };
   });
+}
+
+export async function getLimitedOffer(): Promise<HomeLimitedOffer | null> {
+  const now = new Date();
+  const offer = await prisma.offer.findFirst({
+    where: {
+      isActive: true,
+      countdownEndsAt: { not: null },
+      AND: [
+        {
+          OR: [{ startsAt: null }, { startsAt: { lte: now } }],
+        },
+        {
+          OR: [{ endsAt: null }, { endsAt: { gte: now } }],
+        },
+      ],
+    },
+    orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+    include: {
+      discounts: {
+        where: {
+          isActive: true,
+          AND: [
+            {
+              OR: [{ startsAt: null }, { startsAt: { lte: now } }],
+            },
+            {
+              OR: [{ endsAt: null }, { endsAt: { gte: now } }],
+            },
+          ],
+        },
+        orderBy: { createdAt: "desc" },
+      },
+    },
+  });
+
+  if (!offer) return null;
+
+  const discount = offer.discounts[0];
+  const discountText =
+    discount?.discountValue != null
+      ? discount.discountType === "PERCENTAGE"
+        ? `خصم يصل إلى ${Math.round(discount.discountValue)}%`
+        : `خصم يصل إلى ${Math.round(discount.discountValue)}`
+      : null;
+
+  return {
+    id: offer.id,
+    badge: offer.badgeText || "عرض محدود",
+    title: offer.title || discountText || "خصم مميز لفترة محدودة",
+    description:
+      offer.description ||
+      offer.subtitle ||
+      "لا تفوتي الفرصة! احصلي على منتجاتك المفضلة بأسعار خيالية",
+    image: offer.image || "/images/products/gift-set.jpg",
+    cta: offer.ctaText || "تسوقي الآن",
+    href: offer.ctaLink || "/search",
+    countdownEndsAt: offer.countdownEndsAt ? offer.countdownEndsAt.toISOString() : null,
+  };
 }
 
 function getBadge(product: {

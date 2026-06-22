@@ -1,8 +1,37 @@
 "use client";
 
+import Link from "next/link";
 import CountdownTimer from '@/component/CountdownTimer';
 
-export default function LimitedOffer() {
+interface LimitedOfferData {
+  id: string;
+  badge: string;
+  title: string;
+  description: string;
+  image: string;
+  cta: string;
+  href: string;
+  countdownEndsAt: string | null;
+}
+
+interface LimitedOfferProps {
+  offer?: LimitedOfferData | null;
+}
+
+const fallbackOffer: LimitedOfferData = {
+  id: "limited-fallback",
+  badge: "عرض محدود",
+  title: "خصم يصل إلى 50% على المجموعات",
+  description: "لا تفوتي الفرصة! احصلي على منتجاتك المفضلة بأسعار خيالية",
+  image: "/images/products/gift-set.jpg",
+  cta: "تسوقي الآن",
+  href: "/search",
+  countdownEndsAt: null,
+};
+
+export default function LimitedOffer({ offer }: LimitedOfferProps) {
+  const activeOffer = offer ?? fallbackOffer;
+
   return (
     <section className="py-20 bg-gradient-to-br from-pink to-pink-dark relative overflow-hidden">
       {/* Decorative circles */}
@@ -15,25 +44,28 @@ export default function LimitedOffer() {
           {/* Text */}
           <div className="text-center md:text-right text-white">
             <span className="bg-white/20 px-4 py-1.5 rounded-full text-sm font-medium mb-4 inline-block font-tajawal">
-              عرض محدود
+              {activeOffer.badge}
             </span>
             <h2 className="text-3xl md:text-5xl font-extrabold mb-4 font-tajawal leading-tight">
-              خصم يصل إلى<br />50% على المجموعات
+              {activeOffer.title}
             </h2>
             <p className="text-white/80 text-lg mb-8 font-tajawal">
-              لا تفوتي الفرصة! احصلي على منتجاتك المفضلة بأسعار خيالية
+              {activeOffer.description}
             </p>
-            <CountdownTimer />
-            <button className="mt-8 bg-white text-pink-dark px-8 py-3.5 rounded-full font-bold hover:bg-gray-100 transition-colors font-tajawal shadow-lg">
-              تسوقي الآن
-            </button>
+            <CountdownTimer targetDate={activeOffer.countdownEndsAt} />
+            <Link
+              href={activeOffer.href}
+              className="inline-block mt-8 bg-white text-pink-dark px-8 py-3.5 rounded-full font-bold hover:bg-gray-100 transition-colors font-tajawal shadow-lg"
+            >
+              {activeOffer.cta}
+            </Link>
           </div>
 
           {/* Image */}
           <div className="hidden md:flex justify-center">
             <img
-              src="/images/products/gift-set.jpg"
-              alt="عرض محدود"
+              src={activeOffer.image}
+              alt={activeOffer.badge}
               className="w-full max-w-md rounded-3xl shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500"
             />
           </div>
