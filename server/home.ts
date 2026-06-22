@@ -47,6 +47,20 @@ export interface HomeLimitedOffer {
   countdownEndsAt: string | null;
 }
 
+function resolveOfferHref(rawHref: string | null | undefined, fallbackTerm: string) {
+  const value = rawHref?.trim();
+
+  if (!value) {
+    return `/search?q=${encodeURIComponent(fallbackTerm)}`;
+  }
+
+  if (value.startsWith("/") || value.startsWith("http://") || value.startsWith("https://")) {
+    return value;
+  }
+
+  return `/search?q=${encodeURIComponent(value)}`;
+}
+
 export async function getHomePageData(country?: string) {
   const activeCountry: CountryCode = country === "TR" ? "TR" : "SY";
   const warehouseIds = await getWarehouseIdsByCountry(activeCountry);
@@ -210,7 +224,7 @@ export async function getDualOffers(): Promise<HomeDualOffer[]> {
         title: offer.title || "عرض مميز",
         subtitle,
         cta: offer.ctaText || "اكتشفي المزيد",
-        href: offer.ctaLink || "/search",
+        href: resolveOfferHref(offer.ctaLink, offer.title || offer.subtitle || "عرض"),
       };
     });
   } catch (error) {
@@ -288,7 +302,7 @@ export async function getLimitedOffer(): Promise<HomeLimitedOffer | null> {
         "لا تفوتي الفرصة! احصلي على منتجاتك المفضلة بأسعار خيالية",
       image: offer.image || "/images/products/gift-set.jpg",
       cta: offer.ctaText || "تسوقي الآن",
-      href: offer.ctaLink || "/search",
+      href: resolveOfferHref(offer.ctaLink, offer.title || offer.subtitle || "عرض محدود"),
       countdownEndsAt: offer.countdownEndsAt ? offer.countdownEndsAt.toISOString() : null,
     };
   } catch (error) {
