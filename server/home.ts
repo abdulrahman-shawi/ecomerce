@@ -61,6 +61,32 @@ function resolveOfferHref(rawHref: string | null | undefined, fallbackTerm: stri
   return `/search?q=${encodeURIComponent(value)}`;
 }
 
+function resolveOfferTargetHref(
+  rawHref: string | null | undefined,
+  fallbackTerm: string,
+  discount?: {
+    product?: { id: number; seoSlug: string | null; showInAds: boolean } | null;
+    category?: { id: number; slug: string | null; name: string } | null;
+  } | null,
+) {
+  const value = rawHref?.trim();
+
+  if (value && (value.startsWith("/") || value.startsWith("http://") || value.startsWith("https://"))) {
+    return value;
+  }
+
+  if (discount?.product) {
+    const identifier = discount.product.seoSlug ?? String(discount.product.id);
+    return discount.product.showInAds ? `/ad/${identifier}` : `/product/${identifier}`;
+  }
+
+  if (discount?.category) {
+    return `/category/${discount.category.slug ?? discount.category.id}`;
+  }
+
+  return resolveOfferHref(rawHref, fallbackTerm);
+}
+
 export async function getHomePageData(country?: string) {
   const activeCountry: CountryCode = country === "TR" ? "TR" : "SY";
   const warehouseIds = await getWarehouseIdsByCountry(activeCountry);
@@ -187,6 +213,22 @@ export async function getDualOffers(): Promise<HomeDualOffer[]> {
             ],
           },
           orderBy: { createdAt: "desc" },
+          include: {
+            product: {
+              select: {
+                id: true,
+                seoSlug: true,
+                showInAds: true,
+              },
+            },
+            category: {
+              select: {
+                id: true,
+                slug: true,
+                name: true,
+              },
+            },
+          },
         },
       },
     });
@@ -201,6 +243,22 @@ export async function getDualOffers(): Promise<HomeDualOffer[]> {
           discounts: {
             where: { isActive: true },
             orderBy: { createdAt: "desc" },
+            include: {
+              product: {
+                select: {
+                  id: true,
+                  seoSlug: true,
+                  showInAds: true,
+                },
+              },
+              category: {
+                select: {
+                  id: true,
+                  slug: true,
+                  name: true,
+                },
+              },
+            },
           },
         },
       });
@@ -224,7 +282,11 @@ export async function getDualOffers(): Promise<HomeDualOffer[]> {
         title: offer.title || "عرض مميز",
         subtitle,
         cta: offer.ctaText || "اكتشفي المزيد",
-        href: resolveOfferHref(offer.ctaLink, offer.title || offer.subtitle || "عرض"),
+        href: resolveOfferTargetHref(
+          offer.ctaLink,
+          offer.title || offer.subtitle || "عرض",
+          discount,
+        ),
       };
     });
   } catch (error) {
@@ -264,6 +326,22 @@ export async function getLimitedOffer(): Promise<HomeLimitedOffer | null> {
             ],
           },
           orderBy: { createdAt: "desc" },
+          include: {
+            product: {
+              select: {
+                id: true,
+                seoSlug: true,
+                showInAds: true,
+              },
+            },
+            category: {
+              select: {
+                id: true,
+                slug: true,
+                name: true,
+              },
+            },
+          },
         },
       },
     });
@@ -277,6 +355,22 @@ export async function getLimitedOffer(): Promise<HomeLimitedOffer | null> {
           discounts: {
             where: { isActive: true },
             orderBy: { createdAt: "desc" },
+            include: {
+              product: {
+                select: {
+                  id: true,
+                  seoSlug: true,
+                  showInAds: true,
+                },
+              },
+              category: {
+                select: {
+                  id: true,
+                  slug: true,
+                  name: true,
+                },
+              },
+            },
           },
         },
       });
@@ -302,7 +396,11 @@ export async function getLimitedOffer(): Promise<HomeLimitedOffer | null> {
         "لا تفوتي الفرصة! احصلي على منتجاتك المفضلة بأسعار خيالية",
       image: offer.image || "/images/products/gift-set.jpg",
       cta: offer.ctaText || "تسوقي الآن",
-      href: resolveOfferHref(offer.ctaLink, offer.title || offer.subtitle || "عرض محدود"),
+      href: resolveOfferTargetHref(
+        offer.ctaLink,
+        offer.title || offer.subtitle || "عرض محدود",
+        discount,
+      ),
       countdownEndsAt: offer.countdownEndsAt ? offer.countdownEndsAt.toISOString() : null,
     };
   } catch (error) {
