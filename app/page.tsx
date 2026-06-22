@@ -24,8 +24,8 @@ export default async function Home() {
     getHomePageData(country),
     getRecentReviews(5),
     getHeroSlides(),
-    getDualOffers(),
-    getLimitedOffer(),
+    getDualOffers(country),
+    getLimitedOffer(country),
   ]);
 
   return (

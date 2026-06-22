@@ -65,7 +65,12 @@ function resolveOfferTargetHref(
   rawHref: string | null | undefined,
   fallbackTerm: string,
   discount?: {
-    product?: { id: number; seoSlug: string | null; showInAds: boolean } | null;
+    product?: {
+      id: number;
+      seoSlug: string | null;
+      showInAds: boolean;
+      stocks: { id: number }[];
+    } | null;
     category?: { id: number; slug: string | null; name: string } | null;
   } | null,
 ) {
@@ -75,7 +80,7 @@ function resolveOfferTargetHref(
     return value;
   }
 
-  if (discount?.product) {
+  if (discount?.product && discount.product.stocks.length > 0) {
     const identifier = discount.product.seoSlug ?? String(discount.product.id);
     return discount.product.showInAds ? `/ad/${identifier}` : `/product/${identifier}`;
   }
@@ -181,8 +186,10 @@ export async function getHomePageData(country?: string) {
   };
 }
 
-export async function getDualOffers(): Promise<HomeDualOffer[]> {
+export async function getDualOffers(country?: string): Promise<HomeDualOffer[]> {
   const now = new Date();
+  const activeCountry: CountryCode = country === "TR" ? "TR" : "SY";
+  const warehouseIds = await getWarehouseIdsByCountry(activeCountry);
 
   try {
     let offers = await prisma.offer.findMany({
@@ -219,6 +226,13 @@ export async function getDualOffers(): Promise<HomeDualOffer[]> {
                 id: true,
                 seoSlug: true,
                 showInAds: true,
+                stocks: {
+                  where: {
+                    warehouseId: { in: warehouseIds },
+                    quantity: { gt: 0 },
+                  },
+                  select: { id: true },
+                },
               },
             },
             category: {
@@ -249,6 +263,13 @@ export async function getDualOffers(): Promise<HomeDualOffer[]> {
                   id: true,
                   seoSlug: true,
                   showInAds: true,
+                  stocks: {
+                    where: {
+                      warehouseId: { in: warehouseIds },
+                      quantity: { gt: 0 },
+                    },
+                    select: { id: true },
+                  },
                 },
               },
               category: {
@@ -295,8 +316,10 @@ export async function getDualOffers(): Promise<HomeDualOffer[]> {
   }
 }
 
-export async function getLimitedOffer(): Promise<HomeLimitedOffer | null> {
+export async function getLimitedOffer(country?: string): Promise<HomeLimitedOffer | null> {
   const now = new Date();
+  const activeCountry: CountryCode = country === "TR" ? "TR" : "SY";
+  const warehouseIds = await getWarehouseIdsByCountry(activeCountry);
 
   try {
     let offer = await prisma.offer.findFirst({
@@ -332,6 +355,13 @@ export async function getLimitedOffer(): Promise<HomeLimitedOffer | null> {
                 id: true,
                 seoSlug: true,
                 showInAds: true,
+                stocks: {
+                  where: {
+                    warehouseId: { in: warehouseIds },
+                    quantity: { gt: 0 },
+                  },
+                  select: { id: true },
+                },
               },
             },
             category: {
@@ -361,6 +391,13 @@ export async function getLimitedOffer(): Promise<HomeLimitedOffer | null> {
                   id: true,
                   seoSlug: true,
                   showInAds: true,
+                  stocks: {
+                    where: {
+                      warehouseId: { in: warehouseIds },
+                      quantity: { gt: 0 },
+                    },
+                    select: { id: true },
+                  },
                 },
               },
               category: {
