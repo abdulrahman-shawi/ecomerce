@@ -32,13 +32,13 @@ export default async function Home() {
       <Header />
       <main>
         <HeroSlider slides={heroSlides} />
-        <Features />
         <Categories categories={categories} />
         <FeaturedProducts products={featuredProducts} />
         <DualOffers />
         <BestSellers products={bestSellers} />
         <LimitedOffer />
         <Testimonials testimonials={testimonials} />
+        <Features />
         <Newsletter />
       </main>
       <Footer />
