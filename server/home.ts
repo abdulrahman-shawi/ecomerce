@@ -25,6 +25,17 @@ export interface HomeCategory {
   image: string;
 }
 
+export interface HomeDualOffer {
+  id: number;
+  image: string;
+  alt: string;
+  badge: string;
+  title: string;
+  subtitle: string;
+  cta: string;
+  href: string;
+}
+
 export async function getHomePageData(country?: string) {
   const activeCountry: CountryCode = country === "TR" ? "TR" : "SY";
   const warehouseIds = await getWarehouseIdsByCountry(activeCountry);
@@ -117,6 +128,65 @@ export async function getHomePageData(country?: string) {
     bestSellers,
     categories: homeCategories,
   };
+}
+
+export async function getDualOffers(country?: string): Promise<HomeDualOffer[]> {
+  const activeCountry: CountryCode = country === "TR" ? "TR" : "SY";
+  const warehouseIds = await getWarehouseIdsByCountry(activeCountry);
+
+  const products = await prisma.product.findMany({
+    where: {
+      isActive: true,
+      showInAds: true,
+      landingPage: {
+        is: {
+          isActive: true,
+        },
+      },
+      stocks: {
+        some: {
+          warehouseId: { in: warehouseIds },
+        },
+      },
+    },
+    take: 2,
+    orderBy: { createdAt: "desc" },
+    include: {
+      images: true,
+      stocks: {
+        where: {
+          warehouseId: { in: warehouseIds },
+        },
+        orderBy: { price: "asc" },
+      },
+      landingPage: true,
+    },
+  });
+
+  return products.map((product) => {
+    const stock = product.stocks[0];
+    const image =
+      product.images.find((img) => img.type === "main")?.url ||
+      product.images[0]?.url ||
+      "/images/products/placeholder.jpg";
+
+    const discountPercent =
+      product.landingPage?.discountPercent ??
+      (stock?.price && stock.price > 0
+        ? Math.round(((stock.price - stock.discount) / stock.price) * 100)
+        : null);
+
+    return {
+      id: product.id,
+      image,
+      alt: product.name,
+      badge: product.landingPage?.badgeText || "عرض خاص",
+      title: product.landingPage?.heroTitle || product.name,
+      subtitle: discountPercent && discountPercent > 0 ? `خصم ${discountPercent}%` : "اكتشفي الآن",
+      cta: product.landingPage?.ctaText || "اكتشفي المزيد",
+      href: `/ad/${product.seoSlug ?? product.id}`,
+    };
+  });
 }
 
 function getBadge(product: {

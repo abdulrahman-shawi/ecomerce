@@ -408,6 +408,8 @@ export const ModelName = {
   Page: 'Page',
   HeroSlide: 'HeroSlide',
   GeneralSetting: 'GeneralSetting',
+  Offer: 'Offer',
+  OfferDiscount: 'OfferDiscount',
   EmployeeSalaryAdjustment: 'EmployeeSalaryAdjustment',
   AffiliateLink: 'AffiliateLink',
   Commission: 'Commission'
@@ -426,7 +428,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "permission" | "category" | "product" | "productLandingPage" | "review" | "warehouse" | "productStock" | "stockMovement" | "userTarget" | "userActivityTarget" | "targetProduct" | "productImage" | "customer" | "warranty" | "message" | "order" | "expense" | "shipping" | "orderItem" | "trakingCompany" | "page" | "heroSlide" | "generalSetting" | "employeeSalaryAdjustment" | "affiliateLink" | "commission"
+    modelProps: "user" | "permission" | "category" | "product" | "productLandingPage" | "review" | "warehouse" | "productStock" | "stockMovement" | "userTarget" | "userActivityTarget" | "targetProduct" | "productImage" | "customer" | "warranty" | "message" | "order" | "expense" | "shipping" | "orderItem" | "trakingCompany" | "page" | "heroSlide" | "generalSetting" | "offer" | "offerDiscount" | "employeeSalaryAdjustment" | "affiliateLink" | "commission"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2206,6 +2208,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Offer: {
+      payload: Prisma.$OfferPayload<ExtArgs>
+      fields: Prisma.OfferFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OfferFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OfferFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload>
+        }
+        findFirst: {
+          args: Prisma.OfferFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OfferFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload>
+        }
+        findMany: {
+          args: Prisma.OfferFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload>[]
+        }
+        create: {
+          args: Prisma.OfferCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload>
+        }
+        createMany: {
+          args: Prisma.OfferCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.OfferCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload>[]
+        }
+        delete: {
+          args: Prisma.OfferDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload>
+        }
+        update: {
+          args: Prisma.OfferUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload>
+        }
+        deleteMany: {
+          args: Prisma.OfferDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OfferUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.OfferUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload>[]
+        }
+        upsert: {
+          args: Prisma.OfferUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferPayload>
+        }
+        aggregate: {
+          args: Prisma.OfferAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOffer>
+        }
+        groupBy: {
+          args: Prisma.OfferGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OfferGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OfferCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OfferCountAggregateOutputType> | number
+        }
+      }
+    }
+    OfferDiscount: {
+      payload: Prisma.$OfferDiscountPayload<ExtArgs>
+      fields: Prisma.OfferDiscountFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OfferDiscountFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferDiscountPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OfferDiscountFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferDiscountPayload>
+        }
+        findFirst: {
+          args: Prisma.OfferDiscountFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferDiscountPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OfferDiscountFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferDiscountPayload>
+        }
+        findMany: {
+          args: Prisma.OfferDiscountFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferDiscountPayload>[]
+        }
+        create: {
+          args: Prisma.OfferDiscountCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferDiscountPayload>
+        }
+        createMany: {
+          args: Prisma.OfferDiscountCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.OfferDiscountCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferDiscountPayload>[]
+        }
+        delete: {
+          args: Prisma.OfferDiscountDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferDiscountPayload>
+        }
+        update: {
+          args: Prisma.OfferDiscountUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferDiscountPayload>
+        }
+        deleteMany: {
+          args: Prisma.OfferDiscountDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OfferDiscountUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.OfferDiscountUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferDiscountPayload>[]
+        }
+        upsert: {
+          args: Prisma.OfferDiscountUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OfferDiscountPayload>
+        }
+        aggregate: {
+          args: Prisma.OfferDiscountAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOfferDiscount>
+        }
+        groupBy: {
+          args: Prisma.OfferDiscountGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OfferDiscountGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OfferDiscountCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OfferDiscountCountAggregateOutputType> | number
+        }
+      }
+    }
     EmployeeSalaryAdjustment: {
       payload: Prisma.$EmployeeSalaryAdjustmentPayload<ExtArgs>
       fields: Prisma.EmployeeSalaryAdjustmentFieldRefs
@@ -2891,6 +3041,48 @@ export const GeneralSettingScalarFieldEnum = {
 export type GeneralSettingScalarFieldEnum = (typeof GeneralSettingScalarFieldEnum)[keyof typeof GeneralSettingScalarFieldEnum]
 
 
+export const OfferScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  subtitle: 'subtitle',
+  description: 'description',
+  badgeText: 'badgeText',
+  image: 'image',
+  ctaText: 'ctaText',
+  ctaLink: 'ctaLink',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  countdownEndsAt: 'countdownEndsAt',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OfferScalarFieldEnum = (typeof OfferScalarFieldEnum)[keyof typeof OfferScalarFieldEnum]
+
+
+export const OfferDiscountScalarFieldEnum = {
+  id: 'id',
+  offerId: 'offerId',
+  productId: 'productId',
+  categoryId: 'categoryId',
+  discountType: 'discountType',
+  discountValue: 'discountValue',
+  maxDiscountValue: 'maxDiscountValue',
+  minOrderAmount: 'minOrderAmount',
+  usageLimit: 'usageLimit',
+  usedCount: 'usedCount',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OfferDiscountScalarFieldEnum = (typeof OfferDiscountScalarFieldEnum)[keyof typeof OfferDiscountScalarFieldEnum]
+
+
 export const EmployeeSalaryAdjustmentScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -3167,6 +3359,20 @@ export type ListEnumPaidFromOfficeFieldRefInput<$PrismaModel> = FieldRefInputTyp
 
 
 /**
+ * Reference to a field of type 'DiscountType'
+ */
+export type EnumDiscountTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DiscountType'>
+    
+
+
+/**
+ * Reference to a field of type 'DiscountType[]'
+ */
+export type ListEnumDiscountTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DiscountType[]'>
+    
+
+
+/**
  * Reference to a field of type 'CommissionStatus'
  */
 export type EnumCommissionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CommissionStatus'>
@@ -3313,6 +3519,8 @@ export type GlobalOmitConfig = {
   page?: Prisma.PageOmit
   heroSlide?: Prisma.HeroSlideOmit
   generalSetting?: Prisma.GeneralSettingOmit
+  offer?: Prisma.OfferOmit
+  offerDiscount?: Prisma.OfferDiscountOmit
   employeeSalaryAdjustment?: Prisma.EmployeeSalaryAdjustmentOmit
   affiliateLink?: Prisma.AffiliateLinkOmit
   commission?: Prisma.CommissionOmit

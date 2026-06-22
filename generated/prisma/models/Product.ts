@@ -286,6 +286,7 @@ export type ProductWhereInput = {
   affiliateLinks?: Prisma.AffiliateLinkListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
   landingPage?: Prisma.XOR<Prisma.ProductLandingPageNullableScalarRelationFilter, Prisma.ProductLandingPageWhereInput> | null
+  offerDiscounts?: Prisma.OfferDiscountListRelationFilter
 }
 
 export type ProductOrderByWithRelationInput = {
@@ -310,6 +311,7 @@ export type ProductOrderByWithRelationInput = {
   affiliateLinks?: Prisma.AffiliateLinkOrderByRelationAggregateInput
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
   landingPage?: Prisma.ProductLandingPageOrderByWithRelationInput
+  offerDiscounts?: Prisma.OfferDiscountOrderByRelationAggregateInput
 }
 
 export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -337,6 +339,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   affiliateLinks?: Prisma.AffiliateLinkListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
   landingPage?: Prisma.XOR<Prisma.ProductLandingPageNullableScalarRelationFilter, Prisma.ProductLandingPageWhereInput> | null
+  offerDiscounts?: Prisma.OfferDiscountListRelationFilter
 }, "id" | "seoSlug">
 
 export type ProductOrderByWithAggregationInput = {
@@ -395,6 +398,7 @@ export type ProductCreateInput = {
   affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateInput = {
@@ -418,6 +422,7 @@ export type ProductUncheckedCreateInput = {
   affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageUncheckedCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductUpdateInput = {
@@ -440,6 +445,7 @@ export type ProductUpdateInput = {
   affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateInput = {
@@ -463,6 +469,7 @@ export type ProductUncheckedUpdateInput = {
   affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUncheckedUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyInput = {
@@ -574,6 +581,11 @@ export type ProductSumOrderByAggregateInput = {
 export type ProductScalarRelationFilter = {
   is?: Prisma.ProductWhereInput
   isNot?: Prisma.ProductWhereInput
+}
+
+export type ProductNullableScalarRelationFilter = {
+  is?: Prisma.ProductWhereInput | null
+  isNot?: Prisma.ProductWhereInput | null
 }
 
 export type ProductCreateNestedManyWithoutCategoryInput = {
@@ -746,6 +758,22 @@ export type ProductUpdateOneRequiredWithoutOrderItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutOrderItemsInput, Prisma.ProductUpdateWithoutOrderItemsInput>, Prisma.ProductUncheckedUpdateWithoutOrderItemsInput>
 }
 
+export type ProductCreateNestedOneWithoutOfferDiscountsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutOfferDiscountsInput, Prisma.ProductUncheckedCreateWithoutOfferDiscountsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutOfferDiscountsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneWithoutOfferDiscountsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutOfferDiscountsInput, Prisma.ProductUncheckedCreateWithoutOfferDiscountsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutOfferDiscountsInput
+  upsert?: Prisma.ProductUpsertWithoutOfferDiscountsInput
+  disconnect?: Prisma.ProductWhereInput | boolean
+  delete?: Prisma.ProductWhereInput | boolean
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutOfferDiscountsInput, Prisma.ProductUpdateWithoutOfferDiscountsInput>, Prisma.ProductUncheckedUpdateWithoutOfferDiscountsInput>
+}
+
 export type ProductCreateNestedOneWithoutAffiliateLinksInput = {
   create?: Prisma.XOR<Prisma.ProductCreateWithoutAffiliateLinksInput, Prisma.ProductUncheckedCreateWithoutAffiliateLinksInput>
   connectOrCreate?: Prisma.ProductCreateOrConnectWithoutAffiliateLinksInput
@@ -779,6 +807,7 @@ export type ProductCreateWithoutCategoryInput = {
   affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutCategoryInput = {
@@ -801,6 +830,7 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageUncheckedCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutCategoryInput = {
@@ -865,6 +895,7 @@ export type ProductCreateWithoutLandingPageInput = {
   warrantiesAsProduct?: Prisma.WarrantyCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutLandingPageInput = {
@@ -887,6 +918,7 @@ export type ProductUncheckedCreateWithoutLandingPageInput = {
   warrantiesAsProduct?: Prisma.WarrantyUncheckedCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutLandingPageInput = {
@@ -924,6 +956,7 @@ export type ProductUpdateWithoutLandingPageInput = {
   warrantiesAsProduct?: Prisma.WarrantyUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutLandingPageInput = {
@@ -946,6 +979,7 @@ export type ProductUncheckedUpdateWithoutLandingPageInput = {
   warrantiesAsProduct?: Prisma.WarrantyUncheckedUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutReviewsInput = {
@@ -967,6 +1001,7 @@ export type ProductCreateWithoutReviewsInput = {
   warrantiesAsProduct?: Prisma.WarrantyCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutReviewsInput = {
@@ -989,6 +1024,7 @@ export type ProductUncheckedCreateWithoutReviewsInput = {
   warrantiesAsProduct?: Prisma.WarrantyUncheckedCreateNestedManyWithoutProductInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageUncheckedCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutReviewsInput = {
@@ -1026,6 +1062,7 @@ export type ProductUpdateWithoutReviewsInput = {
   warrantiesAsProduct?: Prisma.WarrantyUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutReviewsInput = {
@@ -1048,6 +1085,7 @@ export type ProductUncheckedUpdateWithoutReviewsInput = {
   warrantiesAsProduct?: Prisma.WarrantyUncheckedUpdateManyWithoutProductNestedInput
   affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUncheckedUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutStocksInput = {
@@ -1069,6 +1107,7 @@ export type ProductCreateWithoutStocksInput = {
   affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutStocksInput = {
@@ -1091,6 +1130,7 @@ export type ProductUncheckedCreateWithoutStocksInput = {
   affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageUncheckedCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutStocksInput = {
@@ -1128,6 +1168,7 @@ export type ProductUpdateWithoutStocksInput = {
   affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutStocksInput = {
@@ -1150,6 +1191,7 @@ export type ProductUncheckedUpdateWithoutStocksInput = {
   affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUncheckedUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutStockMovementsInput = {
@@ -1171,6 +1213,7 @@ export type ProductCreateWithoutStockMovementsInput = {
   affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutStockMovementsInput = {
@@ -1193,6 +1236,7 @@ export type ProductUncheckedCreateWithoutStockMovementsInput = {
   affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageUncheckedCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutStockMovementsInput = {
@@ -1230,6 +1274,7 @@ export type ProductUpdateWithoutStockMovementsInput = {
   affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutStockMovementsInput = {
@@ -1252,6 +1297,7 @@ export type ProductUncheckedUpdateWithoutStockMovementsInput = {
   affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUncheckedUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutTargetProductsInput = {
@@ -1273,6 +1319,7 @@ export type ProductCreateWithoutTargetProductsInput = {
   affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutTargetProductsInput = {
@@ -1295,6 +1342,7 @@ export type ProductUncheckedCreateWithoutTargetProductsInput = {
   affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageUncheckedCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutTargetProductsInput = {
@@ -1332,6 +1380,7 @@ export type ProductUpdateWithoutTargetProductsInput = {
   affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutTargetProductsInput = {
@@ -1354,6 +1403,7 @@ export type ProductUncheckedUpdateWithoutTargetProductsInput = {
   affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUncheckedUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutImagesInput = {
@@ -1375,6 +1425,7 @@ export type ProductCreateWithoutImagesInput = {
   affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutImagesInput = {
@@ -1397,6 +1448,7 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageUncheckedCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutImagesInput = {
@@ -1434,6 +1486,7 @@ export type ProductUpdateWithoutImagesInput = {
   affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutImagesInput = {
@@ -1456,6 +1509,7 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUncheckedUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutWarrantiesAsProductInput = {
@@ -1477,6 +1531,7 @@ export type ProductCreateWithoutWarrantiesAsProductInput = {
   affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutWarrantiesAsProductInput = {
@@ -1499,6 +1554,7 @@ export type ProductUncheckedCreateWithoutWarrantiesAsProductInput = {
   affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageUncheckedCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutWarrantiesAsProductInput = {
@@ -1536,6 +1592,7 @@ export type ProductUpdateWithoutWarrantiesAsProductInput = {
   affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutWarrantiesAsProductInput = {
@@ -1558,6 +1615,7 @@ export type ProductUncheckedUpdateWithoutWarrantiesAsProductInput = {
   affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUncheckedUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutOrderItemsInput = {
@@ -1579,6 +1637,7 @@ export type ProductCreateWithoutOrderItemsInput = {
   affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutOrderItemsInput = {
@@ -1601,6 +1660,7 @@ export type ProductUncheckedCreateWithoutOrderItemsInput = {
   affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageUncheckedCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutOrderItemsInput = {
@@ -1638,6 +1698,7 @@ export type ProductUpdateWithoutOrderItemsInput = {
   affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutOrderItemsInput = {
@@ -1652,6 +1713,113 @@ export type ProductUncheckedUpdateWithoutOrderItemsInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
+  targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
+  stocks?: Prisma.ProductStockUncheckedUpdateManyWithoutProductNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  warrantiesAsProduct?: Prisma.WarrantyUncheckedUpdateManyWithoutProductNestedInput
+  affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
+  landingPage?: Prisma.ProductLandingPageUncheckedUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutOfferDiscountsInput = {
+  name: string
+  description?: string | null
+  googleLink?: string | null
+  createdAt?: Date | string
+  seoSlug?: string | null
+  isActive?: boolean
+  showInAds?: boolean
+  affiliatePrice?: number
+  affiliateCommissionRate?: number | null
+  orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
+  category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
+  images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
+  targetProducts?: Prisma.TargetProductCreateNestedManyWithoutProductInput
+  stocks?: Prisma.ProductStockCreateNestedManyWithoutProductInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  warrantiesAsProduct?: Prisma.WarrantyCreateNestedManyWithoutProductInput
+  affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
+  landingPage?: Prisma.ProductLandingPageCreateNestedOneWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutOfferDiscountsInput = {
+  id?: number
+  name: string
+  description?: string | null
+  googleLink?: string | null
+  categoryId?: number | null
+  createdAt?: Date | string
+  seoSlug?: string | null
+  isActive?: boolean
+  showInAds?: boolean
+  affiliatePrice?: number
+  affiliateCommissionRate?: number | null
+  orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
+  images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
+  targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
+  stocks?: Prisma.ProductStockUncheckedCreateNestedManyWithoutProductInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  warrantiesAsProduct?: Prisma.WarrantyUncheckedCreateNestedManyWithoutProductInput
+  affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
+  landingPage?: Prisma.ProductLandingPageUncheckedCreateNestedOneWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutOfferDiscountsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutOfferDiscountsInput, Prisma.ProductUncheckedCreateWithoutOfferDiscountsInput>
+}
+
+export type ProductUpsertWithoutOfferDiscountsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutOfferDiscountsInput, Prisma.ProductUncheckedUpdateWithoutOfferDiscountsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutOfferDiscountsInput, Prisma.ProductUncheckedCreateWithoutOfferDiscountsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutOfferDiscountsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutOfferDiscountsInput, Prisma.ProductUncheckedUpdateWithoutOfferDiscountsInput>
+}
+
+export type ProductUpdateWithoutOfferDiscountsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
+  category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
+  images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
+  targetProducts?: Prisma.TargetProductUpdateManyWithoutProductNestedInput
+  stocks?: Prisma.ProductStockUpdateManyWithoutProductNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  warrantiesAsProduct?: Prisma.WarrantyUpdateManyWithoutProductNestedInput
+  affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
+  landingPage?: Prisma.ProductLandingPageUpdateOneWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutOfferDiscountsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
   stocks?: Prisma.ProductStockUncheckedUpdateManyWithoutProductNestedInput
@@ -1681,6 +1849,7 @@ export type ProductCreateWithoutAffiliateLinksInput = {
   warrantiesAsProduct?: Prisma.WarrantyCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutAffiliateLinksInput = {
@@ -1703,6 +1872,7 @@ export type ProductUncheckedCreateWithoutAffiliateLinksInput = {
   warrantiesAsProduct?: Prisma.WarrantyUncheckedCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
   landingPage?: Prisma.ProductLandingPageUncheckedCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutAffiliateLinksInput = {
@@ -1740,6 +1910,7 @@ export type ProductUpdateWithoutAffiliateLinksInput = {
   warrantiesAsProduct?: Prisma.WarrantyUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutAffiliateLinksInput = {
@@ -1762,6 +1933,7 @@ export type ProductUncheckedUpdateWithoutAffiliateLinksInput = {
   warrantiesAsProduct?: Prisma.WarrantyUncheckedUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUncheckedUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyCategoryInput = {
@@ -1796,6 +1968,7 @@ export type ProductUpdateWithoutCategoryInput = {
   affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutCategoryInput = {
@@ -1818,6 +1991,7 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUncheckedUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutCategoryInput = {
@@ -1847,6 +2021,7 @@ export type ProductCountOutputType = {
   warrantiesAsProduct: number
   affiliateLinks: number
   reviews: number
+  offerDiscounts: number
 }
 
 export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1858,6 +2033,7 @@ export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   warrantiesAsProduct?: boolean | ProductCountOutputTypeCountWarrantiesAsProductArgs
   affiliateLinks?: boolean | ProductCountOutputTypeCountAffiliateLinksArgs
   reviews?: boolean | ProductCountOutputTypeCountReviewsArgs
+  offerDiscounts?: boolean | ProductCountOutputTypeCountOfferDiscountsArgs
 }
 
 /**
@@ -1926,6 +2102,13 @@ export type ProductCountOutputTypeCountReviewsArgs<ExtArgs extends runtime.Types
   where?: Prisma.ReviewWhereInput
 }
 
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountOfferDiscountsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OfferDiscountWhereInput
+}
+
 
 export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1949,6 +2132,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   affiliateLinks?: boolean | Prisma.Product$affiliateLinksArgs<ExtArgs>
   reviews?: boolean | Prisma.Product$reviewsArgs<ExtArgs>
   landingPage?: boolean | Prisma.Product$landingPageArgs<ExtArgs>
+  offerDiscounts?: boolean | Prisma.Product$offerDiscountsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
@@ -2008,6 +2192,7 @@ export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   affiliateLinks?: boolean | Prisma.Product$affiliateLinksArgs<ExtArgs>
   reviews?: boolean | Prisma.Product$reviewsArgs<ExtArgs>
   landingPage?: boolean | Prisma.Product$landingPageArgs<ExtArgs>
+  offerDiscounts?: boolean | Prisma.Product$offerDiscountsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2030,6 +2215,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     affiliateLinks: Prisma.$AffiliateLinkPayload<ExtArgs>[]
     reviews: Prisma.$ReviewPayload<ExtArgs>[]
     landingPage: Prisma.$ProductLandingPagePayload<ExtArgs> | null
+    offerDiscounts: Prisma.$OfferDiscountPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -2447,6 +2633,7 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
   affiliateLinks<T extends Prisma.Product$affiliateLinksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$affiliateLinksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AffiliateLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reviews<T extends Prisma.Product$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   landingPage<T extends Prisma.Product$landingPageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$landingPageArgs<ExtArgs>>): Prisma.Prisma__ProductLandingPageClient<runtime.Types.Result.GetResult<Prisma.$ProductLandingPagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  offerDiscounts<T extends Prisma.Product$offerDiscountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$offerDiscountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OfferDiscountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3115,6 +3302,30 @@ export type Product$landingPageArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   include?: Prisma.ProductLandingPageInclude<ExtArgs> | null
   where?: Prisma.ProductLandingPageWhereInput
+}
+
+/**
+ * Product.offerDiscounts
+ */
+export type Product$offerDiscountsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OfferDiscount
+   */
+  select?: Prisma.OfferDiscountSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OfferDiscount
+   */
+  omit?: Prisma.OfferDiscountOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OfferDiscountInclude<ExtArgs> | null
+  where?: Prisma.OfferDiscountWhereInput
+  orderBy?: Prisma.OfferDiscountOrderByWithRelationInput | Prisma.OfferDiscountOrderByWithRelationInput[]
+  cursor?: Prisma.OfferDiscountWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OfferDiscountScalarFieldEnum | Prisma.OfferDiscountScalarFieldEnum[]
 }
 
 /**

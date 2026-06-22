@@ -13,17 +13,18 @@ import Testimonials from "@/component/sections/Testimonials";
 import Newsletter from "@/component/sections/Newsletter";
 import Footer from "@/component/sections/Footer";
 import CartDrawer from "@/component/CartDrawer";
-import { getHomePageData } from "@/server/home";
+import { getDualOffers, getHomePageData } from "@/server/home";
 import { getHeroSlides } from "@/server/hero-slides";
 import { getRecentReviews } from "@/server/reviews";
 import { getServerCountry } from "@/lib/region";
 
 export default async function Home() {
   const country = getServerCountry();
-  const [{ featuredProducts, bestSellers, categories }, testimonials, heroSlides] = await Promise.all([
+  const [{ featuredProducts, bestSellers, categories }, testimonials, heroSlides, dualOffers] = await Promise.all([
     getHomePageData(country),
     getRecentReviews(5),
     getHeroSlides(),
+    getDualOffers(country),
   ]);
 
   return (
@@ -34,7 +35,7 @@ export default async function Home() {
         <HeroSlider slides={heroSlides} />
         <Categories categories={categories} />
         <FeaturedProducts products={featuredProducts} />
-        <DualOffers />
+        <DualOffers offers={dualOffers} />
         <BestSellers products={bestSellers} />
         <LimitedOffer />
         <Testimonials testimonials={testimonials} />

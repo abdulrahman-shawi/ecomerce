@@ -75,6 +75,8 @@ export const ModelName = {
   Page: 'Page',
   HeroSlide: 'HeroSlide',
   GeneralSetting: 'GeneralSetting',
+  Offer: 'Offer',
+  OfferDiscount: 'OfferDiscount',
   EmployeeSalaryAdjustment: 'EmployeeSalaryAdjustment',
   AffiliateLink: 'AffiliateLink',
   Commission: 'Commission'
@@ -518,6 +520,48 @@ export const GeneralSettingScalarFieldEnum = {
 } as const
 
 export type GeneralSettingScalarFieldEnum = (typeof GeneralSettingScalarFieldEnum)[keyof typeof GeneralSettingScalarFieldEnum]
+
+
+export const OfferScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  subtitle: 'subtitle',
+  description: 'description',
+  badgeText: 'badgeText',
+  image: 'image',
+  ctaText: 'ctaText',
+  ctaLink: 'ctaLink',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  countdownEndsAt: 'countdownEndsAt',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OfferScalarFieldEnum = (typeof OfferScalarFieldEnum)[keyof typeof OfferScalarFieldEnum]
+
+
+export const OfferDiscountScalarFieldEnum = {
+  id: 'id',
+  offerId: 'offerId',
+  productId: 'productId',
+  categoryId: 'categoryId',
+  discountType: 'discountType',
+  discountValue: 'discountValue',
+  maxDiscountValue: 'maxDiscountValue',
+  minOrderAmount: 'minOrderAmount',
+  usageLimit: 'usageLimit',
+  usedCount: 'usedCount',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OfferDiscountScalarFieldEnum = (typeof OfferDiscountScalarFieldEnum)[keyof typeof OfferDiscountScalarFieldEnum]
 
 
 export const EmployeeSalaryAdjustmentScalarFieldEnum = {

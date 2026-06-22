@@ -217,6 +217,7 @@ export type CategoryWhereInput = {
   image?: Prisma.StringNullableFilter<"Category"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   products?: Prisma.ProductListRelationFilter
+  offerDiscounts?: Prisma.OfferDiscountListRelationFilter
 }
 
 export type CategoryOrderByWithRelationInput = {
@@ -226,6 +227,7 @@ export type CategoryOrderByWithRelationInput = {
   image?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   products?: Prisma.ProductOrderByRelationAggregateInput
+  offerDiscounts?: Prisma.OfferDiscountOrderByRelationAggregateInput
 }
 
 export type CategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -238,6 +240,7 @@ export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   image?: Prisma.StringNullableFilter<"Category"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   products?: Prisma.ProductListRelationFilter
+  offerDiscounts?: Prisma.OfferDiscountListRelationFilter
 }, "id" | "name" | "slug">
 
 export type CategoryOrderByWithAggregationInput = {
@@ -270,6 +273,7 @@ export type CategoryCreateInput = {
   image?: string | null
   createdAt?: Date | string
   products?: Prisma.ProductCreateNestedManyWithoutCategoryInput
+  offerDiscounts?: Prisma.OfferDiscountCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateInput = {
@@ -279,6 +283,7 @@ export type CategoryUncheckedCreateInput = {
   image?: string | null
   createdAt?: Date | string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutCategoryInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUpdateInput = {
@@ -287,6 +292,7 @@ export type CategoryUpdateInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUpdateManyWithoutCategoryNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateInput = {
@@ -296,6 +302,7 @@ export type CategoryUncheckedUpdateInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutCategoryNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateManyInput = {
@@ -374,11 +381,28 @@ export type CategoryUpdateOneWithoutProductsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutProductsInput, Prisma.CategoryUpdateWithoutProductsInput>, Prisma.CategoryUncheckedUpdateWithoutProductsInput>
 }
 
+export type CategoryCreateNestedOneWithoutOfferDiscountsInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutOfferDiscountsInput, Prisma.CategoryUncheckedCreateWithoutOfferDiscountsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutOfferDiscountsInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneWithoutOfferDiscountsNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutOfferDiscountsInput, Prisma.CategoryUncheckedCreateWithoutOfferDiscountsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutOfferDiscountsInput
+  upsert?: Prisma.CategoryUpsertWithoutOfferDiscountsInput
+  disconnect?: Prisma.CategoryWhereInput | boolean
+  delete?: Prisma.CategoryWhereInput | boolean
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutOfferDiscountsInput, Prisma.CategoryUpdateWithoutOfferDiscountsInput>, Prisma.CategoryUncheckedUpdateWithoutOfferDiscountsInput>
+}
+
 export type CategoryCreateWithoutProductsInput = {
   name: string
   slug?: string | null
   image?: string | null
   createdAt?: Date | string
+  offerDiscounts?: Prisma.OfferDiscountCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutProductsInput = {
@@ -387,6 +411,7 @@ export type CategoryUncheckedCreateWithoutProductsInput = {
   slug?: string | null
   image?: string | null
   createdAt?: Date | string
+  offerDiscounts?: Prisma.OfferDiscountUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutProductsInput = {
@@ -410,6 +435,7 @@ export type CategoryUpdateWithoutProductsInput = {
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  offerDiscounts?: Prisma.OfferDiscountUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutProductsInput = {
@@ -418,6 +444,57 @@ export type CategoryUncheckedUpdateWithoutProductsInput = {
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  offerDiscounts?: Prisma.OfferDiscountUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryCreateWithoutOfferDiscountsInput = {
+  name: string
+  slug?: string | null
+  image?: string | null
+  createdAt?: Date | string
+  products?: Prisma.ProductCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutOfferDiscountsInput = {
+  id?: number
+  name: string
+  slug?: string | null
+  image?: string | null
+  createdAt?: Date | string
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutOfferDiscountsInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutOfferDiscountsInput, Prisma.CategoryUncheckedCreateWithoutOfferDiscountsInput>
+}
+
+export type CategoryUpsertWithoutOfferDiscountsInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutOfferDiscountsInput, Prisma.CategoryUncheckedUpdateWithoutOfferDiscountsInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutOfferDiscountsInput, Prisma.CategoryUncheckedCreateWithoutOfferDiscountsInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutOfferDiscountsInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutOfferDiscountsInput, Prisma.CategoryUncheckedUpdateWithoutOfferDiscountsInput>
+}
+
+export type CategoryUpdateWithoutOfferDiscountsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.ProductUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutOfferDiscountsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.ProductUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 
@@ -427,10 +504,12 @@ export type CategoryUncheckedUpdateWithoutProductsInput = {
 
 export type CategoryCountOutputType = {
   products: number
+  offerDiscounts: number
 }
 
 export type CategoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | CategoryCountOutputTypeCountProductsArgs
+  offerDiscounts?: boolean | CategoryCountOutputTypeCountOfferDiscountsArgs
 }
 
 /**
@@ -450,6 +529,13 @@ export type CategoryCountOutputTypeCountProductsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.ProductWhereInput
 }
 
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountOfferDiscountsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OfferDiscountWhereInput
+}
+
 
 export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -458,6 +544,7 @@ export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   image?: boolean
   createdAt?: boolean
   products?: boolean | Prisma.Category$productsArgs<ExtArgs>
+  offerDiscounts?: boolean | Prisma.Category$offerDiscountsArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["category"]>
 
@@ -488,6 +575,7 @@ export type CategorySelectScalar = {
 export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "image" | "createdAt", ExtArgs["result"]["category"]>
 export type CategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | Prisma.Category$productsArgs<ExtArgs>
+  offerDiscounts?: boolean | Prisma.Category$offerDiscountsArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CategoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -497,6 +585,7 @@ export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Category"
   objects: {
     products: Prisma.$ProductPayload<ExtArgs>[]
+    offerDiscounts: Prisma.$OfferDiscountPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -899,6 +988,7 @@ readonly fields: CategoryFieldRefs;
 export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   products<T extends Prisma.Category$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  offerDiscounts<T extends Prisma.Category$offerDiscountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$offerDiscountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OfferDiscountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1347,6 +1437,30 @@ export type Category$productsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.ProductScalarFieldEnum | Prisma.ProductScalarFieldEnum[]
+}
+
+/**
+ * Category.offerDiscounts
+ */
+export type Category$offerDiscountsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OfferDiscount
+   */
+  select?: Prisma.OfferDiscountSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OfferDiscount
+   */
+  omit?: Prisma.OfferDiscountOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OfferDiscountInclude<ExtArgs> | null
+  where?: Prisma.OfferDiscountWhereInput
+  orderBy?: Prisma.OfferDiscountOrderByWithRelationInput | Prisma.OfferDiscountOrderByWithRelationInput[]
+  cursor?: Prisma.OfferDiscountWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OfferDiscountScalarFieldEnum | Prisma.OfferDiscountScalarFieldEnum[]
 }
 
 /**

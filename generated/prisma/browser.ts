@@ -138,6 +138,16 @@ export type HeroSlide = Prisma.HeroSlideModel
  */
 export type GeneralSetting = Prisma.GeneralSettingModel
 /**
+ * Model Offer
+ * 
+ */
+export type Offer = Prisma.OfferModel
+/**
+ * Model OfferDiscount
+ * 
+ */
+export type OfferDiscount = Prisma.OfferDiscountModel
+/**
  * Model EmployeeSalaryAdjustment
  * 
  */
