@@ -62,11 +62,11 @@ export default function LimitedOffer({ offer }: LimitedOfferProps) {
           </div>
 
           {/* Image */}
-          <div className="hidden md:flex justify-center">
+          <div className="flex justify-center order-first md:order-none">
             <img
               src={activeOffer.image}
               alt={activeOffer.badge}
-              className="w-full max-w-md rounded-3xl shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500"
+              className="w-full max-w-[280px] sm:max-w-sm md:max-w-md rounded-3xl shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500"
             />
           </div>
         </div>
