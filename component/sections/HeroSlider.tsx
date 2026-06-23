@@ -85,7 +85,7 @@ export default function HeroSlider({ slides: propSlides }: HeroSliderProps) {
 
               {/* Image */}
               <div
-                className={`hidden md:block transition-all duration-700 delay-200 ${
+                className={`block order-first md:order-none transition-all duration-700 delay-200 ${
                   index === current
                     ? 'translate-x-0 opacity-100'
                     : '-translate-x-10 opacity-0'
@@ -96,7 +96,7 @@ export default function HeroSlider({ slides: propSlides }: HeroSliderProps) {
                   alt={slide.title || 'شريحة'}
                   width={800}
                   height={450}
-                  className="w-full h-[450px] object-cover rounded-3xl shadow-2xl"
+                  className="w-full h-[220px] md:h-[450px] object-cover rounded-3xl shadow-2xl"
                   priority={index === current}
                 />
               </div>

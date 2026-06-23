@@ -125,6 +125,7 @@ export async function getHomePageData(country?: string) {
 
   // Fetch categories
   const categories = await prisma.category.findMany({
+    where: { isVisible: true },
     take: 6,
     orderBy: { createdAt: "desc" },
   });
