@@ -10,13 +10,14 @@ import TopBanner from "@/component/sections/TopBanner";
 import CartDrawer from "@/component/CartDrawer";
 import ProductCard from "@/component/ProductCard";
 import { getOfferProducts } from "@/server/home";
+import { getServerCountry } from "@/lib/region";
 
 interface OfferPageProps {
   params: { offerId: string };
 }
 
 export async function generateMetadata({ params }: OfferPageProps): Promise<Metadata> {
-  const offer = await getOfferProducts(params.offerId);
+  const offer = await getOfferProducts(params.offerId, getServerCountry());
 
   if (!offer) {
     return {
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }: OfferPageProps): Promise<Meta
 }
 
 export default async function OfferPage({ params }: OfferPageProps) {
-  const offer = await getOfferProducts(params.offerId);
+  const offer = await getOfferProducts(params.offerId, getServerCountry());
 
   if (!offer) {
     notFound();

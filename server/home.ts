@@ -468,7 +468,11 @@ export async function getLimitedOffer(country?: string): Promise<HomeLimitedOffe
 
 export async function getOfferProducts(
   offerId: string,
+  country?: string,
 ): Promise<OfferProductsPageData | null> {
+  const activeCountry: CountryCode = country === "TR" ? "TR" : "SY";
+  const warehouseIds = await getWarehouseIdsByCountry(activeCountry);
+
   const offer = await prisma.offer.findUnique({
     where: { id: offerId },
     include: {
@@ -481,6 +485,10 @@ export async function getOfferProducts(
               category: true,
               images: true,
               stocks: {
+                where: {
+                  warehouseId: { in: warehouseIds },
+                  quantity: { gt: 0 },
+                },
                 orderBy: { price: "asc" },
               },
               orderItems: true,
@@ -496,7 +504,10 @@ export async function getOfferProducts(
 
   const products = offer.discounts
     .map((discount) => discount.product)
-    .filter((product): product is NonNullable<typeof product> => product != null);
+    .filter(
+      (product): product is NonNullable<typeof product> =>
+        product != null && product.isActive && product.stocks.length > 0
+    );
 
   return {
     id: offer.id,
