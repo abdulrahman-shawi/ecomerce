@@ -6,7 +6,6 @@ import Link from "next/link";
 import {
   getAffiliateDashboard,
   getAffiliateLinks,
-  createAffiliateLink,
   getAffiliateCommissions,
 } from "@/server/affiliate";
 import type { AffiliateUser } from "@/server/affiliate";
@@ -18,7 +17,6 @@ import {
   CheckCircle,
   Copy,
   ExternalLink,
-  Plus,
   LogOut,
   BarChart3,
   Link as LinkIcon,
@@ -43,9 +41,6 @@ export default function AffiliateDashboardPage() {
   const [dashboard, setDashboard] = useState<DashboardData | null>(null);
   const [commissions, setCommissions] = useState<any[]>([]);
   const [links, setLinks] = useState<any[]>([]);
-  const [products, setProducts] = useState<{ id: number; name: string }[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState("");
-  const [showCreateModal, setShowCreateModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
 
@@ -75,16 +70,6 @@ export default function AffiliateDashboardPage() {
     setLinks(linksData);
     setCommissions(comms);
     setLoading(false);
-  };
-
-  const handleCreateLink = async () => {
-    if (!user || !selectedProduct) return;
-    const result = await createAffiliateLink(user.id, parseInt(selectedProduct));
-    if (result.success) {
-      setShowCreateModal(false);
-      setSelectedProduct("");
-      loadDashboard();
-    }
   };
 
   const handleCopy = (code: string) => {
@@ -174,18 +159,11 @@ export default function AffiliateDashboardPage() {
 
         {/* Links Section */}
         <div className="bg-white rounded-2xl shadow-sm p-6 mb-8">
-          <div className="flex items-center justify-between mb-6">
+          <div className="mb-6">
             <h2 className="text-lg font-bold text-gray-dark flex items-center gap-2">
               <LinkIcon size={20} className="text-pink" />
               روابطي
             </h2>
-            <button
-              onClick={() => setShowCreateModal(true)}
-              className="bg-pink text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-pink-dark transition-colors flex items-center gap-1"
-            >
-              <Plus size={16} />
-              رابط جديد
-            </button>
           </div>
 
           {links.length === 0 ? (
@@ -274,30 +252,6 @@ export default function AffiliateDashboardPage() {
         </div>
       </main>
 
-      {/* Create Link Modal */}
-      {showCreateModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-md">
-            <h3 className="text-lg font-bold text-gray-dark mb-4">إنشاء رابط جديد</h3>
-            <ProductSelector onSelect={setSelectedProduct} selected={selectedProduct} />
-            <div className="flex gap-3 mt-6">
-              <button
-                onClick={() => setShowCreateModal(false)}
-                className="flex-1 py-2.5 border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-50 transition-colors"
-              >
-                إلغاء
-              </button>
-              <button
-                onClick={handleCreateLink}
-                disabled={!selectedProduct}
-                className="flex-1 py-2.5 bg-pink text-white rounded-xl font-medium hover:bg-pink-dark transition-colors disabled:opacity-50"
-              >
-                إنشاء
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
@@ -348,46 +302,5 @@ function StatusBadge({ status }: { status: string }) {
     <span className={`px-2.5 py-1 rounded-lg text-xs font-medium ${styles[status] ?? "bg-gray-50 text-gray-600"}`}>
       {labels[status] ?? status}
     </span>
-  );
-}
-
-function ProductSelector({
-  onSelect,
-  selected,
-}: {
-  onSelect: (id: string) => void;
-  selected: string;
-}) {
-  const [products, setProducts] = useState<{ id: number; name: string }[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("/api/products/active")
-      .then((r) => r.json())
-      .then((data) => {
-        setProducts(data.products || []);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
-
-  if (loading) return <p className="text-gray-400 text-sm">جاري تحميل المنتجات...</p>;
-
-  return (
-    <div>
-      <label className="block text-sm font-medium text-gray-700 mb-2">اختر المنتج</label>
-      <select
-        value={selected}
-        onChange={(e) => onSelect(e.target.value)}
-        className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink"
-      >
-        <option value="">اختر منتجاً...</option>
-        {products.map((p) => (
-          <option key={p.id} value={p.id}>
-            {p.name}
-          </option>
-        ))}
-      </select>
-    </div>
   );
 }
