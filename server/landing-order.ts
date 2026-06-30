@@ -67,11 +67,16 @@ export async function createLandingOrder(input: LandingOrderInput) {
     // Read affiliate code
     const cookieStore = await cookies();
     const affiliateCode = cookieStore.get("affiliate-code")?.value || null;
-    let affiliateLink: { id: string; commissionRate: number; productId: number } | null = null;
+    let affiliateLink: {
+      id: string;
+      userId: string;
+      commissionRate: number;
+      productId: number;
+    } | null = null;
     if (affiliateCode) {
       affiliateLink = await prisma.affiliateLink.findUnique({
         where: { uniqueCode: affiliateCode },
-        select: { id: true, commissionRate: true, productId: true },
+        select: { id: true, userId: true, commissionRate: true, productId: true },
       });
     }
 
@@ -146,6 +151,7 @@ export async function createLandingOrder(input: LandingOrderInput) {
           deliveryNotes: notes,
           status: "المتجر",
           customerId: customer.id,
+          userId: affiliateLink?.productId === productId ? affiliateLink.userId : undefined,
           warehouseId: warehouse.id,
         },
       });

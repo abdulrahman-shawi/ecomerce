@@ -36,14 +36,23 @@ export async function POST(request: NextRequest) {
     const cookieCode = cookieStore.get("affiliate-code")?.value;
     const bodyCode = body.affiliateCode;
     const affiliateCode = bodyCode || cookieCode || null;
-    let affiliateLink: { id: string; commissionRate: number; productId: number } | null = null;
+    let affiliateLink: {
+      id: string;
+      userId: string;
+      commissionRate: number;
+      productId: number;
+    } | null = null;
 
     if (affiliateCode) {
       affiliateLink = await prisma.affiliateLink.findUnique({
         where: { uniqueCode: affiliateCode },
-        select: { id: true, commissionRate: true, productId: true },
+        select: { id: true, userId: true, commissionRate: true, productId: true },
       });
     }
+
+    const matchedAffiliateItem = affiliateLink
+      ? items.find((item: { id: number }) => item.id === affiliateLink.productId)
+      : null;
 
     const stockCountry = country === "TR" ? "تركيا" : "سوريا";
 
@@ -156,6 +165,7 @@ export async function POST(request: NextRequest) {
           googleMapsLink,
           status: "المتجر",
           customerId: customer.id,
+          userId: matchedAffiliateItem ? affiliateLink?.userId : undefined,
           warehouseId: warehouse.id,
         },
       });
@@ -181,7 +191,7 @@ export async function POST(request: NextRequest) {
 
       // ─── 8. Create commission if affiliate link matches ───
       if (affiliateLink) {
-        const matchedItem = items.find((i: any) => i.id === affiliateLink!.productId);
+        const matchedItem = matchedAffiliateItem;
         if (matchedItem) {
           const product = await tx.product.findUnique({
             where: { id: matchedItem.id },
