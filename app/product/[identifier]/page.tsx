@@ -34,15 +34,21 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${product.name} | SKYNOVA`;
+  const title = product.metaTitle?.trim() || product.name;
   const description =
-    product.description ??
+    product.metaDescription?.trim() ||
+    product.description ||
     `اشترِ ${product.name} بأفضل سعر. منتج عالي الجودة للعناية بالبشرة والشعر من SKYNOVA.`;
   const url = `https://skynova.store/product/${product.seoSlug ?? product.id}`;
+  const keywords = product.metaKeywords
+    ?.split(",")
+    .map((keyword) => keyword.trim())
+    .filter(Boolean);
 
   return {
     title,
     description,
+    ...(keywords?.length ? { keywords } : {}),
     openGraph: {
       title,
       description,
@@ -104,9 +110,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: product.name,
+    name: product.metaTitle ?? product.name,
     image: product.image,
-    description: product.description ?? undefined,
+    description: product.metaDescription ?? product.description ?? undefined,
     url: productUrl,
     brand: {
       "@type": "Brand",

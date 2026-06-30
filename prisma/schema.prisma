@@ -220,6 +220,9 @@ model Product {
 
   // ─── NEW: E-commerce Affiliate columns ───
   seoSlug               String?  @unique
+  metaTitle             String?
+  metaDescription       String?
+  metaKeywords          String?
   isActive              Boolean  @default(true)
   showInAds             Boolean  @default(false)
   affiliatePrice        Float    @default(0)
@@ -667,6 +670,10 @@ model GeneralSetting {
   companyPhone    String?
   siteCurrency    String?  @default("USD")
   usdToTryRate    Float?   @default(0)
+  usdToSypRate    Float?   @default(0)
+  cashboxSyp      Float?   @default(0)
+  cashboxTry      Float?   @default(0)
+  cashboxUsd      Float?   @default(0)
   createdAt       DateTime @default(now())
   logo            String?
   facebookUrl     String?

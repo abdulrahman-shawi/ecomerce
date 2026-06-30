@@ -29,11 +29,19 @@ export type AggregateGeneralSetting = {
 export type GeneralSettingAvgAggregateOutputType = {
   id: number | null
   usdToTryRate: number | null
+  usdToSypRate: number | null
+  cashboxSyp: number | null
+  cashboxTry: number | null
+  cashboxUsd: number | null
 }
 
 export type GeneralSettingSumAggregateOutputType = {
   id: number | null
   usdToTryRate: number | null
+  usdToSypRate: number | null
+  cashboxSyp: number | null
+  cashboxTry: number | null
+  cashboxUsd: number | null
 }
 
 export type GeneralSettingMinAggregateOutputType = {
@@ -43,6 +51,10 @@ export type GeneralSettingMinAggregateOutputType = {
   companyPhone: string | null
   siteCurrency: string | null
   usdToTryRate: number | null
+  usdToSypRate: number | null
+  cashboxSyp: number | null
+  cashboxTry: number | null
+  cashboxUsd: number | null
   createdAt: Date | null
   logo: string | null
   facebookUrl: string | null
@@ -60,6 +72,10 @@ export type GeneralSettingMaxAggregateOutputType = {
   companyPhone: string | null
   siteCurrency: string | null
   usdToTryRate: number | null
+  usdToSypRate: number | null
+  cashboxSyp: number | null
+  cashboxTry: number | null
+  cashboxUsd: number | null
   createdAt: Date | null
   logo: string | null
   facebookUrl: string | null
@@ -77,6 +93,10 @@ export type GeneralSettingCountAggregateOutputType = {
   companyPhone: number
   siteCurrency: number
   usdToTryRate: number
+  usdToSypRate: number
+  cashboxSyp: number
+  cashboxTry: number
+  cashboxUsd: number
   createdAt: number
   logo: number
   facebookUrl: number
@@ -92,11 +112,19 @@ export type GeneralSettingCountAggregateOutputType = {
 export type GeneralSettingAvgAggregateInputType = {
   id?: true
   usdToTryRate?: true
+  usdToSypRate?: true
+  cashboxSyp?: true
+  cashboxTry?: true
+  cashboxUsd?: true
 }
 
 export type GeneralSettingSumAggregateInputType = {
   id?: true
   usdToTryRate?: true
+  usdToSypRate?: true
+  cashboxSyp?: true
+  cashboxTry?: true
+  cashboxUsd?: true
 }
 
 export type GeneralSettingMinAggregateInputType = {
@@ -106,6 +134,10 @@ export type GeneralSettingMinAggregateInputType = {
   companyPhone?: true
   siteCurrency?: true
   usdToTryRate?: true
+  usdToSypRate?: true
+  cashboxSyp?: true
+  cashboxTry?: true
+  cashboxUsd?: true
   createdAt?: true
   logo?: true
   facebookUrl?: true
@@ -123,6 +155,10 @@ export type GeneralSettingMaxAggregateInputType = {
   companyPhone?: true
   siteCurrency?: true
   usdToTryRate?: true
+  usdToSypRate?: true
+  cashboxSyp?: true
+  cashboxTry?: true
+  cashboxUsd?: true
   createdAt?: true
   logo?: true
   facebookUrl?: true
@@ -140,6 +176,10 @@ export type GeneralSettingCountAggregateInputType = {
   companyPhone?: true
   siteCurrency?: true
   usdToTryRate?: true
+  usdToSypRate?: true
+  cashboxSyp?: true
+  cashboxTry?: true
+  cashboxUsd?: true
   createdAt?: true
   logo?: true
   facebookUrl?: true
@@ -244,6 +284,10 @@ export type GeneralSettingGroupByOutputType = {
   companyPhone: string | null
   siteCurrency: string | null
   usdToTryRate: number | null
+  usdToSypRate: number | null
+  cashboxSyp: number | null
+  cashboxTry: number | null
+  cashboxUsd: number | null
   createdAt: Date
   logo: string | null
   facebookUrl: string | null
@@ -284,6 +328,10 @@ export type GeneralSettingWhereInput = {
   companyPhone?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
   siteCurrency?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
   usdToTryRate?: Prisma.FloatNullableFilter<"GeneralSetting"> | number | null
+  usdToSypRate?: Prisma.FloatNullableFilter<"GeneralSetting"> | number | null
+  cashboxSyp?: Prisma.FloatNullableFilter<"GeneralSetting"> | number | null
+  cashboxTry?: Prisma.FloatNullableFilter<"GeneralSetting"> | number | null
+  cashboxUsd?: Prisma.FloatNullableFilter<"GeneralSetting"> | number | null
   createdAt?: Prisma.DateTimeFilter<"GeneralSetting"> | Date | string
   logo?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
   facebookUrl?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
@@ -301,6 +349,10 @@ export type GeneralSettingOrderByWithRelationInput = {
   companyPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   siteCurrency?: Prisma.SortOrderInput | Prisma.SortOrder
   usdToTryRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  usdToSypRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  cashboxSyp?: Prisma.SortOrderInput | Prisma.SortOrder
+  cashboxTry?: Prisma.SortOrderInput | Prisma.SortOrder
+  cashboxUsd?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   logo?: Prisma.SortOrderInput | Prisma.SortOrder
   facebookUrl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -321,6 +373,10 @@ export type GeneralSettingWhereUniqueInput = Prisma.AtLeast<{
   companyPhone?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
   siteCurrency?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
   usdToTryRate?: Prisma.FloatNullableFilter<"GeneralSetting"> | number | null
+  usdToSypRate?: Prisma.FloatNullableFilter<"GeneralSetting"> | number | null
+  cashboxSyp?: Prisma.FloatNullableFilter<"GeneralSetting"> | number | null
+  cashboxTry?: Prisma.FloatNullableFilter<"GeneralSetting"> | number | null
+  cashboxUsd?: Prisma.FloatNullableFilter<"GeneralSetting"> | number | null
   createdAt?: Prisma.DateTimeFilter<"GeneralSetting"> | Date | string
   logo?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
   facebookUrl?: Prisma.StringNullableFilter<"GeneralSetting"> | string | null
@@ -338,6 +394,10 @@ export type GeneralSettingOrderByWithAggregationInput = {
   companyPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   siteCurrency?: Prisma.SortOrderInput | Prisma.SortOrder
   usdToTryRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  usdToSypRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  cashboxSyp?: Prisma.SortOrderInput | Prisma.SortOrder
+  cashboxTry?: Prisma.SortOrderInput | Prisma.SortOrder
+  cashboxUsd?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   logo?: Prisma.SortOrderInput | Prisma.SortOrder
   facebookUrl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -363,6 +423,10 @@ export type GeneralSettingScalarWhereWithAggregatesInput = {
   companyPhone?: Prisma.StringNullableWithAggregatesFilter<"GeneralSetting"> | string | null
   siteCurrency?: Prisma.StringNullableWithAggregatesFilter<"GeneralSetting"> | string | null
   usdToTryRate?: Prisma.FloatNullableWithAggregatesFilter<"GeneralSetting"> | number | null
+  usdToSypRate?: Prisma.FloatNullableWithAggregatesFilter<"GeneralSetting"> | number | null
+  cashboxSyp?: Prisma.FloatNullableWithAggregatesFilter<"GeneralSetting"> | number | null
+  cashboxTry?: Prisma.FloatNullableWithAggregatesFilter<"GeneralSetting"> | number | null
+  cashboxUsd?: Prisma.FloatNullableWithAggregatesFilter<"GeneralSetting"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"GeneralSetting"> | Date | string
   logo?: Prisma.StringNullableWithAggregatesFilter<"GeneralSetting"> | string | null
   facebookUrl?: Prisma.StringNullableWithAggregatesFilter<"GeneralSetting"> | string | null
@@ -379,6 +443,10 @@ export type GeneralSettingCreateInput = {
   companyPhone?: string | null
   siteCurrency?: string | null
   usdToTryRate?: number | null
+  usdToSypRate?: number | null
+  cashboxSyp?: number | null
+  cashboxTry?: number | null
+  cashboxUsd?: number | null
   createdAt?: Date | string
   logo?: string | null
   facebookUrl?: string | null
@@ -396,6 +464,10 @@ export type GeneralSettingUncheckedCreateInput = {
   companyPhone?: string | null
   siteCurrency?: string | null
   usdToTryRate?: number | null
+  usdToSypRate?: number | null
+  cashboxSyp?: number | null
+  cashboxTry?: number | null
+  cashboxUsd?: number | null
   createdAt?: Date | string
   logo?: string | null
   facebookUrl?: string | null
@@ -412,6 +484,10 @@ export type GeneralSettingUpdateInput = {
   companyPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usdToTryRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  usdToSypRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  cashboxSyp?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  cashboxTry?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  cashboxUsd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facebookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -429,6 +505,10 @@ export type GeneralSettingUncheckedUpdateInput = {
   companyPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usdToTryRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  usdToSypRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  cashboxSyp?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  cashboxTry?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  cashboxUsd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facebookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -446,6 +526,10 @@ export type GeneralSettingCreateManyInput = {
   companyPhone?: string | null
   siteCurrency?: string | null
   usdToTryRate?: number | null
+  usdToSypRate?: number | null
+  cashboxSyp?: number | null
+  cashboxTry?: number | null
+  cashboxUsd?: number | null
   createdAt?: Date | string
   logo?: string | null
   facebookUrl?: string | null
@@ -462,6 +546,10 @@ export type GeneralSettingUpdateManyMutationInput = {
   companyPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usdToTryRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  usdToSypRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  cashboxSyp?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  cashboxTry?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  cashboxUsd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facebookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -479,6 +567,10 @@ export type GeneralSettingUncheckedUpdateManyInput = {
   companyPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteCurrency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usdToTryRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  usdToSypRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  cashboxSyp?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  cashboxTry?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  cashboxUsd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facebookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -496,6 +588,10 @@ export type GeneralSettingCountOrderByAggregateInput = {
   companyPhone?: Prisma.SortOrder
   siteCurrency?: Prisma.SortOrder
   usdToTryRate?: Prisma.SortOrder
+  usdToSypRate?: Prisma.SortOrder
+  cashboxSyp?: Prisma.SortOrder
+  cashboxTry?: Prisma.SortOrder
+  cashboxUsd?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   logo?: Prisma.SortOrder
   facebookUrl?: Prisma.SortOrder
@@ -509,6 +605,10 @@ export type GeneralSettingCountOrderByAggregateInput = {
 export type GeneralSettingAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   usdToTryRate?: Prisma.SortOrder
+  usdToSypRate?: Prisma.SortOrder
+  cashboxSyp?: Prisma.SortOrder
+  cashboxTry?: Prisma.SortOrder
+  cashboxUsd?: Prisma.SortOrder
 }
 
 export type GeneralSettingMaxOrderByAggregateInput = {
@@ -518,6 +618,10 @@ export type GeneralSettingMaxOrderByAggregateInput = {
   companyPhone?: Prisma.SortOrder
   siteCurrency?: Prisma.SortOrder
   usdToTryRate?: Prisma.SortOrder
+  usdToSypRate?: Prisma.SortOrder
+  cashboxSyp?: Prisma.SortOrder
+  cashboxTry?: Prisma.SortOrder
+  cashboxUsd?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   logo?: Prisma.SortOrder
   facebookUrl?: Prisma.SortOrder
@@ -535,6 +639,10 @@ export type GeneralSettingMinOrderByAggregateInput = {
   companyPhone?: Prisma.SortOrder
   siteCurrency?: Prisma.SortOrder
   usdToTryRate?: Prisma.SortOrder
+  usdToSypRate?: Prisma.SortOrder
+  cashboxSyp?: Prisma.SortOrder
+  cashboxTry?: Prisma.SortOrder
+  cashboxUsd?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   logo?: Prisma.SortOrder
   facebookUrl?: Prisma.SortOrder
@@ -548,6 +656,10 @@ export type GeneralSettingMinOrderByAggregateInput = {
 export type GeneralSettingSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   usdToTryRate?: Prisma.SortOrder
+  usdToSypRate?: Prisma.SortOrder
+  cashboxSyp?: Prisma.SortOrder
+  cashboxTry?: Prisma.SortOrder
+  cashboxUsd?: Prisma.SortOrder
 }
 
 
@@ -559,6 +671,10 @@ export type GeneralSettingSelect<ExtArgs extends runtime.Types.Extensions.Intern
   companyPhone?: boolean
   siteCurrency?: boolean
   usdToTryRate?: boolean
+  usdToSypRate?: boolean
+  cashboxSyp?: boolean
+  cashboxTry?: boolean
+  cashboxUsd?: boolean
   createdAt?: boolean
   logo?: boolean
   facebookUrl?: boolean
@@ -576,6 +692,10 @@ export type GeneralSettingSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   companyPhone?: boolean
   siteCurrency?: boolean
   usdToTryRate?: boolean
+  usdToSypRate?: boolean
+  cashboxSyp?: boolean
+  cashboxTry?: boolean
+  cashboxUsd?: boolean
   createdAt?: boolean
   logo?: boolean
   facebookUrl?: boolean
@@ -593,6 +713,10 @@ export type GeneralSettingSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   companyPhone?: boolean
   siteCurrency?: boolean
   usdToTryRate?: boolean
+  usdToSypRate?: boolean
+  cashboxSyp?: boolean
+  cashboxTry?: boolean
+  cashboxUsd?: boolean
   createdAt?: boolean
   logo?: boolean
   facebookUrl?: boolean
@@ -610,6 +734,10 @@ export type GeneralSettingSelectScalar = {
   companyPhone?: boolean
   siteCurrency?: boolean
   usdToTryRate?: boolean
+  usdToSypRate?: boolean
+  cashboxSyp?: boolean
+  cashboxTry?: boolean
+  cashboxUsd?: boolean
   createdAt?: boolean
   logo?: boolean
   facebookUrl?: boolean
@@ -620,7 +748,7 @@ export type GeneralSettingSelectScalar = {
   updatedAt?: boolean
 }
 
-export type GeneralSettingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "siteName" | "companyEmail" | "companyPhone" | "siteCurrency" | "usdToTryRate" | "createdAt" | "logo" | "facebookUrl" | "instagramUrl" | "topBannerText" | "primaryColor" | "secondaryColor" | "updatedAt", ExtArgs["result"]["generalSetting"]>
+export type GeneralSettingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "siteName" | "companyEmail" | "companyPhone" | "siteCurrency" | "usdToTryRate" | "usdToSypRate" | "cashboxSyp" | "cashboxTry" | "cashboxUsd" | "createdAt" | "logo" | "facebookUrl" | "instagramUrl" | "topBannerText" | "primaryColor" | "secondaryColor" | "updatedAt", ExtArgs["result"]["generalSetting"]>
 
 export type $GeneralSettingPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "GeneralSetting"
@@ -632,6 +760,10 @@ export type $GeneralSettingPayload<ExtArgs extends runtime.Types.Extensions.Inte
     companyPhone: string | null
     siteCurrency: string | null
     usdToTryRate: number | null
+    usdToSypRate: number | null
+    cashboxSyp: number | null
+    cashboxTry: number | null
+    cashboxUsd: number | null
     createdAt: Date
     logo: string | null
     facebookUrl: string | null
@@ -1069,6 +1201,10 @@ export interface GeneralSettingFieldRefs {
   readonly companyPhone: Prisma.FieldRef<"GeneralSetting", 'String'>
   readonly siteCurrency: Prisma.FieldRef<"GeneralSetting", 'String'>
   readonly usdToTryRate: Prisma.FieldRef<"GeneralSetting", 'Float'>
+  readonly usdToSypRate: Prisma.FieldRef<"GeneralSetting", 'Float'>
+  readonly cashboxSyp: Prisma.FieldRef<"GeneralSetting", 'Float'>
+  readonly cashboxTry: Prisma.FieldRef<"GeneralSetting", 'Float'>
+  readonly cashboxUsd: Prisma.FieldRef<"GeneralSetting", 'Float'>
   readonly createdAt: Prisma.FieldRef<"GeneralSetting", 'DateTime'>
   readonly logo: Prisma.FieldRef<"GeneralSetting", 'String'>
   readonly facebookUrl: Prisma.FieldRef<"GeneralSetting", 'String'>

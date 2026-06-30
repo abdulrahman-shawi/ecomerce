@@ -48,6 +48,9 @@ export type ProductMinAggregateOutputType = {
   categoryId: number | null
   createdAt: Date | null
   seoSlug: string | null
+  metaTitle: string | null
+  metaDescription: string | null
+  metaKeywords: string | null
   isActive: boolean | null
   showInAds: boolean | null
   affiliatePrice: number | null
@@ -62,6 +65,9 @@ export type ProductMaxAggregateOutputType = {
   categoryId: number | null
   createdAt: Date | null
   seoSlug: string | null
+  metaTitle: string | null
+  metaDescription: string | null
+  metaKeywords: string | null
   isActive: boolean | null
   showInAds: boolean | null
   affiliatePrice: number | null
@@ -76,6 +82,9 @@ export type ProductCountAggregateOutputType = {
   categoryId: number
   createdAt: number
   seoSlug: number
+  metaTitle: number
+  metaDescription: number
+  metaKeywords: number
   isActive: number
   showInAds: number
   affiliatePrice: number
@@ -106,6 +115,9 @@ export type ProductMinAggregateInputType = {
   categoryId?: true
   createdAt?: true
   seoSlug?: true
+  metaTitle?: true
+  metaDescription?: true
+  metaKeywords?: true
   isActive?: true
   showInAds?: true
   affiliatePrice?: true
@@ -120,6 +132,9 @@ export type ProductMaxAggregateInputType = {
   categoryId?: true
   createdAt?: true
   seoSlug?: true
+  metaTitle?: true
+  metaDescription?: true
+  metaKeywords?: true
   isActive?: true
   showInAds?: true
   affiliatePrice?: true
@@ -134,6 +149,9 @@ export type ProductCountAggregateInputType = {
   categoryId?: true
   createdAt?: true
   seoSlug?: true
+  metaTitle?: true
+  metaDescription?: true
+  metaKeywords?: true
   isActive?: true
   showInAds?: true
   affiliatePrice?: true
@@ -235,6 +253,9 @@ export type ProductGroupByOutputType = {
   categoryId: number | null
   createdAt: Date
   seoSlug: string | null
+  metaTitle: string | null
+  metaDescription: string | null
+  metaKeywords: string | null
   isActive: boolean
   showInAds: boolean
   affiliatePrice: number
@@ -272,6 +293,9 @@ export type ProductWhereInput = {
   categoryId?: Prisma.IntNullableFilter<"Product"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   seoSlug?: Prisma.StringNullableFilter<"Product"> | string | null
+  metaTitle?: Prisma.StringNullableFilter<"Product"> | string | null
+  metaDescription?: Prisma.StringNullableFilter<"Product"> | string | null
+  metaKeywords?: Prisma.StringNullableFilter<"Product"> | string | null
   isActive?: Prisma.BoolFilter<"Product"> | boolean
   showInAds?: Prisma.BoolFilter<"Product"> | boolean
   affiliatePrice?: Prisma.FloatFilter<"Product"> | number
@@ -297,6 +321,9 @@ export type ProductOrderByWithRelationInput = {
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   seoSlug?: Prisma.SortOrderInput | Prisma.SortOrder
+  metaTitle?: Prisma.SortOrderInput | Prisma.SortOrder
+  metaDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  metaKeywords?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   showInAds?: Prisma.SortOrder
   affiliatePrice?: Prisma.SortOrder
@@ -325,6 +352,9 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   googleLink?: Prisma.StringNullableFilter<"Product"> | string | null
   categoryId?: Prisma.IntNullableFilter<"Product"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
+  metaTitle?: Prisma.StringNullableFilter<"Product"> | string | null
+  metaDescription?: Prisma.StringNullableFilter<"Product"> | string | null
+  metaKeywords?: Prisma.StringNullableFilter<"Product"> | string | null
   isActive?: Prisma.BoolFilter<"Product"> | boolean
   showInAds?: Prisma.BoolFilter<"Product"> | boolean
   affiliatePrice?: Prisma.FloatFilter<"Product"> | number
@@ -350,6 +380,9 @@ export type ProductOrderByWithAggregationInput = {
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   seoSlug?: Prisma.SortOrderInput | Prisma.SortOrder
+  metaTitle?: Prisma.SortOrderInput | Prisma.SortOrder
+  metaDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  metaKeywords?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   showInAds?: Prisma.SortOrder
   affiliatePrice?: Prisma.SortOrder
@@ -372,6 +405,9 @@ export type ProductScalarWhereWithAggregatesInput = {
   categoryId?: Prisma.IntNullableWithAggregatesFilter<"Product"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
   seoSlug?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  metaTitle?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  metaDescription?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  metaKeywords?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   showInAds?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   affiliatePrice?: Prisma.FloatWithAggregatesFilter<"Product"> | number
@@ -384,6 +420,9 @@ export type ProductCreateInput = {
   googleLink?: string | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -409,6 +448,9 @@ export type ProductUncheckedCreateInput = {
   categoryId?: number | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -431,6 +473,9 @@ export type ProductUpdateInput = {
   googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -456,6 +501,9 @@ export type ProductUncheckedUpdateInput = {
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -480,6 +528,9 @@ export type ProductCreateManyInput = {
   categoryId?: number | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -492,6 +543,9 @@ export type ProductUpdateManyMutationInput = {
   googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -506,6 +560,9 @@ export type ProductUncheckedUpdateManyInput = {
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -530,6 +587,9 @@ export type ProductCountOrderByAggregateInput = {
   categoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   seoSlug?: Prisma.SortOrder
+  metaTitle?: Prisma.SortOrder
+  metaDescription?: Prisma.SortOrder
+  metaKeywords?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   showInAds?: Prisma.SortOrder
   affiliatePrice?: Prisma.SortOrder
@@ -551,6 +611,9 @@ export type ProductMaxOrderByAggregateInput = {
   categoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   seoSlug?: Prisma.SortOrder
+  metaTitle?: Prisma.SortOrder
+  metaDescription?: Prisma.SortOrder
+  metaKeywords?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   showInAds?: Prisma.SortOrder
   affiliatePrice?: Prisma.SortOrder
@@ -565,6 +628,9 @@ export type ProductMinOrderByAggregateInput = {
   categoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   seoSlug?: Prisma.SortOrder
+  metaTitle?: Prisma.SortOrder
+  metaDescription?: Prisma.SortOrder
+  metaKeywords?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   showInAds?: Prisma.SortOrder
   affiliatePrice?: Prisma.SortOrder
@@ -794,6 +860,9 @@ export type ProductCreateWithoutCategoryInput = {
   googleLink?: string | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -817,6 +886,9 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   googleLink?: string | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -870,6 +942,9 @@ export type ProductScalarWhereInput = {
   categoryId?: Prisma.IntNullableFilter<"Product"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   seoSlug?: Prisma.StringNullableFilter<"Product"> | string | null
+  metaTitle?: Prisma.StringNullableFilter<"Product"> | string | null
+  metaDescription?: Prisma.StringNullableFilter<"Product"> | string | null
+  metaKeywords?: Prisma.StringNullableFilter<"Product"> | string | null
   isActive?: Prisma.BoolFilter<"Product"> | boolean
   showInAds?: Prisma.BoolFilter<"Product"> | boolean
   affiliatePrice?: Prisma.FloatFilter<"Product"> | number
@@ -882,6 +957,9 @@ export type ProductCreateWithoutLandingPageInput = {
   googleLink?: string | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -906,6 +984,9 @@ export type ProductUncheckedCreateWithoutLandingPageInput = {
   categoryId?: number | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -943,6 +1024,9 @@ export type ProductUpdateWithoutLandingPageInput = {
   googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -967,6 +1051,9 @@ export type ProductUncheckedUpdateWithoutLandingPageInput = {
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -988,6 +1075,9 @@ export type ProductCreateWithoutReviewsInput = {
   googleLink?: string | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1012,6 +1102,9 @@ export type ProductUncheckedCreateWithoutReviewsInput = {
   categoryId?: number | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1049,6 +1142,9 @@ export type ProductUpdateWithoutReviewsInput = {
   googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1073,6 +1169,9 @@ export type ProductUncheckedUpdateWithoutReviewsInput = {
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1094,6 +1193,9 @@ export type ProductCreateWithoutStocksInput = {
   googleLink?: string | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1118,6 +1220,9 @@ export type ProductUncheckedCreateWithoutStocksInput = {
   categoryId?: number | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1155,6 +1260,9 @@ export type ProductUpdateWithoutStocksInput = {
   googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1179,6 +1287,9 @@ export type ProductUncheckedUpdateWithoutStocksInput = {
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1200,6 +1311,9 @@ export type ProductCreateWithoutStockMovementsInput = {
   googleLink?: string | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1224,6 +1338,9 @@ export type ProductUncheckedCreateWithoutStockMovementsInput = {
   categoryId?: number | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1261,6 +1378,9 @@ export type ProductUpdateWithoutStockMovementsInput = {
   googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1285,6 +1405,9 @@ export type ProductUncheckedUpdateWithoutStockMovementsInput = {
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1306,6 +1429,9 @@ export type ProductCreateWithoutTargetProductsInput = {
   googleLink?: string | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1330,6 +1456,9 @@ export type ProductUncheckedCreateWithoutTargetProductsInput = {
   categoryId?: number | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1367,6 +1496,9 @@ export type ProductUpdateWithoutTargetProductsInput = {
   googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1391,6 +1523,9 @@ export type ProductUncheckedUpdateWithoutTargetProductsInput = {
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1412,6 +1547,9 @@ export type ProductCreateWithoutImagesInput = {
   googleLink?: string | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1436,6 +1574,9 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   categoryId?: number | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1473,6 +1614,9 @@ export type ProductUpdateWithoutImagesInput = {
   googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1497,6 +1641,9 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1518,6 +1665,9 @@ export type ProductCreateWithoutWarrantiesAsProductInput = {
   googleLink?: string | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1542,6 +1692,9 @@ export type ProductUncheckedCreateWithoutWarrantiesAsProductInput = {
   categoryId?: number | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1579,6 +1732,9 @@ export type ProductUpdateWithoutWarrantiesAsProductInput = {
   googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1603,6 +1759,9 @@ export type ProductUncheckedUpdateWithoutWarrantiesAsProductInput = {
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1624,6 +1783,9 @@ export type ProductCreateWithoutOrderItemsInput = {
   googleLink?: string | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1648,6 +1810,9 @@ export type ProductUncheckedCreateWithoutOrderItemsInput = {
   categoryId?: number | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1685,6 +1850,9 @@ export type ProductUpdateWithoutOrderItemsInput = {
   googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1709,6 +1877,9 @@ export type ProductUncheckedUpdateWithoutOrderItemsInput = {
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1730,6 +1901,9 @@ export type ProductCreateWithoutOfferDiscountsInput = {
   googleLink?: string | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1754,6 +1928,9 @@ export type ProductUncheckedCreateWithoutOfferDiscountsInput = {
   categoryId?: number | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1791,6 +1968,9 @@ export type ProductUpdateWithoutOfferDiscountsInput = {
   googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1815,6 +1995,9 @@ export type ProductUncheckedUpdateWithoutOfferDiscountsInput = {
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1836,6 +2019,9 @@ export type ProductCreateWithoutAffiliateLinksInput = {
   googleLink?: string | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1860,6 +2046,9 @@ export type ProductUncheckedCreateWithoutAffiliateLinksInput = {
   categoryId?: number | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1897,6 +2086,9 @@ export type ProductUpdateWithoutAffiliateLinksInput = {
   googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1921,6 +2113,9 @@ export type ProductUncheckedUpdateWithoutAffiliateLinksInput = {
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1943,6 +2138,9 @@ export type ProductCreateManyCategoryInput = {
   googleLink?: string | null
   createdAt?: Date | string
   seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: number
@@ -1955,6 +2153,9 @@ export type ProductUpdateWithoutCategoryInput = {
   googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1978,6 +2179,9 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2001,6 +2205,9 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
   googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -2118,6 +2325,9 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   categoryId?: boolean
   createdAt?: boolean
   seoSlug?: boolean
+  metaTitle?: boolean
+  metaDescription?: boolean
+  metaKeywords?: boolean
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: boolean
@@ -2144,6 +2354,9 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   categoryId?: boolean
   createdAt?: boolean
   seoSlug?: boolean
+  metaTitle?: boolean
+  metaDescription?: boolean
+  metaKeywords?: boolean
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: boolean
@@ -2159,6 +2372,9 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   categoryId?: boolean
   createdAt?: boolean
   seoSlug?: boolean
+  metaTitle?: boolean
+  metaDescription?: boolean
+  metaKeywords?: boolean
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: boolean
@@ -2174,13 +2390,16 @@ export type ProductSelectScalar = {
   categoryId?: boolean
   createdAt?: boolean
   seoSlug?: boolean
+  metaTitle?: boolean
+  metaDescription?: boolean
+  metaKeywords?: boolean
   isActive?: boolean
   showInAds?: boolean
   affiliatePrice?: boolean
   affiliateCommissionRate?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "googleLink" | "categoryId" | "createdAt" | "seoSlug" | "isActive" | "showInAds" | "affiliatePrice" | "affiliateCommissionRate", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "googleLink" | "categoryId" | "createdAt" | "seoSlug" | "metaTitle" | "metaDescription" | "metaKeywords" | "isActive" | "showInAds" | "affiliatePrice" | "affiliateCommissionRate", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orderItems?: boolean | Prisma.Product$orderItemsArgs<ExtArgs>
   category?: boolean | Prisma.Product$categoryArgs<ExtArgs>
@@ -2225,6 +2444,9 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     categoryId: number | null
     createdAt: Date
     seoSlug: string | null
+    metaTitle: string | null
+    metaDescription: string | null
+    metaKeywords: string | null
     isActive: boolean
     showInAds: boolean
     affiliatePrice: number
@@ -2670,6 +2892,9 @@ export interface ProductFieldRefs {
   readonly categoryId: Prisma.FieldRef<"Product", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Product", 'DateTime'>
   readonly seoSlug: Prisma.FieldRef<"Product", 'String'>
+  readonly metaTitle: Prisma.FieldRef<"Product", 'String'>
+  readonly metaDescription: Prisma.FieldRef<"Product", 'String'>
+  readonly metaKeywords: Prisma.FieldRef<"Product", 'String'>
   readonly isActive: Prisma.FieldRef<"Product", 'Boolean'>
   readonly showInAds: Prisma.FieldRef<"Product", 'Boolean'>
   readonly affiliatePrice: Prisma.FieldRef<"Product", 'Float'>

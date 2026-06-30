@@ -166,7 +166,17 @@ async function fetchCategoryProducts(
 export async function getProductBySlug(
   identifier: string,
   country?: string
-): Promise<(HomeProduct & { seoSlug: string | null; categorySlug: string | null }) | null> {
+): Promise<
+  (
+    HomeProduct & {
+      seoSlug: string | null;
+      categorySlug: string | null;
+      metaTitle: string | null;
+      metaDescription: string | null;
+      metaKeywords: string | null;
+    }
+  ) | null
+> {
   const activeCountry: CountryCode = country === "TR" ? "TR" : "SY";
   const warehouseIds = await getWarehouseIdsByCountry(activeCountry);
 
@@ -284,6 +294,9 @@ export async function getProductBySlug(
     categoryName: product.category?.name ?? null,
     seoSlug: product.seoSlug,
     categorySlug: product.category?.slug ?? null,
+    metaTitle: product.metaTitle,
+    metaDescription: product.metaDescription,
+    metaKeywords: product.metaKeywords,
     averageRating,
     totalReviews,
     stock: totalStock,
@@ -308,6 +321,9 @@ export interface LandingProduct {
   stock: number;
   categoryName: string | null;
   seoSlug: string | null;
+  metaTitle: string | null;
+  metaDescription: string | null;
+  metaKeywords: string | null;
   showInAds: boolean;
   landingPage: {
     heroTitle: string | null;
@@ -415,6 +431,9 @@ export async function getLandingProduct(
     stock: totalStock,
     categoryName: product.category?.name ?? null,
     seoSlug: product.seoSlug,
+    metaTitle: product.metaTitle,
+    metaDescription: product.metaDescription,
+    metaKeywords: product.metaKeywords,
     showInAds: product.showInAds,
     landingPage: lp
       ? {

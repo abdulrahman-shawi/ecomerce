@@ -22,18 +22,41 @@ export async function generateMetadata({ params }: LandingPageProps): Promise<Me
     };
   }
 
-  const title = product.landingPage?.heroTitle || product.name;
-  const description = product.landingPage?.heroDescription || product.description || `احصل على ${product.name} بأفضل سعر مع توصيل سريع ودفع عند الاستلام.`;
+  const title =
+    product.metaTitle?.trim() ||
+    product.landingPage?.heroTitle ||
+    product.name;
+  const description =
+    product.metaDescription?.trim() ||
+    product.landingPage?.heroDescription ||
+    product.description ||
+    `احصل على ${product.name} بأفضل سعر مع توصيل سريع ودفع عند الاستلام.`;
+  const url = `https://skynova.store/ad/${product.seoSlug ?? product.id}`;
+  const keywords = product.metaKeywords
+    ?.split(",")
+    .map((keyword) => keyword.trim())
+    .filter(Boolean);
 
   return {
-    title: `${title} - عرض خاص | SKYNOVA`,
+    title,
     description,
+    ...(keywords?.length ? { keywords } : {}),
     openGraph: {
-      title: `${title} - عرض خاص | SKYNOVA`,
+      title,
       description,
+      url,
       images: [{ url: product.image, width: 800, height: 800, alt: product.name }],
       type: "website",
       locale: "ar_AR",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [product.image],
+    },
+    alternates: {
+      canonical: url,
     },
   };
 }
