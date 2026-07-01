@@ -53,7 +53,10 @@ export type UserMinAggregateOutputType = {
   permissionId: string | null
   parentId: string | null
   isAffiliate: boolean | null
+  affiliateApproved: boolean | null
   affiliateCode: string | null
+  affiliateRequestedAt: Date | null
+  affiliateApprovedAt: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -73,7 +76,10 @@ export type UserMaxAggregateOutputType = {
   permissionId: string | null
   parentId: string | null
   isAffiliate: boolean | null
+  affiliateApproved: boolean | null
   affiliateCode: string | null
+  affiliateRequestedAt: Date | null
+  affiliateApprovedAt: Date | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -93,7 +99,10 @@ export type UserCountAggregateOutputType = {
   permissionId: number
   parentId: number
   isAffiliate: number
+  affiliateApproved: number
   affiliateCode: number
+  affiliateRequestedAt: number
+  affiliateApprovedAt: number
   _all: number
 }
 
@@ -125,7 +134,10 @@ export type UserMinAggregateInputType = {
   permissionId?: true
   parentId?: true
   isAffiliate?: true
+  affiliateApproved?: true
   affiliateCode?: true
+  affiliateRequestedAt?: true
+  affiliateApprovedAt?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -145,7 +157,10 @@ export type UserMaxAggregateInputType = {
   permissionId?: true
   parentId?: true
   isAffiliate?: true
+  affiliateApproved?: true
   affiliateCode?: true
+  affiliateRequestedAt?: true
+  affiliateApprovedAt?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -165,7 +180,10 @@ export type UserCountAggregateInputType = {
   permissionId?: true
   parentId?: true
   isAffiliate?: true
+  affiliateApproved?: true
   affiliateCode?: true
+  affiliateRequestedAt?: true
+  affiliateApprovedAt?: true
   _all?: true
 }
 
@@ -272,7 +290,10 @@ export type UserGroupByOutputType = {
   permissionId: string | null
   parentId: string | null
   isAffiliate: boolean
+  affiliateApproved: boolean
   affiliateCode: string | null
+  affiliateRequestedAt: Date | null
+  affiliateApprovedAt: Date | null
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
   _sum: UserSumAggregateOutputType | null
@@ -315,7 +336,10 @@ export type UserWhereInput = {
   permissionId?: Prisma.StringNullableFilter<"User"> | string | null
   parentId?: Prisma.StringNullableFilter<"User"> | string | null
   isAffiliate?: Prisma.BoolFilter<"User"> | boolean
+  affiliateApproved?: Prisma.BoolFilter<"User"> | boolean
   affiliateCode?: Prisma.StringNullableFilter<"User"> | string | null
+  affiliateRequestedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  affiliateApprovedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   parent?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   subordinates?: Prisma.UserListRelationFilter
   orders?: Prisma.OrderListRelationFilter
@@ -348,7 +372,10 @@ export type UserOrderByWithRelationInput = {
   permissionId?: Prisma.SortOrderInput | Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   isAffiliate?: Prisma.SortOrder
+  affiliateApproved?: Prisma.SortOrder
   affiliateCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  affiliateRequestedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  affiliateApprovedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   parent?: Prisma.UserOrderByWithRelationInput
   subordinates?: Prisma.UserOrderByRelationAggregateInput
   orders?: Prisma.OrderOrderByRelationAggregateInput
@@ -385,6 +412,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   permissionId?: Prisma.StringNullableFilter<"User"> | string | null
   parentId?: Prisma.StringNullableFilter<"User"> | string | null
   isAffiliate?: Prisma.BoolFilter<"User"> | boolean
+  affiliateApproved?: Prisma.BoolFilter<"User"> | boolean
+  affiliateRequestedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  affiliateApprovedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   parent?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   subordinates?: Prisma.UserListRelationFilter
   orders?: Prisma.OrderListRelationFilter
@@ -417,7 +447,10 @@ export type UserOrderByWithAggregationInput = {
   permissionId?: Prisma.SortOrderInput | Prisma.SortOrder
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   isAffiliate?: Prisma.SortOrder
+  affiliateApproved?: Prisma.SortOrder
   affiliateCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  affiliateRequestedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  affiliateApprovedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -445,7 +478,10 @@ export type UserScalarWhereWithAggregatesInput = {
   permissionId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   parentId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   isAffiliate?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  affiliateApproved?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   affiliateCode?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  affiliateRequestedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  affiliateApprovedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
 }
 
 export type UserCreateInput = {
@@ -463,7 +499,10 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   parent?: Prisma.UserCreateNestedOneWithoutSubordinatesInput
   subordinates?: Prisma.UserCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -496,7 +535,10 @@ export type UserUncheckedCreateInput = {
   permissionId?: string | null
   parentId?: string | null
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   subordinates?: Prisma.UserUncheckedCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUsersInput
@@ -525,7 +567,10 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parent?: Prisma.UserUpdateOneWithoutSubordinatesNestedInput
   subordinates?: Prisma.UserUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -558,7 +603,10 @@ export type UserUncheckedUpdateInput = {
   permissionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   subordinates?: Prisma.UserUncheckedUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutUsersNestedInput
@@ -589,7 +637,10 @@ export type UserCreateManyInput = {
   permissionId?: string | null
   parentId?: string | null
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -607,7 +658,10 @@ export type UserUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -627,7 +681,10 @@ export type UserUncheckedUpdateManyInput = {
   permissionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserNullableScalarRelationFilter = {
@@ -662,7 +719,10 @@ export type UserCountOrderByAggregateInput = {
   permissionId?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
   isAffiliate?: Prisma.SortOrder
+  affiliateApproved?: Prisma.SortOrder
   affiliateCode?: Prisma.SortOrder
+  affiliateRequestedAt?: Prisma.SortOrder
+  affiliateApprovedAt?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
@@ -687,7 +747,10 @@ export type UserMaxOrderByAggregateInput = {
   permissionId?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
   isAffiliate?: Prisma.SortOrder
+  affiliateApproved?: Prisma.SortOrder
   affiliateCode?: Prisma.SortOrder
+  affiliateRequestedAt?: Prisma.SortOrder
+  affiliateApprovedAt?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -707,7 +770,10 @@ export type UserMinOrderByAggregateInput = {
   permissionId?: Prisma.SortOrder
   parentId?: Prisma.SortOrder
   isAffiliate?: Prisma.SortOrder
+  affiliateApproved?: Prisma.SortOrder
   affiliateCode?: Prisma.SortOrder
+  affiliateRequestedAt?: Prisma.SortOrder
+  affiliateApprovedAt?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
@@ -774,6 +840,10 @@ export type DateTimeFieldUpdateOperationsInput = {
 
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type UserUpdateOneWithoutSubordinatesNestedInput = {
@@ -1043,7 +1113,10 @@ export type UserCreateWithoutSubordinatesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   parent?: Prisma.UserCreateNestedOneWithoutSubordinatesInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   permission?: Prisma.PermissionCreateNestedOneWithoutUsersInput
@@ -1075,7 +1148,10 @@ export type UserUncheckedCreateWithoutSubordinatesInput = {
   permissionId?: string | null
   parentId?: string | null
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUsersInput
   message?: Prisma.MessageUncheckedCreateNestedManyWithoutUserInput
@@ -1108,7 +1184,10 @@ export type UserCreateWithoutParentInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   subordinates?: Prisma.UserCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   permission?: Prisma.PermissionCreateNestedOneWithoutUsersInput
@@ -1139,7 +1218,10 @@ export type UserUncheckedCreateWithoutParentInput = {
   updatedAt?: Date | string
   permissionId?: string | null
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   subordinates?: Prisma.UserUncheckedCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUsersInput
@@ -1189,7 +1271,10 @@ export type UserUpdateWithoutSubordinatesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parent?: Prisma.UserUpdateOneWithoutSubordinatesNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   permission?: Prisma.PermissionUpdateOneWithoutUsersNestedInput
@@ -1221,7 +1306,10 @@ export type UserUncheckedUpdateWithoutSubordinatesInput = {
   permissionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutUsersNestedInput
   message?: Prisma.MessageUncheckedUpdateManyWithoutUserNestedInput
@@ -1270,7 +1358,10 @@ export type UserScalarWhereInput = {
   permissionId?: Prisma.StringNullableFilter<"User"> | string | null
   parentId?: Prisma.StringNullableFilter<"User"> | string | null
   isAffiliate?: Prisma.BoolFilter<"User"> | boolean
+  affiliateApproved?: Prisma.BoolFilter<"User"> | boolean
   affiliateCode?: Prisma.StringNullableFilter<"User"> | string | null
+  affiliateRequestedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  affiliateApprovedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
 }
 
 export type UserCreateWithoutPermissionInput = {
@@ -1288,7 +1379,10 @@ export type UserCreateWithoutPermissionInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   parent?: Prisma.UserCreateNestedOneWithoutSubordinatesInput
   subordinates?: Prisma.UserCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -1319,7 +1413,10 @@ export type UserUncheckedCreateWithoutPermissionInput = {
   updatedAt?: Date | string
   parentId?: string | null
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   subordinates?: Prisma.UserUncheckedCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUsersInput
@@ -1374,7 +1471,10 @@ export type UserCreateWithoutReviewsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   parent?: Prisma.UserCreateNestedOneWithoutSubordinatesInput
   subordinates?: Prisma.UserCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -1406,7 +1506,10 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   permissionId?: string | null
   parentId?: string | null
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   subordinates?: Prisma.UserUncheckedCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUsersInput
@@ -1450,7 +1553,10 @@ export type UserUpdateWithoutReviewsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parent?: Prisma.UserUpdateOneWithoutSubordinatesNestedInput
   subordinates?: Prisma.UserUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -1482,7 +1588,10 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   permissionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   subordinates?: Prisma.UserUncheckedUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutUsersNestedInput
@@ -1510,7 +1619,10 @@ export type UserCreateWithoutStockMovementsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   parent?: Prisma.UserCreateNestedOneWithoutSubordinatesInput
   subordinates?: Prisma.UserCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -1542,7 +1654,10 @@ export type UserUncheckedCreateWithoutStockMovementsInput = {
   permissionId?: string | null
   parentId?: string | null
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   subordinates?: Prisma.UserUncheckedCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUsersInput
@@ -1586,7 +1701,10 @@ export type UserUpdateWithoutStockMovementsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parent?: Prisma.UserUpdateOneWithoutSubordinatesNestedInput
   subordinates?: Prisma.UserUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -1618,7 +1736,10 @@ export type UserUncheckedUpdateWithoutStockMovementsInput = {
   permissionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   subordinates?: Prisma.UserUncheckedUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutUsersNestedInput
@@ -1646,7 +1767,10 @@ export type UserCreateWithoutTargetsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   parent?: Prisma.UserCreateNestedOneWithoutSubordinatesInput
   subordinates?: Prisma.UserCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -1678,7 +1802,10 @@ export type UserUncheckedCreateWithoutTargetsInput = {
   permissionId?: string | null
   parentId?: string | null
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   subordinates?: Prisma.UserUncheckedCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUsersInput
@@ -1722,7 +1849,10 @@ export type UserUpdateWithoutTargetsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parent?: Prisma.UserUpdateOneWithoutSubordinatesNestedInput
   subordinates?: Prisma.UserUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -1754,7 +1884,10 @@ export type UserUncheckedUpdateWithoutTargetsInput = {
   permissionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   subordinates?: Prisma.UserUncheckedUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutUsersNestedInput
@@ -1782,7 +1915,10 @@ export type UserCreateWithoutActivityTargetsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   parent?: Prisma.UserCreateNestedOneWithoutSubordinatesInput
   subordinates?: Prisma.UserCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -1814,7 +1950,10 @@ export type UserUncheckedCreateWithoutActivityTargetsInput = {
   permissionId?: string | null
   parentId?: string | null
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   subordinates?: Prisma.UserUncheckedCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUsersInput
@@ -1858,7 +1997,10 @@ export type UserUpdateWithoutActivityTargetsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parent?: Prisma.UserUpdateOneWithoutSubordinatesNestedInput
   subordinates?: Prisma.UserUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -1890,7 +2032,10 @@ export type UserUncheckedUpdateWithoutActivityTargetsInput = {
   permissionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   subordinates?: Prisma.UserUncheckedUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutUsersNestedInput
@@ -1918,7 +2063,10 @@ export type UserCreateWithoutCustomersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   parent?: Prisma.UserCreateNestedOneWithoutSubordinatesInput
   subordinates?: Prisma.UserCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -1950,7 +2098,10 @@ export type UserUncheckedCreateWithoutCustomersInput = {
   permissionId?: string | null
   parentId?: string | null
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   subordinates?: Prisma.UserUncheckedCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   message?: Prisma.MessageUncheckedCreateNestedManyWithoutUserInput
@@ -1999,7 +2150,10 @@ export type UserCreateWithoutMessageInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   parent?: Prisma.UserCreateNestedOneWithoutSubordinatesInput
   subordinates?: Prisma.UserCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -2031,7 +2185,10 @@ export type UserUncheckedCreateWithoutMessageInput = {
   permissionId?: string | null
   parentId?: string | null
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   subordinates?: Prisma.UserUncheckedCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUsersInput
@@ -2075,7 +2232,10 @@ export type UserUpdateWithoutMessageInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parent?: Prisma.UserUpdateOneWithoutSubordinatesNestedInput
   subordinates?: Prisma.UserUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -2107,7 +2267,10 @@ export type UserUncheckedUpdateWithoutMessageInput = {
   permissionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   subordinates?: Prisma.UserUncheckedUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutUsersNestedInput
@@ -2135,7 +2298,10 @@ export type UserCreateWithoutOrdersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   parent?: Prisma.UserCreateNestedOneWithoutSubordinatesInput
   subordinates?: Prisma.UserCreateNestedManyWithoutParentInput
   permission?: Prisma.PermissionCreateNestedOneWithoutUsersInput
@@ -2167,7 +2333,10 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   permissionId?: string | null
   parentId?: string | null
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   subordinates?: Prisma.UserUncheckedCreateNestedManyWithoutParentInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUsersInput
   message?: Prisma.MessageUncheckedCreateNestedManyWithoutUserInput
@@ -2211,7 +2380,10 @@ export type UserUpdateWithoutOrdersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parent?: Prisma.UserUpdateOneWithoutSubordinatesNestedInput
   subordinates?: Prisma.UserUpdateManyWithoutParentNestedInput
   permission?: Prisma.PermissionUpdateOneWithoutUsersNestedInput
@@ -2243,7 +2415,10 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   permissionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   subordinates?: Prisma.UserUncheckedUpdateManyWithoutParentNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutUsersNestedInput
   message?: Prisma.MessageUncheckedUpdateManyWithoutUserNestedInput
@@ -2271,7 +2446,10 @@ export type UserCreateWithoutExpensesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   parent?: Prisma.UserCreateNestedOneWithoutSubordinatesInput
   subordinates?: Prisma.UserCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -2303,7 +2481,10 @@ export type UserUncheckedCreateWithoutExpensesInput = {
   permissionId?: string | null
   parentId?: string | null
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   subordinates?: Prisma.UserUncheckedCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUsersInput
@@ -2347,7 +2528,10 @@ export type UserUpdateWithoutExpensesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parent?: Prisma.UserUpdateOneWithoutSubordinatesNestedInput
   subordinates?: Prisma.UserUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -2379,7 +2563,10 @@ export type UserUncheckedUpdateWithoutExpensesInput = {
   permissionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   subordinates?: Prisma.UserUncheckedUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutUsersNestedInput
@@ -2407,7 +2594,10 @@ export type UserCreateWithoutSalaryAdjustmentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   parent?: Prisma.UserCreateNestedOneWithoutSubordinatesInput
   subordinates?: Prisma.UserCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -2439,7 +2629,10 @@ export type UserUncheckedCreateWithoutSalaryAdjustmentsInput = {
   permissionId?: string | null
   parentId?: string | null
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   subordinates?: Prisma.UserUncheckedCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUsersInput
@@ -2483,7 +2676,10 @@ export type UserUpdateWithoutSalaryAdjustmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parent?: Prisma.UserUpdateOneWithoutSubordinatesNestedInput
   subordinates?: Prisma.UserUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -2515,7 +2711,10 @@ export type UserUncheckedUpdateWithoutSalaryAdjustmentsInput = {
   permissionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   subordinates?: Prisma.UserUncheckedUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutUsersNestedInput
@@ -2543,7 +2742,10 @@ export type UserCreateWithoutAffiliateLinksInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   parent?: Prisma.UserCreateNestedOneWithoutSubordinatesInput
   subordinates?: Prisma.UserCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -2575,7 +2777,10 @@ export type UserUncheckedCreateWithoutAffiliateLinksInput = {
   permissionId?: string | null
   parentId?: string | null
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
   subordinates?: Prisma.UserUncheckedCreateNestedManyWithoutParentInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUsersInput
@@ -2619,7 +2824,10 @@ export type UserUpdateWithoutAffiliateLinksInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parent?: Prisma.UserUpdateOneWithoutSubordinatesNestedInput
   subordinates?: Prisma.UserUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -2651,7 +2859,10 @@ export type UserUncheckedUpdateWithoutAffiliateLinksInput = {
   permissionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   subordinates?: Prisma.UserUncheckedUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutUsersNestedInput
@@ -2680,7 +2891,10 @@ export type UserCreateManyParentInput = {
   updatedAt?: Date | string
   permissionId?: string | null
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
 }
 
 export type UserUpdateWithoutParentInput = {
@@ -2698,7 +2912,10 @@ export type UserUpdateWithoutParentInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   subordinates?: Prisma.UserUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   permission?: Prisma.PermissionUpdateOneWithoutUsersNestedInput
@@ -2729,7 +2946,10 @@ export type UserUncheckedUpdateWithoutParentInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permissionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   subordinates?: Prisma.UserUncheckedUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutUsersNestedInput
@@ -2759,7 +2979,10 @@ export type UserUncheckedUpdateManyWithoutParentInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   permissionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserCreateManyPermissionInput = {
@@ -2778,7 +3001,10 @@ export type UserCreateManyPermissionInput = {
   updatedAt?: Date | string
   parentId?: string | null
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: string | null
+  affiliateRequestedAt?: Date | string | null
+  affiliateApprovedAt?: Date | string | null
 }
 
 export type UserUpdateWithoutPermissionInput = {
@@ -2796,7 +3022,10 @@ export type UserUpdateWithoutPermissionInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parent?: Prisma.UserUpdateOneWithoutSubordinatesNestedInput
   subordinates?: Prisma.UserUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -2827,7 +3056,10 @@ export type UserUncheckedUpdateWithoutPermissionInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   subordinates?: Prisma.UserUncheckedUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutUsersNestedInput
@@ -2857,7 +3089,10 @@ export type UserUncheckedUpdateManyWithoutPermissionInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserUpdateWithoutCustomersInput = {
@@ -2875,7 +3110,10 @@ export type UserUpdateWithoutCustomersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parent?: Prisma.UserUpdateOneWithoutSubordinatesNestedInput
   subordinates?: Prisma.UserUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -2907,7 +3145,10 @@ export type UserUncheckedUpdateWithoutCustomersInput = {
   permissionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   subordinates?: Prisma.UserUncheckedUpdateManyWithoutParentNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   message?: Prisma.MessageUncheckedUpdateManyWithoutUserNestedInput
@@ -2937,7 +3178,10 @@ export type UserUncheckedUpdateManyWithoutCustomersInput = {
   permissionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isAffiliate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliateApproved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliateCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  affiliateRequestedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  affiliateApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -3078,7 +3322,10 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   permissionId?: boolean
   parentId?: boolean
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: boolean
+  affiliateRequestedAt?: boolean
+  affiliateApprovedAt?: boolean
   parent?: boolean | Prisma.User$parentArgs<ExtArgs>
   subordinates?: boolean | Prisma.User$subordinatesArgs<ExtArgs>
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
@@ -3112,7 +3359,10 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   permissionId?: boolean
   parentId?: boolean
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: boolean
+  affiliateRequestedAt?: boolean
+  affiliateApprovedAt?: boolean
   parent?: boolean | Prisma.User$parentArgs<ExtArgs>
   permission?: boolean | Prisma.User$permissionArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -3134,7 +3384,10 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   permissionId?: boolean
   parentId?: boolean
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: boolean
+  affiliateRequestedAt?: boolean
+  affiliateApprovedAt?: boolean
   parent?: boolean | Prisma.User$parentArgs<ExtArgs>
   permission?: boolean | Prisma.User$permissionArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -3156,10 +3409,13 @@ export type UserSelectScalar = {
   permissionId?: boolean
   parentId?: boolean
   isAffiliate?: boolean
+  affiliateApproved?: boolean
   affiliateCode?: boolean
+  affiliateRequestedAt?: boolean
+  affiliateApprovedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "phone" | "notes" | "jobTitle" | "avatar" | "accountType" | "password" | "salesCommissionPercent" | "wage" | "createdAt" | "updatedAt" | "permissionId" | "parentId" | "isAffiliate" | "affiliateCode", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "phone" | "notes" | "jobTitle" | "avatar" | "accountType" | "password" | "salesCommissionPercent" | "wage" | "createdAt" | "updatedAt" | "permissionId" | "parentId" | "isAffiliate" | "affiliateApproved" | "affiliateCode" | "affiliateRequestedAt" | "affiliateApprovedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   parent?: boolean | Prisma.User$parentArgs<ExtArgs>
   subordinates?: boolean | Prisma.User$subordinatesArgs<ExtArgs>
@@ -3219,7 +3475,10 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     permissionId: string | null
     parentId: string | null
     isAffiliate: boolean
+    affiliateApproved: boolean
     affiliateCode: string | null
+    affiliateRequestedAt: Date | null
+    affiliateApprovedAt: Date | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -3672,7 +3931,10 @@ export interface UserFieldRefs {
   readonly permissionId: Prisma.FieldRef<"User", 'String'>
   readonly parentId: Prisma.FieldRef<"User", 'String'>
   readonly isAffiliate: Prisma.FieldRef<"User", 'Boolean'>
+  readonly affiliateApproved: Prisma.FieldRef<"User", 'Boolean'>
   readonly affiliateCode: Prisma.FieldRef<"User", 'String'>
+  readonly affiliateRequestedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly affiliateApprovedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     
 

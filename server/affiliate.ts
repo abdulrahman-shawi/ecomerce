@@ -53,9 +53,9 @@ export async function registerAffiliate(
         email,
         password: hashedPassword,
         phone: phone || null,
-        isAffiliate: true,
+        isAffiliate: false,
         affiliateCode,
-        accountType: "STAFF",
+        accountType: "AFFILIATE",
       },
     });
 

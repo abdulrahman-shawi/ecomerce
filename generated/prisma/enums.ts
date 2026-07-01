@@ -79,7 +79,8 @@ export type PaidFromOffice = (typeof PaidFromOffice)[keyof typeof PaidFromOffice
 export const AccountType = {
   ADMIN: 'ADMIN',
   MANAGER: 'MANAGER',
-  STAFF: 'STAFF'
+  STAFF: 'STAFF',
+  AFFILIATE: 'AFFILIATE'
 } as const
 
 export type AccountType = (typeof AccountType)[keyof typeof AccountType]

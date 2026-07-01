@@ -501,10 +501,6 @@ export type UserTargetUpdatesalesRewardValueInput = {
   push?: number | number[]
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type UserTargetCreateNestedOneWithoutProductsInput = {
   create?: Prisma.XOR<Prisma.UserTargetCreateWithoutProductsInput, Prisma.UserTargetUncheckedCreateWithoutProductsInput>
   connectOrCreate?: Prisma.UserTargetCreateOrConnectWithoutProductsInput

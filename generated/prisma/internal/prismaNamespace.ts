@@ -2634,7 +2634,10 @@ export const UserScalarFieldEnum = {
   permissionId: 'permissionId',
   parentId: 'parentId',
   isAffiliate: 'isAffiliate',
-  affiliateCode: 'affiliateCode'
+  affiliateApproved: 'affiliateApproved',
+  affiliateCode: 'affiliateCode',
+  affiliateRequestedAt: 'affiliateRequestedAt',
+  affiliateApprovedAt: 'affiliateApprovedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
