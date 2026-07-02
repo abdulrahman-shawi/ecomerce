@@ -1,12 +1,15 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { verifyToken } from "@/lib/jwt";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 
 export interface LandingOrderInput {
   productId: number;
   quantity: number;
+  customerId?: string | null;
+  authToken?: string;
   name: string;
   phone: string;
   country: "SY" | "TR";
@@ -23,7 +26,7 @@ function generateOrderNumber(): string {
 
 export async function createLandingOrder(input: LandingOrderInput) {
   try {
-    const { productId, quantity, name, phone, country, city, address, notes } = input;
+    const { productId, quantity, customerId, authToken, name, phone, country, city, address, notes } = input;
 
     if (!productId || !quantity || !name || !phone || !country || !city || !address) {
       return { success: false, error: "يرجى تعبئة جميع الحقول المطلوبة" };
@@ -83,42 +86,84 @@ export async function createLandingOrder(input: LandingOrderInput) {
     const firstStock = stocks[0];
     const unitPrice = firstStock ? firstStock.discount : product.affiliatePrice;
     const totalPrice = unitPrice * quantity;
+    const authPayload = authToken ? verifyToken(authToken) : null;
+    const authenticatedCustomerId = authPayload?.userId ?? customerId ?? null;
 
     const { order } = await prisma.$transaction(async (tx) => {
-      // Find or create customer
-      let customer = await tx.customer.findFirst({
-        where: { phone: { has: phone } },
-      });
+      let customer = authenticatedCustomerId
+        ? await tx.customer.findUnique({ where: { id: authenticatedCustomerId } })
+        : null;
 
-      if (!customer) {
-        try {
-          customer = await tx.customer.create({
+      if (customer) {
+        customer = await tx.customer.update({
+          where: { id: customer.id },
+          data: {
+            status: "المتجر",
+            country,
+            city,
+            source: customer.source ?? "landing_page",
+            ...(!customer.phone.includes(phone) ? { phone: { push: phone } } : {}),
+          },
+        });
+      } else {
+        customer = await tx.customer.findFirst({
+          where: {
+            name,
+            phone: { has: phone },
+          },
+        });
+
+        if (!customer) {
+          const existingByPhone = await tx.customer.findFirst({
+            where: { phone: { has: phone } },
+          });
+          const existingByName = await tx.customer.findUnique({ where: { name } });
+          customer = existingByPhone ?? existingByName;
+        }
+
+        if (customer) {
+          customer = await tx.customer.update({
+            where: { id: customer.id },
             data: {
-              name,
-              phone: [phone],
               status: "المتجر",
-              phonestatus: "معلق",
               country,
               city,
-              source: "landing_page",
+              source: customer.source ?? "landing_page",
+              ...(!customer.phone.includes(phone) ? { phone: { push: phone } } : {}),
             },
           });
-        } catch (createErr: any) {
-          if (createErr?.code === "P2002") {
-            customer = await tx.customer.findUnique({ where: { name } });
-            if (customer) {
-              customer = await tx.customer.update({
-                where: { id: customer.id },
-                data: {
-                  phone: { push: phone },
-                  country,
-                  city,
-                },
-              });
+        } else {
+          try {
+            customer = await tx.customer.create({
+              data: {
+                name,
+                phone: [phone],
+                status: "المتجر",
+                phonestatus: "معلق",
+                country,
+                city,
+                source: "landing_page",
+              },
+            });
+          } catch (createErr: any) {
+            if (createErr?.code === "P2002") {
+              customer = await tx.customer.findUnique({ where: { name } });
+              if (customer) {
+                customer = await tx.customer.update({
+                  where: { id: customer.id },
+                  data: {
+                    status: "المتجر",
+                    country,
+                    city,
+                    source: customer.source ?? "landing_page",
+                    ...(!customer.phone.includes(phone) ? { phone: { push: phone } } : {}),
+                  },
+                });
+              }
             }
-          }
-          if (!customer) {
-            throw new Error(createErr?.message || "فشل إنشاء العميل");
+            if (!customer) {
+              throw new Error(createErr?.message || "فشل إنشاء العميل");
+            }
           }
         }
       }

@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { useCart } from "@/context/CartContext";
 import { useRegion } from "@/context/RegionContext";
 import { useSettings } from "@/context/SettingsContext";
+import { useAuth } from "@/context/AuthContext";
 import { formatPrice } from "@/lib/currency";
 import { countries, citiesByCountry } from "@/lib/cities";
 import { MapPin, User, ShoppingBag, ChevronLeft, CheckCircle } from "lucide-react";
@@ -19,6 +20,7 @@ export default function CheckoutPage() {
   const { items, totalPrice, clearCart } = useCart();
   const { country: regionCountry } = useRegion();
   const { siteCurrency, usdToTryRate } = useSettings();
+  const { user } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -131,12 +133,17 @@ export default function CheckoutPage() {
 
     try {
       const affiliateCode = typeof window !== "undefined" ? localStorage.getItem("affiliate-code") : null;
+      const authToken = typeof window !== "undefined" ? localStorage.getItem("ecommerce-auth-token") : null;
       const res = await fetch("/api/checkout", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+        },
         credentials: "include",
         body: JSON.stringify({
           ...formData,
+          customerId: user?.id ?? null,
           lat: position?.[0] ?? null,
           lng: position?.[1] ?? null,
           items,

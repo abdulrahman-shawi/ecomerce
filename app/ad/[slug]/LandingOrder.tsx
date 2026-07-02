@@ -5,6 +5,7 @@ import Image from "next/image";
 import { formatPrice, getCurrencySymbol } from "@/lib/currency";
 import { citiesByCountry } from "@/lib/cities";
 import { createLandingOrder } from "@/server/landing-order";
+import { useAuth } from "@/context/AuthContext";
 import StarRating from "@/component/StarRating";
 import {
   Phone,
@@ -85,6 +86,7 @@ const defaultFeatures = [
 ];
 
 export default function LandingOrder({ product, reviews, siteName }: LandingOrderProps) {
+  const { user } = useAuth();
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(product.image);
   const [showForm, setShowForm] = useState(false);
@@ -130,9 +132,13 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
     setLoading(true);
     setResult(null);
 
+    const authToken = typeof window !== "undefined" ? localStorage.getItem("ecommerce-auth-token") : null;
+
     const res = await createLandingOrder({
       productId: product.id,
       quantity,
+      customerId: user?.id ?? null,
+      authToken: authToken ?? undefined,
       name: form.name,
       phone: form.phone,
       country: form.country,

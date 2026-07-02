@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
+import { verifyToken } from "@/lib/jwt";
 
 function generateOrderNumber(): string {
   const timestamp = Date.now().toString(36).toUpperCase();
@@ -11,6 +12,11 @@ function generateOrderNumber(): string {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    const authHeader = request.headers.get("authorization");
+    const authToken = authHeader?.startsWith("Bearer ")
+      ? authHeader.slice("Bearer ".length).trim()
+      : null;
+    const authPayload = authToken ? verifyToken(authToken) : null;
     const {
       name,
       phone,
@@ -57,41 +63,82 @@ export async function POST(request: NextRequest) {
     const stockCountry = country === "TR" ? "تركيا" : "سوريا";
 
     const { customer, order } = await prisma.$transaction(async (tx) => {
-      // ─── 1. Find or create customer ───
-      let customer = await tx.customer.findFirst({
-        where: { phone: { has: phone } },
-      });
+      // ─── 1. Resolve customer ───
+      const authenticatedCustomer = authPayload?.userId
+        ? await tx.customer.findUnique({ where: { id: authPayload.userId } })
+        : null;
 
-      if (!customer) {
-        try {
-          customer = await tx.customer.create({
+      let customer = authenticatedCustomer;
+
+      if (customer) {
+        customer = await tx.customer.update({
+          where: { id: customer.id },
+          data: {
+            status: "المتجر",
+            country,
+            city,
+            ...(!customer.phone.includes(phone) ? { phone: { push: phone } } : {}),
+          },
+        });
+      } else {
+        customer = await tx.customer.findFirst({
+          where: {
+            name,
+            phone: { has: phone },
+          },
+        });
+
+        if (!customer) {
+          const existingByPhone = await tx.customer.findFirst({
+            where: { phone: { has: phone } },
+          });
+          const existingByName = await tx.customer.findUnique({ where: { name } });
+          customer = existingByPhone ?? existingByName;
+        }
+
+        if (customer) {
+          customer = await tx.customer.update({
+            where: { id: customer.id },
             data: {
-              name,
-              phone: [phone],
-              status: "المتجر ",
-              phonestatus: "معلق",
+              status: "المتجر",
               country,
               city,
+              ...(!customer.phone.includes(phone) ? { phone: { push: phone } } : {}),
             },
           });
-        } catch (createErr: any) {
-          if (createErr?.code === "P2002") {
-            customer = await tx.customer.findUnique({ where: { name } });
-            if (customer) {
-              customer = await tx.customer.update({
-                where: { id: customer.id },
-                data: {
-                  phone: { push: phone },
-                  country,
-                  city,
-                },
-              });
+        } else {
+          try {
+            customer = await tx.customer.create({
+              data: {
+                name,
+                phone: [phone],
+                status: "المتجر",
+                phonestatus: "معلق",
+                country,
+                city,
+              },
+            });
+          } catch (createErr: any) {
+            if (createErr?.code === "P2002") {
+              customer = await tx.customer.findUnique({ where: { name } });
+              if (customer) {
+                customer = await tx.customer.update({
+                  where: { id: customer.id },
+                  data: {
+                    status: "المتجر",
+                    country,
+                    city,
+                    ...(!customer.phone.includes(phone) ? { phone: { push: phone } } : {}),
+                  },
+                });
+              }
             }
-          }
-          if (!customer) {
-            throw new Error(
-              `Failed to create customer: ${createErr?.message || "Unknown error"}`
-            );
+
+            if (!customer) {
+              throw new Error(
+                `Failed to create customer: ${createErr?.message || "Unknown error"}`
+              );
+            }
           }
         }
       }
