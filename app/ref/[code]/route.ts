@@ -3,11 +3,11 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { code: string } }
+  context: { params: { code: string } | Promise<{ code: string }> }
 ) {
-  const code = params.code;
-
   try {
+    const { code } = await context.params;
+
     const link = await prisma.affiliateLink.findUnique({
       where: { uniqueCode: code },
       include: {
@@ -31,16 +31,15 @@ export async function GET(
       ? `/product/${link.product.seoSlug}`
       : `/product/${link.product.id}`;
 
-    const response = NextResponse.rewrite(new URL(productUrl, request.url));
+    const response = NextResponse.redirect(new URL(productUrl, request.url));
 
     // Set affiliate cookie for 30 days
-    // Using sameSite: "none" + secure for maximum compatibility in production
     response.cookies.set("affiliate-code", code, {
       maxAge: 60 * 60 * 24 * 30,
       path: "/",
       httpOnly: false,
-      sameSite: "none",
-      secure: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
     });
 
     return response;
