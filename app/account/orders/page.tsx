@@ -73,8 +73,8 @@ export default function OrdersPage() {
       return;
     }
 
-    if (user?.name) {
-      getOrdersForAccount(user.name, user.phone)
+    if (user?.id || user?.name || user?.phone) {
+      getOrdersForAccount(user?.id, user?.name, user?.phone)
         .then((data) => setOrders(data as unknown as Order[]))
         .catch(() => setOrders([]))
         .finally(() => setLoading(false));

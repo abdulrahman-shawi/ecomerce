@@ -34,10 +34,19 @@ export async function getCustomerOrders(customerId: string) {
   return orders;
 }
 
-export async function getOrdersForAccount(name: string, phone?: string | null) {
+export async function getOrdersForAccount(
+  customerId?: string | null,
+  name?: string | null,
+  phone?: string | null
+) {
   const filters: Prisma.OrderWhereInput[] = [
-    { customer: { is: { name } } },
-    { receiverName: name },
+    ...(customerId ? [{ customerId }] : []),
+    ...(name
+      ? [
+          { customer: { is: { name } } },
+          { receiverName: name },
+        ]
+      : []),
   ];
 
   if (phone) {
@@ -45,6 +54,10 @@ export async function getOrdersForAccount(name: string, phone?: string | null) {
       { customer: { is: { phone: { has: phone } } } },
       { receiverPhone: { has: phone } }
     );
+  }
+
+  if (filters.length === 0) {
+    return [];
   }
 
   return prisma.order.findMany({
