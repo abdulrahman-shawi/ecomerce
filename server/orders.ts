@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import type { Prisma } from "@/generated/prisma/client";
 
 const orderInclude = {
   items: {
@@ -34,14 +35,14 @@ export async function getCustomerOrders(customerId: string) {
 }
 
 export async function getOrdersForAccount(name: string, phone?: string | null) {
-  const filters = [
-    { customer: { name } },
+  const filters: Prisma.OrderWhereInput[] = [
+    { customer: { is: { name } } },
     { receiverName: name },
   ];
 
   if (phone) {
     filters.push(
-      { customer: { phone: { has: phone } } },
+      { customer: { is: { phone: { has: phone } } } },
       { receiverPhone: { has: phone } }
     );
   }
