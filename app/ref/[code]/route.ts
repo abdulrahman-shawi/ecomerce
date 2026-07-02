@@ -31,7 +31,7 @@ export async function GET(
       ? `/product/${link.product.seoSlug}`
       : `/product/${link.product.id}`;
 
-    const response = NextResponse.redirect(new URL(productUrl, request.url));
+    const response = NextResponse.rewrite(new URL(productUrl, request.url));
 
     // Set affiliate cookie for 30 days
     response.cookies.set("affiliate-code", code, {
