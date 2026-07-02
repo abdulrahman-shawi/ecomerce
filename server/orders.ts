@@ -2,33 +2,57 @@
 
 import { prisma } from "@/lib/prisma";
 
-export async function getCustomerOrders(customerId: string) {
-  const orders = await prisma.order.findMany({
-    where: { customerId },
+const orderInclude = {
+  items: {
     include: {
-      items: {
-        include: {
-          product: {
-            select: {
-              id: true,
-              name: true,
-              images: {
-                where: { type: "main" },
-                take: 1,
-                select: { url: true },
-              },
-            },
+      product: {
+        select: {
+          id: true,
+          name: true,
+          images: {
+            where: { type: "main" },
+            take: 1,
+            select: { url: true },
           },
         },
       },
-      shipping: {
-        select: { name: true, price: true },
-      },
     },
+  },
+  shipping: {
+    select: { name: true, price: true },
+  },
+} as const;
+
+export async function getCustomerOrders(customerId: string) {
+  const orders = await prisma.order.findMany({
+    where: { customerId },
+    include: orderInclude,
     orderBy: { createdAt: "desc" },
   });
 
   return orders;
+}
+
+export async function getOrdersForAccount(name: string, phone?: string | null) {
+  const filters = [
+    { customer: { name } },
+    { receiverName: name },
+  ];
+
+  if (phone) {
+    filters.push(
+      { customer: { phone: { has: phone } } },
+      { receiverPhone: { has: phone } }
+    );
+  }
+
+  return prisma.order.findMany({
+    where: {
+      OR: filters,
+    },
+    include: orderInclude,
+    orderBy: { createdAt: "desc" },
+  });
 }
 
 export async function getOrdersByPhone(phone: string) {

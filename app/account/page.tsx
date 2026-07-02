@@ -4,7 +4,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Link from "next/link";
-import { User, LogOut, Package, Heart, MapPin, Phone } from "lucide-react";
+import { User, LogOut, Package, Heart, MapPin, Phone, BadgePercent } from "lucide-react";
 import Header from "@/component/sections/Header";
 import Footer from "@/component/sections/Footer";
 
@@ -52,6 +52,19 @@ export default function AccountPage() {
               <div>
                 <h3 className="font-medium text-gray-800 font-tajawal">طلباتي</h3>
                 <p className="text-sm text-gray-400 font-tajawal">عرض سجل الطلبات</p>
+              </div>
+            </Link>
+
+            <Link
+              href="/affiliate/dashboard"
+              className="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 transition-colors border border-gray-100 text-right"
+            >
+              <div className="w-10 h-10 bg-pink/10 rounded-full flex items-center justify-center text-pink">
+                <BadgePercent size={20} />
+              </div>
+              <div>
+                <h3 className="font-medium text-gray-800 font-tajawal">الأفلييت</h3>
+                <p className="text-sm text-gray-400 font-tajawal">تسجيل الدخول وإدارة حساب الأفلييت</p>
               </div>
             </Link>
 

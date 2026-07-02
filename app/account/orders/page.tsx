@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { useSettings } from "@/context/SettingsContext";
 import { formatPrice } from "@/lib/currency";
-import { getOrdersByPhone } from "@/server/orders";
+import { getOrdersForAccount } from "@/server/orders";
 import Header from "@/component/sections/Header";
 import Footer from "@/component/sections/Footer";
 import { Package, ArrowLeft, Calendar, Truck, CreditCard, MapPin, Phone } from "lucide-react";
@@ -73,8 +73,8 @@ export default function OrdersPage() {
       return;
     }
 
-    if (user?.phone) {
-      getOrdersByPhone(user.phone)
+    if (user?.name) {
+      getOrdersForAccount(user.name, user.phone)
         .then((data) => setOrders(data as unknown as Order[]))
         .catch(() => setOrders([]))
         .finally(() => setLoading(false));
