@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
       : null;
     const authPayload = authToken ? verifyToken(authToken) : null;
     const {
+      customerId,
       name,
       phone,
       country,
@@ -64,8 +65,9 @@ export async function POST(request: NextRequest) {
 
     const { customer, order } = await prisma.$transaction(async (tx) => {
       // ─── 1. Resolve customer ───
-      const authenticatedCustomer = authPayload?.userId
-        ? await tx.customer.findUnique({ where: { id: authPayload.userId } })
+      const authenticatedCustomerId = authPayload?.userId ?? customerId ?? null;
+      const authenticatedCustomer = authenticatedCustomerId
+        ? await tx.customer.findUnique({ where: { id: authenticatedCustomerId } })
         : null;
 
       let customer = authenticatedCustomer;
