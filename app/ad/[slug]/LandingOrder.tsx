@@ -7,8 +7,9 @@ import { citiesByCountry } from "@/lib/cities";
 import { createLandingOrder } from "@/server/landing-order";
 import { useAuth } from "@/context/AuthContext";
 import StarRating from "@/component/StarRating";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import {
-  Phone,
   MapPin,
   User,
   Package,
@@ -84,6 +85,16 @@ const defaultFeatures = [
   { title: "تركيبة آمنة", description: "مناسب لجميع أنواع البشرة والشعر." },
   { title: "عبوة اقتصادية", description: "كمية تكفي معكِ لفترة طويلة." },
 ];
+
+function sanitizePhoneNumber(value: string) {
+  const normalized = value.replace(/[^\d+]/g, "");
+
+  if (!normalized.startsWith("+")) {
+    return normalized.replace(/\+/g, "");
+  }
+
+  return `+${normalized.slice(1).replace(/\+/g, "")}`;
+}
 
 export default function LandingOrder({ product, reviews, siteName }: LandingOrderProps) {
   const { user } = useAuth();
@@ -186,15 +197,19 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1 font-tajawal">رقم الهاتف *</label>
-        <div className="relative">
-          <Phone className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-          <input
-            type="tel"
-            required
+        <div className="phone-input-wrapper" dir="ltr">
+          <PhoneInput
+            international
+            defaultCountry={form.country}
             value={form.phone}
-            onChange={(e) => setForm({ ...form, phone: e.target.value })}
-            className="w-full border border-gray-200 rounded-xl pr-10 pl-3 py-3 focus:outline-none focus:ring-2 focus:ring-pink focus:border-transparent font-tajawal bg-gray-50"
-            placeholder="مثال: 0991234567"
+            onChange={(value) => setForm({ ...form, phone: sanitizePhoneNumber(value || "") })}
+            placeholder="Enter phone number"
+            className="w-full border border-gray-200 rounded-xl focus-within:outline-none focus-within:ring-2 focus-within:ring-pink focus-within:border-transparent font-tajawal bg-gray-50 overflow-hidden"
+            numberInputProps={{
+              required: true,
+              inputMode: "numeric",
+              pattern: "[0-9+]*",
+            }}
           />
         </div>
       </div>
