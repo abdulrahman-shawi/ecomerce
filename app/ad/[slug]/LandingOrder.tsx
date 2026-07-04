@@ -70,6 +70,7 @@ interface LandingOrderProps {
   product: LandingProduct;
   reviews: Review[];
   siteName: string;
+  usdToTryRate: number;
 }
 
 const defaultTrustBadges = [
@@ -96,7 +97,7 @@ function sanitizePhoneNumber(value: string) {
   return `+${normalized.slice(1).replace(/\+/g, "")}`;
 }
 
-export default function LandingOrder({ product, reviews, siteName }: LandingOrderProps) {
+export default function LandingOrder({ product, reviews, siteName, usdToTryRate }: LandingOrderProps) {
   const { user } = useAuth();
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(product.image);
@@ -113,7 +114,6 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
   const [result, setResult] = useState<{ success: boolean; message: string; orderNumber?: string } | null>(null);
 
   const currencySymbol = getCurrencySymbol(product.currency);
-  const totalPrice = product.price * quantity;
   const lp = product.landingPage;
   const heroTitle = lp?.heroTitle || product.name;
   const heroSubtitle = lp?.heroSubtitle || null;
@@ -129,6 +129,10 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
   const showGuarantee = lp?.showGuarantee ?? true;
 
   const hasDiscount = product.originalPrice && product.originalPrice > product.price;
+  const displayedUnitPrice = hasDiscount
+    ? Math.round(product.originalPrice! - product.price)
+    : product.price;
+  const totalPrice = displayedUnitPrice * quantity;
   const computedDiscountPercent = hasDiscount
     ? Math.round(((product.originalPrice! - product.price) / product.originalPrice!) * 100)
     : 0;
@@ -292,11 +296,11 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
       <div className="bg-pink-50 rounded-xl p-4 border border-pink-100">
         <div className="flex items-center justify-between mb-2">
           <span className="text-gray-600 font-tajawal">سعر الوحدة:</span>
-          <span className="font-bold font-tajawal">{formatPrice(product.price, product.currency)}</span>
+          <span className="font-bold font-tajawal">{formatPrice(displayedUnitPrice, product.currency, usdToTryRate)}</span>
         </div>
         <div className="flex items-center justify-between text-lg">
           <span className="font-bold text-gray-800 font-tajawal">الإجمالي:</span>
-          <span className="text-2xl font-bold text-pink-dark font-tajawal">{formatPrice(totalPrice, product.currency)}</span>
+          <span className="text-2xl font-bold text-pink-dark font-tajawal">{formatPrice(totalPrice, product.currency, usdToTryRate)}</span>
         </div>
       </div>
 
@@ -306,7 +310,7 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
         className="w-full bg-pink hover:bg-pink-dark text-white py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:shadow-lg hover:shadow-pink/30 font-tajawal disabled:opacity-60 flex items-center justify-center gap-2"
       >
         {loading ? <Loader2 className="animate-spin" size={20} /> : null}
-        {loading ? "جاري إرسال الطلب..." : `${ctaText} - ${formatPrice(totalPrice, product.currency)}`}
+        {loading ? "جاري إرسال الطلب..." : `${ctaText} - ${formatPrice(totalPrice, product.currency, usdToTryRate)}`}
       </button>
 
       {!inModal && (
@@ -414,11 +418,11 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
 
               <div className="flex items-center gap-4 mb-6">
                 <span className="text-4xl font-bold text-pink-dark font-tajawal">
-                  {formatPrice(product.price, product.currency)}
+                  {formatPrice(displayedUnitPrice, product.currency, usdToTryRate)}
                 </span>
                 {hasDiscount && (
                   <span className="text-2xl text-gray-400 line-through font-tajawal">
-                    {formatPrice(product.originalPrice!, product.currency)}
+                    {formatPrice(product.originalPrice!, product.currency, usdToTryRate)}
                   </span>
                 )}
               </div>
@@ -452,7 +456,7 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-3 z-40 flex items-center justify-between gap-3">
         <div>
           <p className="text-xs text-gray-500 font-tajawal">السعر الإجمالي</p>
-          <p className="text-xl font-bold text-pink-dark font-tajawal">{formatPrice(totalPrice, product.currency)}</p>
+          <p className="text-xl font-bold text-pink-dark font-tajawal">{formatPrice(totalPrice, product.currency, usdToTryRate)}</p>
         </div>
         <button
           onClick={() => setShowForm(true)}

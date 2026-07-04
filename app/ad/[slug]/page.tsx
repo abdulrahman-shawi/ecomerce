@@ -92,6 +92,7 @@ export default async function LandingPage({ params }: LandingPageProps) {
       }}
       reviews={reviewsData.reviews}
       siteName={settings.siteName}
+      usdToTryRate={settings.usdToTryRate}
     />
   );
 }
