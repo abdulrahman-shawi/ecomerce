@@ -22,6 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
       default: title,
       template: `%s | ${siteName}`,
     },
+    manifest: "/manifest.webmanifest",
     description,
     keywords: [
       "عناية بالبشرة",
@@ -51,6 +52,13 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
     },
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: "default",
+      title: siteName,
+    },
+    applicationName: siteName,
+    themeColor: "#7f305d",
     robots: {
       index: true,
       follow: true,

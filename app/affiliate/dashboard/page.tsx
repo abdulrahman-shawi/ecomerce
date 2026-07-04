@@ -15,6 +15,7 @@ import {
   DollarSign,
   Clock,
   CheckCircle,
+  XCircle,
   Copy,
   ExternalLink,
   LogOut,
@@ -30,6 +31,9 @@ interface DashboardData {
   totalCommissions: number;
   pendingCommissions: number;
   paidCommissions: number;
+  potentialCommissions: number;
+  confirmedCommissions: number;
+  lostCommissions: number;
   linksCount: number;
   links: any[];
 }
@@ -129,7 +133,7 @@ export default function AffiliateDashboardPage() {
       <main className="max-w-7xl mx-auto px-4 py-8">
         {/* Stats Cards */}
         {dashboard && (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-2 gap-4 mb-8 md:grid-cols-3 xl:grid-cols-6">
             <StatCard
               icon={<MousePointerClick size={20} />}
               label="النقرات"
@@ -150,9 +154,21 @@ export default function AffiliateDashboardPage() {
             />
             <StatCard
               icon={<Clock size={20} />}
-              label="معلقة"
-              value={formatPrice(dashboard.pendingCommissions, siteCurrency, usdToTryRate)}
+              label="العمولات المحتملة"
+              value={formatPrice(dashboard.potentialCommissions, siteCurrency, usdToTryRate)}
               color="orange"
+            />
+            <StatCard
+              icon={<CheckCircle size={20} />}
+              label="العمولات المؤكدة"
+              value={formatPrice(dashboard.confirmedCommissions, siteCurrency, usdToTryRate)}
+              color="green"
+            />
+            <StatCard
+              icon={<XCircle size={20} />}
+              label="العمولات الضائعة"
+              value={formatPrice(dashboard.lostCommissions, siteCurrency, usdToTryRate)}
+              color="red"
             />
           </div>
         )}
@@ -238,7 +254,7 @@ export default function AffiliateDashboardPage() {
                       <td className="py-3 px-2">{c.affiliateLink?.product?.name ?? "—"}</td>
                       <td className="py-3 px-2 font-bold">{formatPrice(c.amount, siteCurrency, usdToTryRate)}</td>
                       <td className="py-3 px-2">
-                        <StatusBadge status={c.status} />
+                        <StatusBadge orderStatus={c.order?.status} commissionStatus={c.status} />
                       </td>
                       <td className="py-3 px-2 text-gray-400 text-xs">
                         {new Date(c.createdAt).toLocaleDateString("ar-SA")}
@@ -265,13 +281,14 @@ function StatCard({
   icon: React.ReactNode;
   label: string;
   value: string | number;
-  color: "blue" | "green" | "pink" | "orange";
+  color: "blue" | "green" | "pink" | "orange" | "red";
 }) {
   const colors = {
     blue: "bg-blue-50 text-blue-600",
     green: "bg-green-50 text-green-600",
     pink: "bg-pink-50 text-pink",
     orange: "bg-orange-50 text-orange-600",
+    red: "bg-red-50 text-red-600",
   };
 
   return (
@@ -285,7 +302,39 @@ function StatCard({
   );
 }
 
-function StatusBadge({ status }: { status: string }) {
+function StatusBadge({
+  orderStatus,
+  commissionStatus,
+}: {
+  orderStatus?: string | null;
+  commissionStatus: string;
+}) {
+  const normalizedOrderStatus = (orderStatus ?? "").trim().toLowerCase();
+
+  if (["المتجر"].includes(normalizedOrderStatus)) {
+    return (
+      <span className="px-2.5 py-1 rounded-lg text-xs font-medium bg-yellow-50 text-yellow-600">
+        محتملة
+      </span>
+    );
+  }
+
+  if (["مؤكد", "جاهزة للتسليم", "جاهز للتسليم", "تم التسليم", "تم التوصيل", "تم تسليم الطلب", "confirmed", "shipped", "delivered"].includes(normalizedOrderStatus)) {
+    return (
+      <span className="px-2.5 py-1 rounded-lg text-xs font-medium bg-green-50 text-green-600">
+        مؤكدة
+      </span>
+    );
+  }
+
+  if (["تم الغاء الطلب", "تم إلغاء الطلب", "ملغي", "ملغاة", "فشل التسليم", "مرتجع", "cancelled", "returned", "return", "failed_delivery", "failed delivery"].includes(normalizedOrderStatus)) {
+    return (
+      <span className="px-2.5 py-1 rounded-lg text-xs font-medium bg-red-50 text-red-600">
+        ضائعة
+      </span>
+    );
+  }
+
   const styles: Record<string, string> = {
     PENDING: "bg-yellow-50 text-yellow-600",
     PAID: "bg-green-50 text-green-600",
@@ -299,8 +348,8 @@ function StatusBadge({ status }: { status: string }) {
   };
 
   return (
-    <span className={`px-2.5 py-1 rounded-lg text-xs font-medium ${styles[status] ?? "bg-gray-50 text-gray-600"}`}>
-      {labels[status] ?? status}
+    <span className={`px-2.5 py-1 rounded-lg text-xs font-medium ${styles[commissionStatus] ?? "bg-gray-50 text-gray-600"}`}>
+      {labels[commissionStatus] ?? commissionStatus}
     </span>
   );
 }

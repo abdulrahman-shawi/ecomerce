@@ -21,6 +21,44 @@ function generateUniqueCode(): string {
   return "LNK" + Math.random().toString(36).substring(2, 10).toUpperCase();
 }
 
+function normalizeOrderStatus(status: string | null | undefined): string {
+  return (status ?? "").trim().toLowerCase();
+}
+
+function isPotentialOrderStatus(status: string | null | undefined): boolean {
+  return ["المتجر"].includes(normalizeOrderStatus(status));
+}
+
+function isConfirmedOrderStatus(status: string | null | undefined): boolean {
+  return [
+    "مؤكد",
+    "جاهزة للتسليم",
+    "جاهز للتسليم",
+    "تم التسليم",
+    "تم التوصيل",
+    "تم تسليم الطلب",
+    "confirmed",
+    "shipped",
+    "delivered",
+  ].includes(normalizeOrderStatus(status));
+}
+
+function isLostOrderStatus(status: string | null | undefined): boolean {
+  return [
+    "تم الغاء الطلب",
+    "تم إلغاء الطلب",
+    "ملغي",
+    "ملغاة",
+    "فشل التسليم",
+    "مرتجع",
+    "cancelled",
+    "returned",
+    "return",
+    "failed_delivery",
+    "failed delivery",
+  ].includes(normalizeOrderStatus(status));
+}
+
 // ─── 1. Register Affiliate ───
 export async function registerAffiliate(
   username: string,
@@ -176,6 +214,13 @@ export async function getAffiliateDashboard(userId: string) {
     where: {
       affiliateLink: { userId },
     },
+    include: {
+      order: {
+        select: {
+          status: true,
+        },
+      },
+    },
   });
 
   const totalClicks = links.reduce((sum, l) => sum + l.clicks, 0);
@@ -187,6 +232,15 @@ export async function getAffiliateDashboard(userId: string) {
   const paidCommissions = commissions
     .filter((c) => c.status === "PAID")
     .reduce((sum, c) => sum + c.amount, 0);
+  const potentialCommissions = commissions
+    .filter((c) => isPotentialOrderStatus(c.order?.status))
+    .reduce((sum, c) => sum + c.amount, 0);
+  const confirmedCommissions = commissions
+    .filter((c) => isConfirmedOrderStatus(c.order?.status))
+    .reduce((sum, c) => sum + c.amount, 0);
+  const lostCommissions = commissions
+    .filter((c) => isLostOrderStatus(c.order?.status))
+    .reduce((sum, c) => sum + c.amount, 0);
 
   return {
     totalClicks,
@@ -194,6 +248,9 @@ export async function getAffiliateDashboard(userId: string) {
     totalCommissions,
     pendingCommissions,
     paidCommissions,
+    potentialCommissions,
+    confirmedCommissions,
+    lostCommissions,
     linksCount: links.length,
     links,
   };
@@ -211,7 +268,7 @@ export async function getAffiliateCommissions(userId: string) {
           product: { select: { name: true } },
         },
       },
-      order: { select: { orderNumber: true, createdAt: true } },
+      order: { select: { orderNumber: true, createdAt: true, status: true } },
     },
     orderBy: { createdAt: "desc" },
   });
