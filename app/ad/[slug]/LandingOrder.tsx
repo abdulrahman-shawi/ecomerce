@@ -471,7 +471,7 @@ export default function LandingOrder({ product, reviews, siteName }: LandingOrde
       </section>
 
       {/* Order Form Section Desktop */}
-      <section id="order-form" className="hidden lg:block py-16 bg-gradient-to-br from-gray-50 to-pink-50/30">
+      <section id="order-form" className="py-16 pb-28 lg:pb-16 bg-gradient-to-br from-gray-50 to-pink-50/30">
         <div className="max-w-4xl mx-auto px-4">
           <div className="bg-white rounded-3xl shadow-xl p-8 md:p-10 border border-pink-100">
             <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-2 font-tajawal">

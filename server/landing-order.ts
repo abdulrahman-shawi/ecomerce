@@ -196,7 +196,6 @@ export async function createLandingOrder(input: LandingOrderInput) {
           deliveryNotes: notes,
           status: "المتجر",
           customerId: customer.id,
-          userId: affiliateLink?.productId === productId ? affiliateLink.userId : undefined,
           warehouseId: warehouse.id,
         },
       });

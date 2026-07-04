@@ -169,6 +169,7 @@ export async function getProductBySlug(
 ): Promise<
   (
     HomeProduct & {
+      images: string[];
       seoSlug: string | null;
       categorySlug: string | null;
       metaTitle: string | null;
@@ -273,10 +274,11 @@ export async function getProductBySlug(
   if (!product) return null;
 
   const stock = product.stocks[0];
-  const image =
-    product.images.find((img) => img.type === "main")?.url ||
-    product.images[0]?.url ||
-    "/images/products/placeholder.jpg";
+  const images = product.images
+    .slice()
+    .sort((a, b) => (a.type === "main" ? -1 : b.type === "main" ? 1 : 0))
+    .map((img) => img.url);
+  const image = images[0] || "/images/products/placeholder.jpg";
 
   const price = stock ? stock.discount : product.affiliatePrice;
   const originalPrice = stock?.price ?? null;
@@ -288,6 +290,7 @@ export async function getProductBySlug(
     name: product.name,
     description: product.description,
     image,
+    images,
     price: Math.round(price),
     originalPrice: originalPrice ? Math.round(originalPrice) : null,
     badge: getBadge(product),

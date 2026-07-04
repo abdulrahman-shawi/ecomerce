@@ -8,6 +8,7 @@ import Header from "@/component/sections/Header";
 import Footer from "@/component/sections/Footer";
 import TopBanner from "@/component/sections/TopBanner";
 import CartDrawer from "@/component/CartDrawer";
+import ProductGallery from "@/component/ProductGallery";
 import { getProductBySlug } from "@/server/products";
 import { getServerCountry } from "@/lib/region";
 import { getProductReviews } from "@/server/reviews";
@@ -176,26 +177,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
           <div className="grid md:grid-cols-2 gap-0">
             {/* Image Section */}
-            <div className="relative aspect-square bg-gray-50">
-              <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                className="object-cover"
-                priority
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-              {product.badge && (
-                <span className="absolute top-4 right-4 bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg font-tajawal">
-                  {product.badge}
-                </span>
-              )}
-              {hasDiscount && (
-                <span className="absolute top-4 right-4 mt-8 bg-pink text-white text-xs font-bold px-3 py-1.5 rounded-lg font-tajawal">
-                  -{formatPrice(product.price, settings.siteCurrency, settings.usdToTryRate)}
-                </span>
-              )}
-            </div>
+            <ProductGallery
+              name={product.name}
+              images={product.images}
+              badge={product.badge}
+              discountLabel={
+                hasDiscount
+                  ? `-${formatPrice(product.price, settings.siteCurrency, settings.usdToTryRate)}`
+                  : null
+              }
+            />
 
             {/* Details Section */}
             <div className="p-6 md:p-10 flex flex-col text-right">
