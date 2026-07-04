@@ -171,6 +171,7 @@ export async function getProductBySlug(
     HomeProduct & {
       images: string[];
       seoSlug: string | null;
+      categoryId: number | null;
       categorySlug: string | null;
       metaTitle: string | null;
       metaDescription: string | null;
@@ -296,6 +297,7 @@ export async function getProductBySlug(
     badge: getBadge(product),
     categoryName: product.category?.name ?? null,
     seoSlug: product.seoSlug,
+    categoryId: product.category?.id ?? null,
     categorySlug: product.category?.slug ?? null,
     metaTitle: product.metaTitle,
     metaDescription: product.metaDescription,

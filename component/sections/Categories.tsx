@@ -24,9 +24,9 @@ export default function Categories({ categories }: CategoriesProps) {
             <Link
               key={cat.id}
               href={cat.slug ? `/category/${cat.slug}` : `/category/${cat.id}`}
-              className="group cursor-pointer block"
+              className="group mx-auto block w-full max-w-[240px] cursor-pointer"
             >
-              <div className="relative overflow-hidden rounded-2xl aspect-square mb-3">
+              <div className="relative mb-3 aspect-[4/5] overflow-hidden rounded-2xl">
                 <img
                   src={cat.image}
                   alt={cat.name}

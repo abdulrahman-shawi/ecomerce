@@ -84,8 +84,13 @@ export async function createLandingOrder(input: LandingOrderInput) {
     }
 
     const firstStock = stocks[0];
-    const unitPrice = firstStock ? firstStock.discount : product.affiliatePrice;
+    const originalUnitPrice = firstStock?.price ?? product.affiliatePrice;
+    const unitDiscount =
+      firstStock && firstStock.price > firstStock.discount ? firstStock.discount : 0;
+    const unitPrice = Math.max(originalUnitPrice - unitDiscount, 0);
     const totalPrice = unitPrice * quantity;
+    const totalDiscount = unitDiscount * quantity;
+    const totalAmount = originalUnitPrice * quantity;
     const authPayload = authToken ? verifyToken(authToken) : null;
     const authenticatedCustomerId = authPayload?.userId ?? customerId ?? null;
 
@@ -184,9 +189,9 @@ export async function createLandingOrder(input: LandingOrderInput) {
       const order = await tx.order.create({
         data: {
           orderNumber: generateOrderNumber(),
-          totalAmount: totalPrice,
+          totalAmount,
           finalAmount: totalPrice,
-          discount: 0,
+          discount: totalDiscount,
           paymentMethod: "CASH",
           receiverName: name,
           receiverPhone: [phone],
@@ -206,7 +211,7 @@ export async function createLandingOrder(input: LandingOrderInput) {
         data: {
           quantity,
           price: unitPrice,
-          discount: 0,
+          discount: unitDiscount,
           productId,
           orderId: order.id,
           affiliateLinkId,

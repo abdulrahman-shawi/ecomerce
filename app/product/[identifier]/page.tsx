@@ -107,6 +107,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const productUrl = `https://skynova.store/product/${
     product.seoSlug ?? product.id
   }`;
+  const categoryHref = product.categorySlug
+    ? `/category/${product.categorySlug}`
+    : product.categoryId
+      ? `/category/${product.categoryId}`
+      : null;
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -155,10 +160,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
               الرئيسية
             </Link>
             <span className="text-gray-300">/</span>
-            {product.categoryName && (
+            {product.categoryName && categoryHref && (
               <>
                 <Link
-                  href={`/category/${product.categorySlug ?? product.categoryName}`}
+                  href={categoryHref}
                   className="text-gray-500 hover:text-pink transition-colors"
                 >
                   {product.categoryName}
@@ -233,11 +238,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
               {/* Meta Info */}
               <div className="space-y-3 mb-8 text-sm text-gray-500 font-tajawal">
-                {product.categoryName && (
+                {product.categoryName && categoryHref && (
                   <div className="flex items-center gap-2">
                     <span>القسم:</span>
                     <Link
-                      href={`/category/${product.categorySlug ?? product.categoryName}`}
+                      href={categoryHref}
                       className="text-pink hover:underline"
                     >
                       {product.categoryName}

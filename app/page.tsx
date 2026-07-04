@@ -40,8 +40,6 @@ export default async function Home() {
         <BestSellers products={bestSellers} />
         <LimitedOffer offer={limitedOffer} />
         <Testimonials testimonials={testimonials} />
-        <Features />
-        <Newsletter />
       </main>
       <Footer />
       <CartDrawer />
