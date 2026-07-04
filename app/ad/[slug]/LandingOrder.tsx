@@ -144,6 +144,12 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!form.name || !form.phone || !form.city || !form.address) {
+      setResult({ success: false, message: "يرجى تعبئة جميع الحقول المطلوبة" });
+      return;
+    }
+
     setLoading(true);
     setResult(null);
 
@@ -178,8 +184,8 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
     }
   };
 
-  const OrderForm = ({ inModal = false }: { inModal?: boolean }) => (
-    <form onSubmit={handleSubmit} className="space-y-4">
+  const renderOrderForm = (inModal = false) => (
+    <form onSubmit={handleSubmit} noValidate className="space-y-4">
       {result && !result.success && (
         <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm font-tajawal">{result.message}</div>
       )}
@@ -210,9 +216,7 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
             placeholder="Enter phone number"
             className="w-full border border-gray-200 rounded-xl focus-within:outline-none focus-within:ring-2 focus-within:ring-pink focus-within:border-transparent font-tajawal bg-gray-50 overflow-hidden"
             numberInputProps={{
-              required: true,
               inputMode: "numeric",
-              pattern: "[0-9+]*",
             }}
           />
         </div>
@@ -499,7 +503,7 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
             <p className="text-center text-gray-500 mb-8 font-tajawal">
               املئي النموذج وسنتواصل معكِ خلال دقائق لتأكيد الطلب
             </p>
-            <OrderForm />
+            {renderOrderForm()}
           </div>
         </div>
       </section>
@@ -560,7 +564,7 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
                 <X size={24} />
               </button>
             </div>
-            <OrderForm inModal />
+            {renderOrderForm(true)}
           </div>
         </div>
       )}
