@@ -132,7 +132,9 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
   const displayedUnitPrice = hasDiscount
     ? Math.round(product.originalPrice! - product.price)
     : product.price;
+  const originalUnitPrice = hasDiscount ? Math.round(product.originalPrice!) : null;
   const totalPrice = displayedUnitPrice * quantity;
+  const originalTotalPrice = originalUnitPrice ? originalUnitPrice * quantity : null;
   const computedDiscountPercent = hasDiscount
     ? Math.round(((product.originalPrice! - product.price) / product.originalPrice!) * 100)
     : 0;
@@ -300,11 +302,25 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
       <div className="bg-pink-50 rounded-xl p-4 border border-pink-100">
         <div className="flex items-center justify-between mb-2">
           <span className="text-gray-600 font-tajawal">سعر الوحدة:</span>
-          <span className="font-bold font-tajawal">{formatPrice(displayedUnitPrice, product.currency, usdToTryRate)}</span>
+          <div className="flex items-center gap-2">
+            <span className="font-bold font-tajawal">{formatPrice(displayedUnitPrice, product.currency, usdToTryRate)}</span>
+            {originalUnitPrice && (
+              <span className="text-sm text-gray-400 line-through font-tajawal">
+                {formatPrice(originalUnitPrice, product.currency, usdToTryRate)}
+              </span>
+            )}
+          </div>
         </div>
         <div className="flex items-center justify-between text-lg">
           <span className="font-bold text-gray-800 font-tajawal">الإجمالي:</span>
-          <span className="text-2xl font-bold text-pink-dark font-tajawal">{formatPrice(totalPrice, product.currency, usdToTryRate)}</span>
+          <div className="flex items-center gap-2">
+            <span className="text-2xl font-bold text-pink-dark font-tajawal">{formatPrice(totalPrice, product.currency, usdToTryRate)}</span>
+            {originalTotalPrice && (
+              <span className="text-base text-gray-400 line-through font-tajawal">
+                {formatPrice(originalTotalPrice, product.currency, usdToTryRate)}
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
@@ -460,7 +476,14 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-3 z-40 flex items-center justify-between gap-3">
         <div>
           <p className="text-xs text-gray-500 font-tajawal">السعر الإجمالي</p>
-          <p className="text-xl font-bold text-pink-dark font-tajawal">{formatPrice(totalPrice, product.currency, usdToTryRate)}</p>
+          <div className="flex items-center gap-2">
+            <p className="text-xl font-bold text-pink-dark font-tajawal">{formatPrice(totalPrice, product.currency, usdToTryRate)}</p>
+            {originalTotalPrice && (
+              <p className="text-sm text-gray-400 line-through font-tajawal">
+                {formatPrice(originalTotalPrice, product.currency, usdToTryRate)}
+              </p>
+            )}
+          </div>
         </div>
         <button
           onClick={() => setShowForm(true)}
