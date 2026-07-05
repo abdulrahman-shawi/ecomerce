@@ -129,6 +129,10 @@ export async function loginAffiliate(
       return { success: false, error: "البريد الإلكتروني أو كلمة المرور غير صحيحة" };
     }
 
+    if (!user.affiliateApproved) {
+      return { success: false, error: "حساب الأفلييت غير معتمد بعد" };
+    }
+
     const isValid = await bcrypt.compare(password, user.password);
     if (!isValid) {
       return { success: false, error: "البريد الإلكتروني أو كلمة المرور غير صحيحة" };
@@ -283,8 +287,12 @@ export async function getCurrentAffiliate(): Promise<AffiliateUser | null> {
   const payload = verifyToken(token);
   if (!payload) return null;
 
-  const user = await prisma.user.findUnique({
-    where: { id: payload.userId, isAffiliate: true },
+  const user = await prisma.user.findFirst({
+    where: {
+      id: payload.userId,
+      isAffiliate: true,
+      affiliateApproved: true,
+    },
     select: { id: true, username: true, email: true, phone: true },
   });
 
