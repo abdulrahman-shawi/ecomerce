@@ -18,10 +18,44 @@ export interface LandingOrderInput {
   notes?: string;
 }
 
+interface QuantityDiscountTier {
+  minQty: number;
+  discountPercent: number;
+}
+
 function generateOrderNumber(): string {
   const timestamp = Date.now().toString(36).toUpperCase();
   const random = Math.random().toString(36).substring(2, 6).toUpperCase();
   return `ORD-${timestamp}-${random}`;
+}
+
+function normalizeQuantityDiscountTiers(value: unknown): QuantityDiscountTier[] {
+  if (!Array.isArray(value)) return [];
+
+  return value
+    .map((tier: any) => {
+      const minQty = Number(tier?.minQty ?? tier?.quantity ?? tier?.fromQuantity ?? tier?.minQuantity ?? 0);
+      const discountPercent = Number(tier?.discountPercent ?? tier?.discount ?? tier?.percent ?? 0);
+
+      if (!Number.isFinite(minQty) || minQty < 1 || !Number.isFinite(discountPercent) || discountPercent <= 0) {
+        return null;
+      }
+
+      return {
+        minQty: Math.floor(minQty),
+        discountPercent,
+      };
+    })
+    .filter((tier): tier is QuantityDiscountTier => tier !== null)
+    .sort((a, b) => a.minQty - b.minQty);
+}
+
+function getAppliedQuantityDiscountTier(tiers: QuantityDiscountTier[], quantity: number): QuantityDiscountTier | null {
+  if (quantity < 1) return null;
+
+  return tiers
+    .filter((tier) => tier.minQty <= quantity)
+    .sort((a, b) => b.minQty - a.minQty)[0] ?? null;
 }
 
 export async function createLandingOrder(input: LandingOrderInput) {
@@ -34,7 +68,7 @@ export async function createLandingOrder(input: LandingOrderInput) {
 
     const product = await prisma.product.findUnique({
       where: { id: productId },
-      include: { stocks: true },
+      include: { stocks: true, landingPage: true },
     });
 
     if (!product || !product.isActive) {
@@ -85,11 +119,16 @@ export async function createLandingOrder(input: LandingOrderInput) {
 
     const firstStock = stocks[0];
     const originalUnitPrice = firstStock?.price ?? product.affiliatePrice;
-    const unitDiscount =
+    const stockDiscount =
       firstStock && firstStock.price > firstStock.discount ? firstStock.discount : 0;
-    const unitPrice = Math.max(originalUnitPrice - unitDiscount, 0);
+    const baseUnitPrice = Math.max(originalUnitPrice - stockDiscount, 0);
+    const quantityDiscountTiers = normalizeQuantityDiscountTiers(product.landingPage?.quantityDiscountTiers);
+    const appliedQuantityDiscountTier = getAppliedQuantityDiscountTier(quantityDiscountTiers, quantity);
+    const unitPrice = appliedQuantityDiscountTier
+      ? Math.max(0, Math.round(baseUnitPrice * (1 - appliedQuantityDiscountTier.discountPercent / 100)))
+      : baseUnitPrice;
     const totalPrice = unitPrice * quantity;
-    const totalDiscount = unitDiscount * quantity;
+    const totalDiscount = Math.max(originalUnitPrice * quantity - totalPrice, 0);
     const totalAmount = originalUnitPrice * quantity;
     const authPayload = authToken ? verifyToken(authToken) : null;
     const authenticatedCustomerId = authPayload?.userId ?? customerId ?? null;
@@ -211,7 +250,7 @@ export async function createLandingOrder(input: LandingOrderInput) {
         data: {
           quantity,
           price: unitPrice,
-          discount: unitDiscount,
+          discount: Math.max(originalUnitPrice - unitPrice, 0),
           productId,
           orderId: order.id,
           affiliateLinkId,

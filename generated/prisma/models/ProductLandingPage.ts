@@ -86,6 +86,7 @@ export type ProductLandingPageCountAggregateOutputType = {
   guaranteeTitle: number
   guaranteeText: number
   ctaText: number
+  quantityDiscountTiers: number
   isActive: number
   createdAt: number
   updatedAt: number
@@ -153,6 +154,7 @@ export type ProductLandingPageCountAggregateInputType = {
   guaranteeTitle?: true
   guaranteeText?: true
   ctaText?: true
+  quantityDiscountTiers?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -259,6 +261,7 @@ export type ProductLandingPageGroupByOutputType = {
   guaranteeTitle: string | null
   guaranteeText: string | null
   ctaText: string | null
+  quantityDiscountTiers: runtime.JsonValue | null
   isActive: boolean
   createdAt: Date
   updatedAt: Date
@@ -301,6 +304,7 @@ export type ProductLandingPageWhereInput = {
   guaranteeTitle?: Prisma.StringNullableFilter<"ProductLandingPage"> | string | null
   guaranteeText?: Prisma.StringNullableFilter<"ProductLandingPage"> | string | null
   ctaText?: Prisma.StringNullableFilter<"ProductLandingPage"> | string | null
+  quantityDiscountTiers?: Prisma.JsonNullableFilter<"ProductLandingPage">
   isActive?: Prisma.BoolFilter<"ProductLandingPage"> | boolean
   createdAt?: Prisma.DateTimeFilter<"ProductLandingPage"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ProductLandingPage"> | Date | string
@@ -321,6 +325,7 @@ export type ProductLandingPageOrderByWithRelationInput = {
   guaranteeTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   guaranteeText?: Prisma.SortOrderInput | Prisma.SortOrder
   ctaText?: Prisma.SortOrderInput | Prisma.SortOrder
+  quantityDiscountTiers?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -344,6 +349,7 @@ export type ProductLandingPageWhereUniqueInput = Prisma.AtLeast<{
   guaranteeTitle?: Prisma.StringNullableFilter<"ProductLandingPage"> | string | null
   guaranteeText?: Prisma.StringNullableFilter<"ProductLandingPage"> | string | null
   ctaText?: Prisma.StringNullableFilter<"ProductLandingPage"> | string | null
+  quantityDiscountTiers?: Prisma.JsonNullableFilter<"ProductLandingPage">
   isActive?: Prisma.BoolFilter<"ProductLandingPage"> | boolean
   createdAt?: Prisma.DateTimeFilter<"ProductLandingPage"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ProductLandingPage"> | Date | string
@@ -364,6 +370,7 @@ export type ProductLandingPageOrderByWithAggregationInput = {
   guaranteeTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   guaranteeText?: Prisma.SortOrderInput | Prisma.SortOrder
   ctaText?: Prisma.SortOrderInput | Prisma.SortOrder
+  quantityDiscountTiers?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -391,6 +398,7 @@ export type ProductLandingPageScalarWhereWithAggregatesInput = {
   guaranteeTitle?: Prisma.StringNullableWithAggregatesFilter<"ProductLandingPage"> | string | null
   guaranteeText?: Prisma.StringNullableWithAggregatesFilter<"ProductLandingPage"> | string | null
   ctaText?: Prisma.StringNullableWithAggregatesFilter<"ProductLandingPage"> | string | null
+  quantityDiscountTiers?: Prisma.JsonNullableWithAggregatesFilter<"ProductLandingPage">
   isActive?: Prisma.BoolWithAggregatesFilter<"ProductLandingPage"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ProductLandingPage"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ProductLandingPage"> | Date | string
@@ -409,6 +417,7 @@ export type ProductLandingPageCreateInput = {
   guaranteeTitle?: string | null
   guaranteeText?: string | null
   ctaText?: string | null
+  quantityDiscountTiers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -429,6 +438,7 @@ export type ProductLandingPageUncheckedCreateInput = {
   guaranteeTitle?: string | null
   guaranteeText?: string | null
   ctaText?: string | null
+  quantityDiscountTiers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -447,6 +457,7 @@ export type ProductLandingPageUpdateInput = {
   guaranteeTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   guaranteeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ctaText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantityDiscountTiers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -467,6 +478,7 @@ export type ProductLandingPageUncheckedUpdateInput = {
   guaranteeTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   guaranteeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ctaText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantityDiscountTiers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -486,6 +498,7 @@ export type ProductLandingPageCreateManyInput = {
   guaranteeTitle?: string | null
   guaranteeText?: string | null
   ctaText?: string | null
+  quantityDiscountTiers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -504,6 +517,7 @@ export type ProductLandingPageUpdateManyMutationInput = {
   guaranteeTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   guaranteeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ctaText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantityDiscountTiers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -523,6 +537,7 @@ export type ProductLandingPageUncheckedUpdateManyInput = {
   guaranteeTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   guaranteeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ctaText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantityDiscountTiers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -547,6 +562,7 @@ export type ProductLandingPageCountOrderByAggregateInput = {
   guaranteeTitle?: Prisma.SortOrder
   guaranteeText?: Prisma.SortOrder
   ctaText?: Prisma.SortOrder
+  quantityDiscountTiers?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -643,6 +659,7 @@ export type ProductLandingPageCreateWithoutProductInput = {
   guaranteeTitle?: string | null
   guaranteeText?: string | null
   ctaText?: string | null
+  quantityDiscountTiers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -661,6 +678,7 @@ export type ProductLandingPageUncheckedCreateWithoutProductInput = {
   guaranteeTitle?: string | null
   guaranteeText?: string | null
   ctaText?: string | null
+  quantityDiscountTiers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -695,6 +713,7 @@ export type ProductLandingPageUpdateWithoutProductInput = {
   guaranteeTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   guaranteeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ctaText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantityDiscountTiers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -713,6 +732,7 @@ export type ProductLandingPageUncheckedUpdateWithoutProductInput = {
   guaranteeTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   guaranteeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ctaText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantityDiscountTiers?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -734,6 +754,7 @@ export type ProductLandingPageSelect<ExtArgs extends runtime.Types.Extensions.In
   guaranteeTitle?: boolean
   guaranteeText?: boolean
   ctaText?: boolean
+  quantityDiscountTiers?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -754,6 +775,7 @@ export type ProductLandingPageSelectCreateManyAndReturn<ExtArgs extends runtime.
   guaranteeTitle?: boolean
   guaranteeText?: boolean
   ctaText?: boolean
+  quantityDiscountTiers?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -774,6 +796,7 @@ export type ProductLandingPageSelectUpdateManyAndReturn<ExtArgs extends runtime.
   guaranteeTitle?: boolean
   guaranteeText?: boolean
   ctaText?: boolean
+  quantityDiscountTiers?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -794,12 +817,13 @@ export type ProductLandingPageSelectScalar = {
   guaranteeTitle?: boolean
   guaranteeText?: boolean
   ctaText?: boolean
+  quantityDiscountTiers?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProductLandingPageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "productId" | "heroTitle" | "heroSubtitle" | "heroDescription" | "badgeText" | "discountPercent" | "features" | "showReviews" | "showGuarantee" | "guaranteeTitle" | "guaranteeText" | "ctaText" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["productLandingPage"]>
+export type ProductLandingPageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "productId" | "heroTitle" | "heroSubtitle" | "heroDescription" | "badgeText" | "discountPercent" | "features" | "showReviews" | "showGuarantee" | "guaranteeTitle" | "guaranteeText" | "ctaText" | "quantityDiscountTiers" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["productLandingPage"]>
 export type ProductLandingPageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }
@@ -829,6 +853,7 @@ export type $ProductLandingPagePayload<ExtArgs extends runtime.Types.Extensions.
     guaranteeTitle: string | null
     guaranteeText: string | null
     ctaText: string | null
+    quantityDiscountTiers: runtime.JsonValue | null
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -1269,6 +1294,7 @@ export interface ProductLandingPageFieldRefs {
   readonly guaranteeTitle: Prisma.FieldRef<"ProductLandingPage", 'String'>
   readonly guaranteeText: Prisma.FieldRef<"ProductLandingPage", 'String'>
   readonly ctaText: Prisma.FieldRef<"ProductLandingPage", 'String'>
+  readonly quantityDiscountTiers: Prisma.FieldRef<"ProductLandingPage", 'Json'>
   readonly isActive: Prisma.FieldRef<"ProductLandingPage", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"ProductLandingPage", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ProductLandingPage", 'DateTime'>

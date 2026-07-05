@@ -275,6 +275,7 @@ model ProductLandingPage {
 
   // CTA
   ctaText             String?
+  quantityDiscountTiers Json?    @default("[]")
 
   // Status
   isActive            Boolean  @default(true)

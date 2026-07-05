@@ -336,6 +336,7 @@ export interface LandingProduct {
     heroDescription: string | null;
     badgeText: string | null;
     discountPercent: number | null;
+    quantityDiscountTiers: { minQty: number; discountPercent: number }[];
     features: LandingFeature[];
     showReviews: boolean;
     showGuarantee: boolean;
@@ -419,8 +420,27 @@ export async function getLandingProduct(
 
   const lp = product.landingPage;
   const rawFeatures = (lp?.features as any) ?? [];
+  const rawQuantityDiscountTiers = (lp?.quantityDiscountTiers as any) ?? [];
   const features: LandingFeature[] = Array.isArray(rawFeatures)
     ? rawFeatures.map((f: any) => ({ title: String(f.title ?? ""), description: String(f.description ?? "") }))
+    : [];
+  const quantityDiscountTiers = Array.isArray(rawQuantityDiscountTiers)
+    ? rawQuantityDiscountTiers
+        .map((tier: any) => {
+          const minQty = Number(tier?.minQty ?? tier?.quantity ?? tier?.fromQuantity ?? tier?.minQuantity ?? 0);
+          const discountPercent = Number(tier?.discountPercent ?? tier?.discount ?? tier?.percent ?? 0);
+
+          if (!Number.isFinite(minQty) || minQty < 1 || !Number.isFinite(discountPercent) || discountPercent <= 0) {
+            return null;
+          }
+
+          return {
+            minQty: Math.floor(minQty),
+            discountPercent,
+          };
+        })
+        .filter((tier): tier is { minQty: number; discountPercent: number } => tier !== null)
+        .sort((a, b) => a.minQty - b.minQty)
     : [];
 
   return {
@@ -447,6 +467,7 @@ export async function getLandingProduct(
           heroDescription: lp.heroDescription,
           badgeText: lp.badgeText,
           discountPercent: lp.discountPercent,
+          quantityDiscountTiers,
           features,
           showReviews: lp.showReviews,
           showGuarantee: lp.showGuarantee,

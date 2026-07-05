@@ -217,6 +217,7 @@ export const ProductLandingPageScalarFieldEnum = {
   guaranteeTitle: 'guaranteeTitle',
   guaranteeText: 'guaranteeText',
   ctaText: 'ctaText',
+  quantityDiscountTiers: 'quantityDiscountTiers',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

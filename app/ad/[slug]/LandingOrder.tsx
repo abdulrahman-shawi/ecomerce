@@ -37,6 +37,11 @@ interface LandingFeature {
   description: string;
 }
 
+interface QuantityDiscountTier {
+  minQty: number;
+  discountPercent: number;
+}
+
 interface LandingProduct {
   id: number;
   name: string;
@@ -56,6 +61,7 @@ interface LandingProduct {
     heroDescription: string | null;
     badgeText: string | null;
     discountPercent: number | null;
+    quantityDiscountTiers: QuantityDiscountTier[];
     features: LandingFeature[];
     showReviews: boolean;
     showGuarantee: boolean;
@@ -97,6 +103,17 @@ function sanitizePhoneNumber(value: string) {
   return `+${normalized.slice(1).replace(/\+/g, "")}`;
 }
 
+function getAppliedQuantityDiscountTier(
+  tiers: QuantityDiscountTier[] | null | undefined,
+  quantity: number
+): QuantityDiscountTier | null {
+  if (!tiers?.length || quantity < 1) return null;
+
+  return tiers
+    .filter((tier) => tier.minQty <= quantity)
+    .sort((a, b) => b.minQty - a.minQty)[0] ?? null;
+}
+
 export default function LandingOrder({ product, reviews, siteName, usdToTryRate }: LandingOrderProps) {
   const { user } = useAuth();
   const [quantity, setQuantity] = useState(1);
@@ -127,11 +144,16 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
   const features = lp?.features?.length ? lp.features : defaultFeatures;
   const showReviews = lp?.showReviews ?? true;
   const showGuarantee = lp?.showGuarantee ?? true;
+  const quantityDiscountTiers = lp?.quantityDiscountTiers ?? [];
 
   const hasDiscount = product.originalPrice && product.originalPrice > product.price;
-  const displayedUnitPrice = hasDiscount
+  const baseUnitPrice = hasDiscount
     ? Math.round(product.originalPrice! - product.price)
     : product.price;
+  const appliedQuantityDiscountTier = getAppliedQuantityDiscountTier(quantityDiscountTiers, quantity);
+  const displayedUnitPrice = appliedQuantityDiscountTier
+    ? Math.max(0, Math.round(baseUnitPrice * (1 - appliedQuantityDiscountTier.discountPercent / 100)))
+    : baseUnitPrice;
   const originalUnitPrice = hasDiscount ? Math.round(product.originalPrice!) : null;
   const totalPrice = displayedUnitPrice * quantity;
   const originalTotalPrice = originalUnitPrice ? originalUnitPrice * quantity : null;
@@ -300,6 +322,11 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
       </div>
 
       <div className="bg-pink-50 rounded-xl p-4 border border-pink-100">
+        {appliedQuantityDiscountTier && (
+          <div className="mb-3 rounded-lg bg-white/80 px-3 py-2 text-sm text-pink-dark font-tajawal border border-pink-100">
+            تم تطبيق خصم كمية {appliedQuantityDiscountTier.discountPercent}% للطلبات من {appliedQuantityDiscountTier.minQty} قطع فأكثر
+          </div>
+        )}
         <div className="flex items-center justify-between mb-2">
           <span className="text-gray-600 font-tajawal">سعر الوحدة:</span>
           <div className="flex items-center gap-2">
