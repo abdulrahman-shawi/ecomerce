@@ -34,12 +34,24 @@ function isConfirmedOrderStatus(status: string | null | undefined): boolean {
     "مؤكد",
     "جاهزة للتسليم",
     "جاهز للتسليم",
+    "تم استلام الطلب",
+    "تم ارسال الطلب",
+    "تم إرسال الطلب",
     "تم التسليم",
     "تم التوصيل",
     "تم تسليم الطلب",
     "confirmed",
     "shipped",
     "delivered",
+  ].includes(normalizeOrderStatus(status));
+}
+
+function isSuccessfulOrderStatus(status: string | null | undefined): boolean {
+  return [
+    "تم استلام الطلب",
+    "تم ارسال الطلب",
+    "تم إرسال الطلب",
+    "تم تسليم الطلب",
   ].includes(normalizeOrderStatus(status));
 }
 
@@ -197,11 +209,19 @@ export async function createAffiliateLink(
 
 // ─── 4. Get Affiliate Links ───
 export async function getAffiliateLinks(userId: string) {
-  return prisma.affiliateLink.findMany({
+  const links = await prisma.affiliateLink.findMany({
     where: { userId },
-    include: { product: { select: { id: true, name: true, affiliatePrice: true } } },
+    include: {
+      product: { select: { id: true, name: true, affiliatePrice: true } },
+      _count: { select: { commissions: true } },
+    },
     orderBy: { createdAt: "desc" },
   });
+
+  return links.map(({ _count, ...link }) => ({
+    ...link,
+    conversions: _count.commissions,
+  }));
 }
 
 // ─── 5. Get Dashboard Stats ───
@@ -228,7 +248,11 @@ export async function getAffiliateDashboard(userId: string) {
   });
 
   const totalClicks = links.reduce((sum, l) => sum + l.clicks, 0);
-  const totalConversions = links.reduce((sum, l) => sum + l.conversions, 0);
+  const orderedReferralIds = new Set(commissions.map((commission) => commission.orderId));
+  const totalConversions = orderedReferralIds.size;
+  const successfulReferrals = commissions.filter((commission) =>
+    isSuccessfulOrderStatus(commission.order?.status)
+  ).length;
   const totalCommissions = commissions.reduce((sum, c) => sum + c.amount, 0);
   const pendingCommissions = commissions
     .filter((c) => c.status === "PENDING")
@@ -249,6 +273,7 @@ export async function getAffiliateDashboard(userId: string) {
   return {
     totalClicks,
     totalConversions,
+    successfulReferrals,
     totalCommissions,
     pendingCommissions,
     paidCommissions,

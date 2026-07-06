@@ -28,6 +28,7 @@ import { formatPrice } from "@/lib/currency";
 interface DashboardData {
   totalClicks: number;
   totalConversions: number;
+  successfulReferrals: number;
   totalCommissions: number;
   pendingCommissions: number;
   paidCommissions: number;
@@ -133,7 +134,7 @@ export default function AffiliateDashboardPage() {
       <main className="max-w-7xl mx-auto px-4 py-8">
         {/* Stats Cards */}
         {dashboard && (
-          <div className="grid grid-cols-2 gap-4 mb-8 md:grid-cols-3 xl:grid-cols-6">
+          <div className="grid grid-cols-2 gap-4 mb-8 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
             <StatCard
               icon={<MousePointerClick size={20} />}
               label="النقرات"
@@ -142,9 +143,15 @@ export default function AffiliateDashboardPage() {
             />
             <StatCard
               icon={<ShoppingCart size={20} />}
-              label="التحويلات"
+              label="الإحالات المطلوبة"
               value={dashboard.totalConversions}
               color="green"
+            />
+            <StatCard
+              icon={<CheckCircle size={20} />}
+              label="الإحالات الناجحة"
+              value={dashboard.successfulReferrals}
+              color="teal"
             />
             <StatCard
               icon={<DollarSign size={20} />}
@@ -281,7 +288,7 @@ function StatCard({
   icon: React.ReactNode;
   label: string;
   value: string | number;
-  color: "blue" | "green" | "pink" | "orange" | "red";
+  color: "blue" | "green" | "pink" | "orange" | "red" | "teal";
 }) {
   const colors = {
     blue: "bg-blue-50 text-blue-600",
@@ -289,6 +296,7 @@ function StatCard({
     pink: "bg-pink-50 text-pink",
     orange: "bg-orange-50 text-orange-600",
     red: "bg-red-50 text-red-600",
+    teal: "bg-teal-50 text-teal-600",
   };
 
   return (
@@ -319,7 +327,7 @@ function StatusBadge({
     );
   }
 
-  if (["مؤكد", "جاهزة للتسليم", "جاهز للتسليم", "تم التسليم", "تم التوصيل", "تم تسليم الطلب", "confirmed", "shipped", "delivered"].includes(normalizedOrderStatus)) {
+  if (["مؤكد", "جاهزة للتسليم", "جاهز للتسليم", "تم استلام الطلب", "تم ارسال الطلب", "تم إرسال الطلب", "تم التسليم", "تم التوصيل", "تم تسليم الطلب", "confirmed", "shipped", "delivered"].includes(normalizedOrderStatus)) {
     return (
       <span className="px-2.5 py-1 rounded-lg text-xs font-medium bg-green-50 text-green-600">
         مؤكدة
