@@ -24,7 +24,7 @@ export default function ProductGallery({
   }, [galleryImages]);
 
   return (
-    <div className="bg-gray-50 p-4 md:p-6">
+    <div className="min-w-0 bg-gray-50 p-4 md:p-6">
       <div className="relative aspect-square overflow-hidden rounded-2xl bg-white">
         <Image
           src={selectedImage}

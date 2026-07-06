@@ -148,7 +148,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   };
 
   return (
-    <div dir="rtl" className="font-tajawal min-h-screen bg-gray-light">
+    <div dir="rtl" className="font-tajawal min-h-screen bg-gray-light overflow-x-hidden">
       <TopBanner />
       <Header />
 
@@ -194,7 +194,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             />
 
             {/* Details Section */}
-            <div className="p-6 md:p-10 flex flex-col text-right">
+            <div className="min-w-0 p-6 md:p-10 flex flex-col text-right">
               <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2 font-tajawal leading-relaxed">
                 {product.name}
               </h1>
@@ -210,7 +210,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               )}
 
               {/* Price */}
-              <div className="flex items-center gap-4 mb-6">
+              <div className="mb-6 flex flex-wrap items-center gap-4">
                 <span className="text-3xl font-bold text-pink-dark font-tajawal">
                   {formatPrice(discountAmount, settings.siteCurrency, settings.usdToTryRate)}
                 </span>
@@ -260,7 +260,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </div>
 
               {/* Actions */}
-              <div className="mt-auto flex gap-4">
+              <div className="mt-auto flex flex-wrap gap-4">
                 <BuyNowButton product={{
                   id: product.id,
                   name: product.name,

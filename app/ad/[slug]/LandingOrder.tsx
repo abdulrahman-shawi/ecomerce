@@ -394,7 +394,7 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
   }
 
   return (
-    <div className="min-h-screen bg-white" dir="rtl">
+    <div className="min-h-screen bg-white overflow-x-hidden" dir="rtl">
       {/* Top Bar */}
       <div className="bg-gray-900 text-white py-2.5 text-center text-sm font-tajawal">
         {badgeText} — شحن مجاني للطلبات فوق 299{currencySymbol}
@@ -405,7 +405,7 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-10 items-center">
             {/* Product Visual */}
-            <div className="order-1 lg:order-2">
+            <div className="order-1 min-w-0 lg:order-2">
               <div className="relative">
                 {discountPercent > 0 && (
                   <div className="absolute -top-4 -right-4 z-10 bg-red-500 text-white font-bold px-4 py-2 rounded-full shadow-lg font-tajawal">
@@ -442,7 +442,7 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
             </div>
 
             {/* Product Info */}
-            <div className="order-2 lg:order-1 text-right">
+            <div className="order-2 min-w-0 text-right lg:order-1">
               <div className="inline-flex items-center gap-2 bg-pink/10 text-pink-dark px-4 py-1.5 rounded-full text-sm font-medium mb-4 font-tajawal">
                 <Star size={14} className="fill-yellow-400 text-yellow-400" />
                 {product.averageRating ? `${product.averageRating} (${product.totalReviews} تقييم)` : "منتج مميز"}
@@ -463,7 +463,7 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
                 />
               )}
 
-              <div className="flex items-center gap-4 mb-6">
+              <div className="mb-6 flex flex-wrap items-center gap-4">
                 <span className="text-4xl font-bold text-pink-dark font-tajawal">
                   {formatPrice(displayedUnitPrice, product.currency, usdToTryRate)}
                 </span>

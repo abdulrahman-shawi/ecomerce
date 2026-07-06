@@ -66,6 +66,12 @@
 }
 
 @layer base {
+  html,
+  body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
   * {
     @apply border-border;
   }
@@ -75,6 +81,11 @@
 }
 
 @layer components {
+  .product-description {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
   .product-description h1 {
     @apply text-2xl font-bold text-gray-800 mb-4 mt-6 leading-relaxed;
   }
