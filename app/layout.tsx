@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Tajawal } from "next/font/google";
 import "./globals.css";
 import ClientProviders from "@/component/ClientProviders";
@@ -10,6 +10,12 @@ const tajawal = Tajawal({
   weight: ["400", "500", "700", "800", "900"],
   variable: "--font-tajawal",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getGeneralSettings();
