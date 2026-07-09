@@ -8,20 +8,21 @@ import {
   useCallback,
   type ReactNode,
 } from "react";
-import { loginUser, registerUser } from "@/server/auth";
-import type { AuthUser } from "@/server/auth";
+import { loginUser } from "@/server/auth";
 
 interface UserData {
   id: string;
   name: string;
   phone: string | null;
+  country?: string | null;
+  city?: string | null;
 }
 
 interface AuthContextType {
   user: UserData | null;
   isLoggedIn: boolean;
-  login: (username: string, phone: string) => Promise<{ success: boolean; error?: string }>;
-  register: (name: string, phone: string) => Promise<{ success: boolean; error?: string }>;
+  login: (username: string, phone: string, name?: string) => Promise<{ success: boolean; error?: string }>;
+  updateUser: (nextUser: UserData) => void;
   logout: () => void;
 }
 
@@ -56,26 +57,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [user]);
 
-  const login = useCallback(async (username: string, phone: string): Promise<{ success: boolean; error?: string }> => {
-    const result = await loginUser(username, phone);
+  const login = useCallback(async (username: string, phone: string, name?: string): Promise<{ success: boolean; error?: string }> => {
+    const result = await loginUser(username, phone, name);
     if (result.success) {
-      const { id, name, phone: userPhone, token } = result.user;
-      setUser({ id, name, phone: userPhone });
+      const { id, name, phone: userPhone, country, city, token } = result.user;
+      setUser({ id, name, phone: userPhone, country, city });
       localStorage.setItem(AUTH_TOKEN_KEY, token);
       return { success: true };
     }
     return { success: false, error: result.error };
   }, []);
 
-  const register = useCallback(async (name: string, phone: string): Promise<{ success: boolean; error?: string }> => {
-    const result = await registerUser(name, phone);
-    if (result.success) {
-      const { id, name: userName, phone: userPhone, token } = result.user;
-      setUser({ id, name: userName, phone: userPhone });
-      localStorage.setItem(AUTH_TOKEN_KEY, token);
-      return { success: true };
-    }
-    return { success: false, error: result.error };
+  const updateUser = useCallback((nextUser: UserData) => {
+    setUser(nextUser);
   }, []);
 
   const logout = useCallback(() => {
@@ -88,7 +82,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         user,
         isLoggedIn: !!user,
         login,
-        register,
+        updateUser,
         logout,
       }}
     >
