@@ -5,6 +5,33 @@ import { signToken } from "@/lib/jwt";
 
 const STORE_LOGIN_NAME = "skynova";
 
+async function getAvailableCustomerName(baseName: string, phone: string): Promise<string> {
+  const normalizedBaseName = baseName.trim() || STORE_LOGIN_NAME;
+  const existingBase = await prisma.customer.findUnique({
+    where: { name: normalizedBaseName },
+    select: { id: true },
+  });
+
+  if (!existingBase) {
+    return normalizedBaseName;
+  }
+
+  const digitsOnlyPhone = phone.replace(/\D/g, "");
+  const suffix = digitsOnlyPhone.slice(-6) || Date.now().toString().slice(-6);
+  const fallbackName = `${normalizedBaseName}-${suffix}`;
+
+  const existingFallback = await prisma.customer.findUnique({
+    where: { name: fallbackName },
+    select: { id: true },
+  });
+
+  if (!existingFallback) {
+    return fallbackName;
+  }
+
+  return `${fallbackName}-${Date.now().toString().slice(-4)}`;
+}
+
 export interface AuthUser {
   id: string;
   name: string;
@@ -16,13 +43,11 @@ export interface AuthUser {
 
 export async function loginUser(
   username: string,
-  phone: string,
-  name?: string
+  phone: string
 ): Promise<{ success: true; user: AuthUser } | { success: false; error: string }> {
   try {
     const normalizedUsername = username.trim().toLowerCase();
     const normalizedPhone = phone.trim();
-    const normalizedName = name?.trim();
 
     if (normalizedUsername !== STORE_LOGIN_NAME) {
       return { success: false, error: "الاسم أو رقم الهاتف غير صحيح" };
@@ -35,21 +60,11 @@ export async function loginUser(
     });
 
     if (!customer) {
-      if (!normalizedName) {
-        return { success: false, error: "الرجاء إدخال الاسم لإكمال التسجيل" };
-      }
-
-      const existingByName = await prisma.customer.findUnique({
-        where: { name: normalizedName },
-      });
-
-      if (existingByName) {
-        return { success: false, error: "الاسم مستخدم مسبقاً، أدخل اسماً مختلفاً" };
-      }
+      const customerName = await getAvailableCustomerName(STORE_LOGIN_NAME, normalizedPhone);
 
       customer = await prisma.customer.create({
         data: {
-          name: normalizedName,
+          name: customerName,
           phone: [normalizedPhone],
           status: "المتجر",
         },

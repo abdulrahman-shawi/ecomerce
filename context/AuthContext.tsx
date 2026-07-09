@@ -21,7 +21,7 @@ interface UserData {
 interface AuthContextType {
   user: UserData | null;
   isLoggedIn: boolean;
-  login: (username: string, phone: string, name?: string) => Promise<{ success: boolean; error?: string }>;
+  login: (username: string, phone: string) => Promise<{ success: boolean; error?: string }>;
   updateUser: (nextUser: UserData) => void;
   logout: () => void;
 }
@@ -57,8 +57,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [user]);
 
-  const login = useCallback(async (username: string, phone: string, name?: string): Promise<{ success: boolean; error?: string }> => {
-    const result = await loginUser(username, phone, name);
+  const login = useCallback(async (username: string, phone: string): Promise<{ success: boolean; error?: string }> => {
+    const result = await loginUser(username, phone);
     if (result.success) {
       const { id, name, phone: userPhone, country, city, token } = result.user;
       setUser({ id, name, phone: userPhone, country, city });
