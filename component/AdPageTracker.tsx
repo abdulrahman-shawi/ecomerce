@@ -1,36 +1,39 @@
-"use client";
+// components/AdPageTracker.tsx
+'use client';
 
-import { useEffect } from "react";
+import * as React from 'react';
 
-interface AdPageTrackerProps {
+type AdPageTrackerProps = {
   productId: number;
-}
+};
 
 export default function AdPageTracker({ productId }: AdPageTrackerProps) {
-  useEffect(() => {
-    if (typeof window === "undefined") {
+  React.useEffect(() => {
+    if (!productId) return;
+
+    const pathname = window.location.pathname;
+    const sessionKey = `ad-track:${productId}:${pathname}`;
+
+    try {
+      if (window.sessionStorage.getItem(sessionKey) === '1') {
+        return;
+      }
+      window.sessionStorage.setItem(sessionKey, '1');
+    } catch {
       return;
     }
 
-    const path = window.location.pathname;
-    const sessionKey = `ad-page-visit:${productId}:${path}`;
-
-    if (window.sessionStorage.getItem(sessionKey)) {
-      return;
-    }
-
-    window.sessionStorage.setItem(sessionKey, "1");
-
-    void fetch("/api/ad/track", {
-      method: "POST",
+    void fetch('/api/ad/track', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ productId, path }),
+      body: JSON.stringify({
+        productId,
+        path: pathname,
+      }),
       keepalive: true,
-    }).catch(() => {
-      window.sessionStorage.removeItem(sessionKey);
-    });
+    }).catch(() => undefined);
   }, [productId]);
 
   return null;

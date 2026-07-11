@@ -97,6 +97,7 @@ export default async function LandingPage({ params }: LandingPageProps) {
         siteName={settings.siteName}
         usdToTryRate={settings.usdToTryRate}
       />
+      <AdPageTracker productId={product.id} />
     </>
   );
 }

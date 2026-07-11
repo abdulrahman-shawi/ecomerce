@@ -1,66 +1,44 @@
-import { randomUUID } from "crypto";
-import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+// app/api/ad/track/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
 
-const VISITOR_COOKIE_NAME = "ad-visitor-id";
-const VISITOR_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
+const AD_VISITOR_COOKIE_NAME = 'ad-visitor-id';
 
-function detectBrowser(userAgent: string | null) {
-  if (!userAgent) return null;
-
-  if (/edg/i.test(userAgent)) return "Edge";
-  if (/opr|opera/i.test(userAgent)) return "Opera";
-  if (/chrome|crios/i.test(userAgent) && !/edg|opr|opera/i.test(userAgent)) return "Chrome";
-  if (/firefox|fxios/i.test(userAgent)) return "Firefox";
-  if (/safari/i.test(userAgent) && !/chrome|crios|android/i.test(userAgent)) return "Safari";
-
-  return "Other";
+function detectDeviceType(userAgent: string) {
+  if (/tablet|ipad/i.test(userAgent)) return 'Tablet';
+  if (/mobile|android|iphone|ipod/i.test(userAgent)) return 'Mobile';
+  return 'Desktop';
 }
 
-function detectOs(userAgent: string | null) {
-  if (!userAgent) return null;
-
-  if (/windows/i.test(userAgent)) return "Windows";
-  if (/android/i.test(userAgent)) return "Android";
-  if (/iphone|ipad|ipod/i.test(userAgent)) return "iOS";
-  if (/mac os x|macintosh/i.test(userAgent)) return "macOS";
-  if (/linux/i.test(userAgent)) return "Linux";
-
-  return "Other";
+function detectBrowser(userAgent: string) {
+  if (/edg\//i.test(userAgent)) return 'Edge';
+  if (/opr\//i.test(userAgent) || /opera/i.test(userAgent)) return 'Opera';
+  if (/chrome\//i.test(userAgent) && !/edg\//i.test(userAgent) && !/opr\//i.test(userAgent)) return 'Chrome';
+  if (/safari\//i.test(userAgent) && !/chrome\//i.test(userAgent)) return 'Safari';
+  if (/firefox\//i.test(userAgent)) return 'Firefox';
+  return 'Unknown';
 }
 
-function detectDeviceType(userAgent: string | null) {
-  if (!userAgent) return null;
-
-  if (/ipad|tablet|playbook|silk/i.test(userAgent)) return "Tablet";
-  if (/mobi|android|iphone|ipod|phone/i.test(userAgent)) return "Mobile";
-
-  return "Desktop";
-}
-
-function normalizeLocale(acceptLanguage: string | null) {
-  if (!acceptLanguage) return null;
-
-  const primaryLocale = acceptLanguage.split(",")[0]?.trim();
-  return primaryLocale || null;
-}
-
-async function adPageVisitsTableExists() {
-  const result = await prisma.$queryRaw<Array<{ regclass: string | null }>>`
-    SELECT to_regclass('public.ad_page_visits') AS regclass
-  `;
-
-  return Boolean(result[0]?.regclass);
+function detectOperatingSystem(userAgent: string) {
+  if (/windows/i.test(userAgent)) return 'Windows';
+  if (/android/i.test(userAgent)) return 'Android';
+  if (/iphone|ipad|ipod|ios/i.test(userAgent)) return 'iOS';
+  if (/mac os|macintosh/i.test(userAgent)) return 'macOS';
+  if (/linux/i.test(userAgent)) return 'Linux';
+  return 'Unknown';
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json().catch(() => null);
-    const productId = Number(body?.productId);
-    const path = typeof body?.path === "string" ? body.path.trim() : "";
+    const body = await request.json();
+    const productId = Number(body?.productId || 0);
+    const path = String(body?.path || '').trim() || `/ad/${productId}`;
 
-    if (!Number.isInteger(productId) || productId <= 0 || !path) {
-      return NextResponse.json({ success: false, error: "Invalid payload" }, { status: 400 });
+    if (!Number.isInteger(productId) || productId <= 0) {
+      return NextResponse.json(
+        { success: false, error: 'بيانات التتبع غير صالحة' },
+        { status: 400 }
+      );
     }
 
     const product = await prisma.product.findFirst({
@@ -78,18 +56,21 @@ export async function POST(request: NextRequest) {
     });
 
     if (!product) {
-      return NextResponse.json({ success: false, error: "Ad page is unavailable" }, { status: 404 });
+      return NextResponse.json(
+        { success: false, error: 'الإعلان غير موجود أو غير مفعل' },
+        { status: 404 }
+      );
     }
 
-    if (!(await adPageVisitsTableExists())) {
-      return NextResponse.json({ success: true, tracked: false, reason: "missing_table" }, { status: 202 });
-    }
+    const existingVisitorId = String(
+      request.cookies.get(AD_VISITOR_COOKIE_NAME)?.value || ''
+    ).trim();
 
-    const existingVisitorId = request.cookies.get(VISITOR_COOKIE_NAME)?.value;
-    const visitorId = existingVisitorId || randomUUID();
-    const userAgent = request.headers.get("user-agent");
-    const referrer = request.headers.get("referer");
-    const locale = normalizeLocale(request.headers.get("accept-language"));
+    const visitorId = existingVisitorId || crypto.randomUUID();
+    const userAgent = String(request.headers.get('user-agent') || '').trim();
+    const referrer = String(request.headers.get('referer') || '').trim() || null;
+    const localeHeader = String(request.headers.get('accept-language') || '').trim();
+    const locale = localeHeader ? localeHeader.split(',')[0]?.trim() || null : null;
 
     await prisma.adPageVisit.create({
       data: {
@@ -97,30 +78,30 @@ export async function POST(request: NextRequest) {
         visitorId,
         path,
         referrer,
-        userAgent,
+        userAgent: userAgent || null,
         browser: detectBrowser(userAgent),
-        os: detectOs(userAgent),
+        os: detectOperatingSystem(userAgent),
         deviceType: detectDeviceType(userAgent),
         locale,
       },
     });
 
-    const response = NextResponse.json({ success: true, tracked: true });
+    const response = NextResponse.json({ success: true });
 
     if (!existingVisitorId) {
-      response.cookies.set({
-        name: VISITOR_COOKIE_NAME,
-        value: visitorId,
+      response.cookies.set(AD_VISITOR_COOKIE_NAME, visitorId, {
+        maxAge: 60 * 60 * 24 * 365,
+        path: '/',
         httpOnly: true,
-        sameSite: "lax",
-        secure: process.env.NODE_ENV === "production",
-        maxAge: VISITOR_COOKIE_MAX_AGE,
-        path: "/",
+        sameSite: 'lax',
       });
     }
 
     return response;
-  } catch {
-    return NextResponse.json({ success: false, error: "Unable to track ad visit" }, { status: 500 });
+  } catch (error: any) {
+    return NextResponse.json(
+      { success: false, error: error?.message || 'تعذر تتبع زيارة صفحة الإعلان' },
+      { status: 500 }
+    );
   }
 }
