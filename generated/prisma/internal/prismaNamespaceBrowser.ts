@@ -79,7 +79,8 @@ export const ModelName = {
   OfferDiscount: 'OfferDiscount',
   EmployeeSalaryAdjustment: 'EmployeeSalaryAdjustment',
   AffiliateLink: 'AffiliateLink',
-  Commission: 'Commission'
+  Commission: 'Commission',
+  AdPageVisit: 'AdPageVisit'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -613,6 +614,23 @@ export const CommissionScalarFieldEnum = {
 } as const
 
 export type CommissionScalarFieldEnum = (typeof CommissionScalarFieldEnum)[keyof typeof CommissionScalarFieldEnum]
+
+
+export const AdPageVisitScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  visitorId: 'visitorId',
+  path: 'path',
+  referrer: 'referrer',
+  userAgent: 'userAgent',
+  browser: 'browser',
+  os: 'os',
+  deviceType: 'deviceType',
+  locale: 'locale',
+  createdAt: 'createdAt'
+} as const
+
+export type AdPageVisitScalarFieldEnum = (typeof AdPageVisitScalarFieldEnum)[keyof typeof AdPageVisitScalarFieldEnum]
 
 
 export const SortOrder = {

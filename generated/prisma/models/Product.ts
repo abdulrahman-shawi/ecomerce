@@ -300,6 +300,7 @@ export type ProductWhereInput = {
   showInAds?: Prisma.BoolFilter<"Product"> | boolean
   affiliatePrice?: Prisma.FloatFilter<"Product"> | number
   affiliateCommissionRate?: Prisma.FloatNullableFilter<"Product"> | number | null
+  adPageVisits?: Prisma.AdPageVisitListRelationFilter
   orderItems?: Prisma.OrderItemListRelationFilter
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   images?: Prisma.ProductImageListRelationFilter
@@ -328,6 +329,7 @@ export type ProductOrderByWithRelationInput = {
   showInAds?: Prisma.SortOrder
   affiliatePrice?: Prisma.SortOrder
   affiliateCommissionRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  adPageVisits?: Prisma.AdPageVisitOrderByRelationAggregateInput
   orderItems?: Prisma.OrderItemOrderByRelationAggregateInput
   category?: Prisma.CategoryOrderByWithRelationInput
   images?: Prisma.ProductImageOrderByRelationAggregateInput
@@ -359,6 +361,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   showInAds?: Prisma.BoolFilter<"Product"> | boolean
   affiliatePrice?: Prisma.FloatFilter<"Product"> | number
   affiliateCommissionRate?: Prisma.FloatNullableFilter<"Product"> | number | null
+  adPageVisits?: Prisma.AdPageVisitListRelationFilter
   orderItems?: Prisma.OrderItemListRelationFilter
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   images?: Prisma.ProductImageListRelationFilter
@@ -427,6 +430,7 @@ export type ProductCreateInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
@@ -455,6 +459,7 @@ export type ProductUncheckedCreateInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
@@ -480,6 +485,7 @@ export type ProductUpdateInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
@@ -508,6 +514,7 @@ export type ProductUncheckedUpdateInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
@@ -854,6 +861,20 @@ export type ProductUpdateOneRequiredWithoutAffiliateLinksNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutAffiliateLinksInput, Prisma.ProductUpdateWithoutAffiliateLinksInput>, Prisma.ProductUncheckedUpdateWithoutAffiliateLinksInput>
 }
 
+export type ProductCreateNestedOneWithoutAdPageVisitsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutAdPageVisitsInput, Prisma.ProductUncheckedCreateWithoutAdPageVisitsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutAdPageVisitsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutAdPageVisitsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutAdPageVisitsInput, Prisma.ProductUncheckedCreateWithoutAdPageVisitsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutAdPageVisitsInput
+  upsert?: Prisma.ProductUpsertWithoutAdPageVisitsInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutAdPageVisitsInput, Prisma.ProductUpdateWithoutAdPageVisitsInput>, Prisma.ProductUncheckedUpdateWithoutAdPageVisitsInput>
+}
+
 export type ProductCreateWithoutCategoryInput = {
   name: string
   description?: string | null
@@ -867,6 +888,7 @@ export type ProductCreateWithoutCategoryInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductCreateNestedManyWithoutProductInput
@@ -893,6 +915,7 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
@@ -964,6 +987,7 @@ export type ProductCreateWithoutLandingPageInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
@@ -991,6 +1015,7 @@ export type ProductUncheckedCreateWithoutLandingPageInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
@@ -1031,6 +1056,7 @@ export type ProductUpdateWithoutLandingPageInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
@@ -1058,6 +1084,7 @@ export type ProductUncheckedUpdateWithoutLandingPageInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
@@ -1082,6 +1109,7 @@ export type ProductCreateWithoutReviewsInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
@@ -1109,6 +1137,7 @@ export type ProductUncheckedCreateWithoutReviewsInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
@@ -1149,6 +1178,7 @@ export type ProductUpdateWithoutReviewsInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
@@ -1176,6 +1206,7 @@ export type ProductUncheckedUpdateWithoutReviewsInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
@@ -1200,6 +1231,7 @@ export type ProductCreateWithoutStocksInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
@@ -1227,6 +1259,7 @@ export type ProductUncheckedCreateWithoutStocksInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
@@ -1267,6 +1300,7 @@ export type ProductUpdateWithoutStocksInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
@@ -1294,6 +1328,7 @@ export type ProductUncheckedUpdateWithoutStocksInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
@@ -1318,6 +1353,7 @@ export type ProductCreateWithoutStockMovementsInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
@@ -1345,6 +1381,7 @@ export type ProductUncheckedCreateWithoutStockMovementsInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
@@ -1385,6 +1422,7 @@ export type ProductUpdateWithoutStockMovementsInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
@@ -1412,6 +1450,7 @@ export type ProductUncheckedUpdateWithoutStockMovementsInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
@@ -1436,6 +1475,7 @@ export type ProductCreateWithoutTargetProductsInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
@@ -1463,6 +1503,7 @@ export type ProductUncheckedCreateWithoutTargetProductsInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   stocks?: Prisma.ProductStockUncheckedCreateNestedManyWithoutProductInput
@@ -1503,6 +1544,7 @@ export type ProductUpdateWithoutTargetProductsInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
@@ -1530,6 +1572,7 @@ export type ProductUncheckedUpdateWithoutTargetProductsInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   stocks?: Prisma.ProductStockUncheckedUpdateManyWithoutProductNestedInput
@@ -1554,6 +1597,7 @@ export type ProductCreateWithoutImagesInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   targetProducts?: Prisma.TargetProductCreateNestedManyWithoutProductInput
@@ -1581,6 +1625,7 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
   stocks?: Prisma.ProductStockUncheckedCreateNestedManyWithoutProductInput
@@ -1621,6 +1666,7 @@ export type ProductUpdateWithoutImagesInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   targetProducts?: Prisma.TargetProductUpdateManyWithoutProductNestedInput
@@ -1648,6 +1694,7 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
   stocks?: Prisma.ProductStockUncheckedUpdateManyWithoutProductNestedInput
@@ -1672,6 +1719,7 @@ export type ProductCreateWithoutWarrantiesAsProductInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
@@ -1699,6 +1747,7 @@ export type ProductUncheckedCreateWithoutWarrantiesAsProductInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
@@ -1739,6 +1788,7 @@ export type ProductUpdateWithoutWarrantiesAsProductInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
@@ -1766,6 +1816,7 @@ export type ProductUncheckedUpdateWithoutWarrantiesAsProductInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
@@ -1790,6 +1841,7 @@ export type ProductCreateWithoutOrderItemsInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitCreateNestedManyWithoutProductInput
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductCreateNestedManyWithoutProductInput
@@ -1817,6 +1869,7 @@ export type ProductUncheckedCreateWithoutOrderItemsInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
   stocks?: Prisma.ProductStockUncheckedCreateNestedManyWithoutProductInput
@@ -1857,6 +1910,7 @@ export type ProductUpdateWithoutOrderItemsInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUpdateManyWithoutProductNestedInput
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUpdateManyWithoutProductNestedInput
@@ -1884,6 +1938,7 @@ export type ProductUncheckedUpdateWithoutOrderItemsInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
   stocks?: Prisma.ProductStockUncheckedUpdateManyWithoutProductNestedInput
@@ -1908,6 +1963,7 @@ export type ProductCreateWithoutOfferDiscountsInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
@@ -1935,6 +1991,7 @@ export type ProductUncheckedCreateWithoutOfferDiscountsInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
@@ -1975,6 +2032,7 @@ export type ProductUpdateWithoutOfferDiscountsInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
@@ -2002,6 +2060,7 @@ export type ProductUncheckedUpdateWithoutOfferDiscountsInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
@@ -2026,6 +2085,7 @@ export type ProductCreateWithoutAffiliateLinksInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
   category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
@@ -2053,6 +2113,7 @@ export type ProductUncheckedCreateWithoutAffiliateLinksInput = {
   showInAds?: boolean
   affiliatePrice?: number
   affiliateCommissionRate?: number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedCreateNestedManyWithoutProductInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
   images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
   targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
@@ -2093,6 +2154,7 @@ export type ProductUpdateWithoutAffiliateLinksInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
@@ -2120,12 +2182,135 @@ export type ProductUncheckedUpdateWithoutAffiliateLinksInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
   stocks?: Prisma.ProductStockUncheckedUpdateManyWithoutProductNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
   warrantiesAsProduct?: Prisma.WarrantyUncheckedUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
+  landingPage?: Prisma.ProductLandingPageUncheckedUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutAdPageVisitsInput = {
+  name: string
+  description?: string | null
+  googleLink?: string | null
+  createdAt?: Date | string
+  seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
+  isActive?: boolean
+  showInAds?: boolean
+  affiliatePrice?: number
+  affiliateCommissionRate?: number | null
+  orderItems?: Prisma.OrderItemCreateNestedManyWithoutProductInput
+  category?: Prisma.CategoryCreateNestedOneWithoutProductsInput
+  images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
+  targetProducts?: Prisma.TargetProductCreateNestedManyWithoutProductInput
+  stocks?: Prisma.ProductStockCreateNestedManyWithoutProductInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  warrantiesAsProduct?: Prisma.WarrantyCreateNestedManyWithoutProductInput
+  affiliateLinks?: Prisma.AffiliateLinkCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
+  landingPage?: Prisma.ProductLandingPageCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutAdPageVisitsInput = {
+  id?: number
+  name: string
+  description?: string | null
+  googleLink?: string | null
+  categoryId?: number | null
+  createdAt?: Date | string
+  seoSlug?: string | null
+  metaTitle?: string | null
+  metaDescription?: string | null
+  metaKeywords?: string | null
+  isActive?: boolean
+  showInAds?: boolean
+  affiliatePrice?: number
+  affiliateCommissionRate?: number | null
+  orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutProductInput
+  images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
+  targetProducts?: Prisma.TargetProductUncheckedCreateNestedManyWithoutProductInput
+  stocks?: Prisma.ProductStockUncheckedCreateNestedManyWithoutProductInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  warrantiesAsProduct?: Prisma.WarrantyUncheckedCreateNestedManyWithoutProductInput
+  affiliateLinks?: Prisma.AffiliateLinkUncheckedCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
+  landingPage?: Prisma.ProductLandingPageUncheckedCreateNestedOneWithoutProductInput
+  offerDiscounts?: Prisma.OfferDiscountUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutAdPageVisitsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutAdPageVisitsInput, Prisma.ProductUncheckedCreateWithoutAdPageVisitsInput>
+}
+
+export type ProductUpsertWithoutAdPageVisitsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutAdPageVisitsInput, Prisma.ProductUncheckedUpdateWithoutAdPageVisitsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutAdPageVisitsInput, Prisma.ProductUncheckedCreateWithoutAdPageVisitsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutAdPageVisitsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutAdPageVisitsInput, Prisma.ProductUncheckedUpdateWithoutAdPageVisitsInput>
+}
+
+export type ProductUpdateWithoutAdPageVisitsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
+  category?: Prisma.CategoryUpdateOneWithoutProductsNestedInput
+  images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
+  targetProducts?: Prisma.TargetProductUpdateManyWithoutProductNestedInput
+  stocks?: Prisma.ProductStockUpdateManyWithoutProductNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  warrantiesAsProduct?: Prisma.WarrantyUpdateManyWithoutProductNestedInput
+  affiliateLinks?: Prisma.AffiliateLinkUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
+  landingPage?: Prisma.ProductLandingPageUpdateOneWithoutProductNestedInput
+  offerDiscounts?: Prisma.OfferDiscountUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutAdPageVisitsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seoSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaKeywords?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
+  images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
+  targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
+  stocks?: Prisma.ProductStockUncheckedUpdateManyWithoutProductNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  warrantiesAsProduct?: Prisma.WarrantyUncheckedUpdateManyWithoutProductNestedInput
+  affiliateLinks?: Prisma.AffiliateLinkUncheckedUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
   landingPage?: Prisma.ProductLandingPageUncheckedUpdateOneWithoutProductNestedInput
   offerDiscounts?: Prisma.OfferDiscountUncheckedUpdateManyWithoutProductNestedInput
@@ -2160,6 +2345,7 @@ export type ProductUpdateWithoutCategoryInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUpdateManyWithoutProductNestedInput
@@ -2186,6 +2372,7 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   showInAds?: Prisma.BoolFieldUpdateOperationsInput | boolean
   affiliatePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   affiliateCommissionRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  adPageVisits?: Prisma.AdPageVisitUncheckedUpdateManyWithoutProductNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutProductNestedInput
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   targetProducts?: Prisma.TargetProductUncheckedUpdateManyWithoutProductNestedInput
@@ -2220,6 +2407,7 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
  */
 
 export type ProductCountOutputType = {
+  adPageVisits: number
   orderItems: number
   images: number
   targetProducts: number
@@ -2232,6 +2420,7 @@ export type ProductCountOutputType = {
 }
 
 export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  adPageVisits?: boolean | ProductCountOutputTypeCountAdPageVisitsArgs
   orderItems?: boolean | ProductCountOutputTypeCountOrderItemsArgs
   images?: boolean | ProductCountOutputTypeCountImagesArgs
   targetProducts?: boolean | ProductCountOutputTypeCountTargetProductsArgs
@@ -2251,6 +2440,13 @@ export type ProductCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
    * Select specific fields to fetch from the ProductCountOutputType
    */
   select?: Prisma.ProductCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountAdPageVisitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AdPageVisitWhereInput
 }
 
 /**
@@ -2332,6 +2528,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   showInAds?: boolean
   affiliatePrice?: boolean
   affiliateCommissionRate?: boolean
+  adPageVisits?: boolean | Prisma.Product$adPageVisitsArgs<ExtArgs>
   orderItems?: boolean | Prisma.Product$orderItemsArgs<ExtArgs>
   category?: boolean | Prisma.Product$categoryArgs<ExtArgs>
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
@@ -2401,6 +2598,7 @@ export type ProductSelectScalar = {
 
 export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "googleLink" | "categoryId" | "createdAt" | "seoSlug" | "metaTitle" | "metaDescription" | "metaKeywords" | "isActive" | "showInAds" | "affiliatePrice" | "affiliateCommissionRate", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  adPageVisits?: boolean | Prisma.Product$adPageVisitsArgs<ExtArgs>
   orderItems?: boolean | Prisma.Product$orderItemsArgs<ExtArgs>
   category?: boolean | Prisma.Product$categoryArgs<ExtArgs>
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
@@ -2424,6 +2622,7 @@ export type ProductIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Product"
   objects: {
+    adPageVisits: Prisma.$AdPageVisitPayload<ExtArgs>[]
     orderItems: Prisma.$OrderItemPayload<ExtArgs>[]
     category: Prisma.$CategoryPayload<ExtArgs> | null
     images: Prisma.$ProductImagePayload<ExtArgs>[]
@@ -2845,6 +3044,7 @@ readonly fields: ProductFieldRefs;
  */
 export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  adPageVisits<T extends Prisma.Product$adPageVisitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$adPageVisitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdPageVisitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   orderItems<T extends Prisma.Product$orderItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$orderItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   category<T extends Prisma.Product$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$categoryArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   images<T extends Prisma.Product$imagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3297,6 +3497,30 @@ export type ProductDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Products to delete.
    */
   limit?: number
+}
+
+/**
+ * Product.adPageVisits
+ */
+export type Product$adPageVisitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AdPageVisit
+   */
+  select?: Prisma.AdPageVisitSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AdPageVisit
+   */
+  omit?: Prisma.AdPageVisitOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AdPageVisitInclude<ExtArgs> | null
+  where?: Prisma.AdPageVisitWhereInput
+  orderBy?: Prisma.AdPageVisitOrderByWithRelationInput | Prisma.AdPageVisitOrderByWithRelationInput[]
+  cursor?: Prisma.AdPageVisitWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AdPageVisitScalarFieldEnum | Prisma.AdPageVisitScalarFieldEnum[]
 }
 
 /**

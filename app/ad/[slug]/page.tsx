@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import AdPageTracker from "@/component/AdPageTracker";
 import LandingOrder from "./LandingOrder";
 import { getLandingProduct } from "@/server/products";
 import { getServerCountry } from "@/lib/region";
@@ -74,25 +75,28 @@ export default async function LandingPage({ params }: LandingPageProps) {
   ]);
 
   return (
-    <LandingOrder
-      product={{
-        id: product.id,
-        name: product.name,
-        description: product.description,
-        image: product.image,
-        images: product.images,
-        price: product.price,
-        originalPrice: product.originalPrice,
-        currency: settings.siteCurrency,
-        averageRating: reviewsData.averageRating || product.averageRating,
-        totalReviews: reviewsData.totalReviews || product.totalReviews,
-        stock: product.stock,
-        showInAds: product.showInAds,
-        landingPage: product.landingPage,
-      }}
-      reviews={reviewsData.reviews}
-      siteName={settings.siteName}
-      usdToTryRate={settings.usdToTryRate}
-    />
+    <>
+      <AdPageTracker productId={product.id} />
+      <LandingOrder
+        product={{
+          id: product.id,
+          name: product.name,
+          description: product.description,
+          image: product.image,
+          images: product.images,
+          price: product.price,
+          originalPrice: product.originalPrice,
+          currency: settings.siteCurrency,
+          averageRating: reviewsData.averageRating || product.averageRating,
+          totalReviews: reviewsData.totalReviews || product.totalReviews,
+          stock: product.stock,
+          showInAds: product.showInAds,
+          landingPage: product.landingPage,
+        }}
+        reviews={reviewsData.reviews}
+        siteName={settings.siteName}
+        usdToTryRate={settings.usdToTryRate}
+      />
+    </>
   );
 }

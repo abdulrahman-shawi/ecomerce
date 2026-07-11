@@ -186,3 +186,8 @@ export type AffiliateLink = Prisma.AffiliateLinkModel
  * 
  */
 export type Commission = Prisma.CommissionModel
+/**
+ * Model AdPageVisit
+ * 
+ */
+export type AdPageVisit = Prisma.AdPageVisitModel

@@ -412,7 +412,8 @@ export const ModelName = {
   OfferDiscount: 'OfferDiscount',
   EmployeeSalaryAdjustment: 'EmployeeSalaryAdjustment',
   AffiliateLink: 'AffiliateLink',
-  Commission: 'Commission'
+  Commission: 'Commission',
+  AdPageVisit: 'AdPageVisit'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -428,7 +429,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "permission" | "category" | "product" | "productLandingPage" | "review" | "warehouse" | "productStock" | "stockMovement" | "userTarget" | "userActivityTarget" | "targetProduct" | "productImage" | "customer" | "warranty" | "message" | "order" | "expense" | "shipping" | "orderItem" | "trakingCompany" | "page" | "heroSlide" | "generalSetting" | "offer" | "offerDiscount" | "employeeSalaryAdjustment" | "affiliateLink" | "commission"
+    modelProps: "user" | "permission" | "category" | "product" | "productLandingPage" | "review" | "warehouse" | "productStock" | "stockMovement" | "userTarget" | "userActivityTarget" | "targetProduct" | "productImage" | "customer" | "warranty" | "message" | "order" | "expense" | "shipping" | "orderItem" | "trakingCompany" | "page" | "heroSlide" | "generalSetting" | "offer" | "offerDiscount" | "employeeSalaryAdjustment" | "affiliateLink" | "commission" | "adPageVisit"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2578,6 +2579,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AdPageVisit: {
+      payload: Prisma.$AdPageVisitPayload<ExtArgs>
+      fields: Prisma.AdPageVisitFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AdPageVisitFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdPageVisitPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AdPageVisitFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdPageVisitPayload>
+        }
+        findFirst: {
+          args: Prisma.AdPageVisitFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdPageVisitPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AdPageVisitFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdPageVisitPayload>
+        }
+        findMany: {
+          args: Prisma.AdPageVisitFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdPageVisitPayload>[]
+        }
+        create: {
+          args: Prisma.AdPageVisitCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdPageVisitPayload>
+        }
+        createMany: {
+          args: Prisma.AdPageVisitCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AdPageVisitCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdPageVisitPayload>[]
+        }
+        delete: {
+          args: Prisma.AdPageVisitDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdPageVisitPayload>
+        }
+        update: {
+          args: Prisma.AdPageVisitUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdPageVisitPayload>
+        }
+        deleteMany: {
+          args: Prisma.AdPageVisitDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AdPageVisitUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AdPageVisitUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdPageVisitPayload>[]
+        }
+        upsert: {
+          args: Prisma.AdPageVisitUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdPageVisitPayload>
+        }
+        aggregate: {
+          args: Prisma.AdPageVisitAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAdPageVisit>
+        }
+        groupBy: {
+          args: Prisma.AdPageVisitGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdPageVisitGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AdPageVisitCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdPageVisitCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3134,6 +3209,23 @@ export const CommissionScalarFieldEnum = {
 export type CommissionScalarFieldEnum = (typeof CommissionScalarFieldEnum)[keyof typeof CommissionScalarFieldEnum]
 
 
+export const AdPageVisitScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  visitorId: 'visitorId',
+  path: 'path',
+  referrer: 'referrer',
+  userAgent: 'userAgent',
+  browser: 'browser',
+  os: 'os',
+  deviceType: 'deviceType',
+  locale: 'locale',
+  createdAt: 'createdAt'
+} as const
+
+export type AdPageVisitScalarFieldEnum = (typeof AdPageVisitScalarFieldEnum)[keyof typeof AdPageVisitScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3536,6 +3628,7 @@ export type GlobalOmitConfig = {
   employeeSalaryAdjustment?: Prisma.EmployeeSalaryAdjustmentOmit
   affiliateLink?: Prisma.AffiliateLinkOmit
   commission?: Prisma.CommissionOmit
+  adPageVisit?: Prisma.AdPageVisitOmit
 }
 
 /* Types for Logging */

@@ -231,6 +231,7 @@ model Product {
   showInAds             Boolean  @default(false)
   affiliatePrice        Float    @default(0)
   affiliateCommissionRate Float? @default(10.00)
+  adPageVisits   AdPageVisit[]
 
   // ─── Existing Relations ───
   orderItems     OrderItem[]
@@ -821,3 +822,27 @@ model Commission {
   @@index([createdAt])
   @@map("commissions")
 }
+
+
+model AdPageVisit {
+  id         String   @id @default(uuid())
+  productId  Int      @map("product_id")
+  visitorId  String   @map("visitor_id")
+  path       String?
+  referrer   String?
+  userAgent  String?  @map("user_agent")
+  browser    String?
+  os         String?
+  deviceType String?  @map("device_type")
+  locale     String?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([visitorId])
+  @@index([createdAt])
+  @@index([productId, createdAt])
+  @@map("ad_page_visits")
+}
+
