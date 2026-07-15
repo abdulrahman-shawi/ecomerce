@@ -95,6 +95,14 @@ export const EcommerceRole = {
 export type EcommerceRole = (typeof EcommerceRole)[keyof typeof EcommerceRole]
 
 
+export const WalletTransferStatus = {
+  PENDING: 'PENDING',
+  RECEIVED: 'RECEIVED'
+} as const
+
+export type WalletTransferStatus = (typeof WalletTransferStatus)[keyof typeof WalletTransferStatus]
+
+
 export const CommissionStatus = {
   PENDING: 'PENDING',
   PAID: 'PAID',

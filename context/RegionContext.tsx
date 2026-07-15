@@ -19,7 +19,7 @@ interface RegionContextType {
 
 const REGION_KEY = "skynova-country";
 const REGION_COOKIE = "skynova-country";
-const VALID_COUNTRIES: CountryCode[] = ["TR", "SY"];
+const VALID_COUNTRIES: CountryCode[] = ["SY"];
 const DEFAULT_COUNTRY: CountryCode = "SY";
 
 function isValidCountry(value: string | undefined | null): value is CountryCode {
@@ -52,15 +52,7 @@ function getStoredCountry(): CountryCode | null {
 }
 
 async function detectCountryByIp(): Promise<CountryCode> {
-  try {
-    const res = await fetch("https://ipapi.co/json/", { cache: "no-store" });
-    if (!res.ok) return DEFAULT_COUNTRY;
-    const data = await res.json();
-    const code = String(data?.country_code || "").toUpperCase();
-    return code === "TR" ? "TR" : DEFAULT_COUNTRY;
-  } catch {
-    return DEFAULT_COUNTRY;
-  }
+  return DEFAULT_COUNTRY;
 }
 
 const RegionContext = createContext<RegionContextType | undefined>(undefined);
@@ -70,13 +62,14 @@ export function RegionProvider({ children }: { children: ReactNode }) {
   const [isDetecting, setIsDetecting] = useState(true);
 
   const applyCountry = useCallback((next: CountryCode, { reload = false }: { reload?: boolean } = {}) => {
-    setCountryState(next);
+    const normalizedCountry = isValidCountry(next) ? next : DEFAULT_COUNTRY;
+    setCountryState(normalizedCountry);
     try {
-      localStorage.setItem(REGION_KEY, next);
+      localStorage.setItem(REGION_KEY, normalizedCountry);
     } catch {
       // ignore
     }
-    setCookie(REGION_COOKIE, next);
+    setCookie(REGION_COOKIE, normalizedCountry);
     if (reload) {
       window.location.reload();
     }
@@ -111,8 +104,8 @@ export function RegionProvider({ children }: { children: ReactNode }) {
   }, [applyCountry]);
 
   const setCountry = useCallback(
-    (next: CountryCode) => {
-      applyCountry(next, { reload: true });
+    (_next: CountryCode) => {
+      applyCountry(DEFAULT_COUNTRY, { reload: true });
     },
     [applyCountry]
   );

@@ -75,6 +75,11 @@ enum EcommerceRole {
   CUSTOMER
 }
 
+enum WalletTransferStatus {
+  PENDING
+  RECEIVED
+}
+
 enum CommissionStatus {
   PENDING
   PAID
@@ -118,6 +123,7 @@ model User {
   parent          User?    @relation("UserToSubordinates", fields: [parentId], references: [id])
   subordinates    User[]   @relation("UserToSubordinates")
   orders                 Order[]
+  walletTransfers        AffiliateWalletTransfer[]
   permission             Permission?     @relation(fields: [permissionId], references: [id])
   customers              Customer[]      @relation("CustomerToUser")
   message                Message[]
@@ -846,3 +852,23 @@ model AdPageVisit {
   @@map("ad_page_visits")
 }
 
+
+model AffiliateWalletTransfer {
+  id           String               @id @default(uuid())
+  userId       String               @map("user_id")
+  amount       Float
+  status       WalletTransferStatus @default(PENDING)
+  reference    String?
+  notes        String?
+  transferredAt DateTime            @default(now()) @map("transferred_at")
+  receivedAt   DateTime?            @map("received_at")
+  createdAt    DateTime             @default(now()) @map("created_at")
+  updatedAt    DateTime             @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@index([transferredAt])
+  @@map("affiliate_wallet_transfers")
+}

@@ -12,7 +12,7 @@ export interface LandingOrderInput {
   authToken?: string;
   name: string;
   phone: string;
-  country: "SY" | "TR";
+  country: "SY";
   city: string;
   address: string;
   notes?: string;
@@ -60,9 +60,10 @@ function getAppliedQuantityDiscountTier(tiers: QuantityDiscountTier[], quantity:
 
 export async function createLandingOrder(input: LandingOrderInput) {
   try {
-    const { productId, quantity, customerId, authToken, name, phone, country, city, address, notes } = input;
+    const { productId, quantity, customerId, authToken, name, phone, city, address, notes } = input;
+    const country = "SY";
 
-    if (!productId || !quantity || !name || !phone || !country || !city || !address) {
+    if (!productId || !quantity || !name || !phone || !city || !address) {
       return { success: false, error: "يرجى تعبئة جميع الحقول المطلوبة" };
     }
 
@@ -75,7 +76,7 @@ export async function createLandingOrder(input: LandingOrderInput) {
       return { success: false, error: "المنتج غير موجود أو غير نشط" };
     }
 
-    const stockCountry = country === "TR" ? "تركيا" : "سوريا";
+    const stockCountry = "سوريا";
     const warehouses = await prisma.warehouse.findMany();
     const warehouse =
       warehouses.find(

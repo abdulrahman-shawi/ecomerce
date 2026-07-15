@@ -80,7 +80,8 @@ export const ModelName = {
   EmployeeSalaryAdjustment: 'EmployeeSalaryAdjustment',
   AffiliateLink: 'AffiliateLink',
   Commission: 'Commission',
-  AdPageVisit: 'AdPageVisit'
+  AdPageVisit: 'AdPageVisit',
+  AffiliateWalletTransfer: 'AffiliateWalletTransfer'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -631,6 +632,22 @@ export const AdPageVisitScalarFieldEnum = {
 } as const
 
 export type AdPageVisitScalarFieldEnum = (typeof AdPageVisitScalarFieldEnum)[keyof typeof AdPageVisitScalarFieldEnum]
+
+
+export const AffiliateWalletTransferScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  amount: 'amount',
+  status: 'status',
+  reference: 'reference',
+  notes: 'notes',
+  transferredAt: 'transferredAt',
+  receivedAt: 'receivedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AffiliateWalletTransferScalarFieldEnum = (typeof AffiliateWalletTransferScalarFieldEnum)[keyof typeof AffiliateWalletTransferScalarFieldEnum]
 
 
 export const SortOrder = {

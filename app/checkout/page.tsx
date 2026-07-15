@@ -4,7 +4,6 @@ import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useCart } from "@/context/CartContext";
-import { useRegion } from "@/context/RegionContext";
 import { useSettings } from "@/context/SettingsContext";
 import { useAuth } from "@/context/AuthContext";
 import { formatPrice } from "@/lib/currency";
@@ -18,14 +17,13 @@ const MapPicker = dynamic(() => import("@/component/MapPicker"), { ssr: false })
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, totalPrice, clearCart } = useCart();
-  const { country: regionCountry } = useRegion();
   const { siteCurrency, usdToTryRate } = useSettings();
   const { user } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    country: regionCountry === "TR" ? "TR" : "SY",
+    country: "SY",
     city: "",
     address: "",
     notes: "",
@@ -62,17 +60,8 @@ export default function CheckoutPage() {
     );
   }, []);
 
-  // Sync checkout country with the selected region
-  useEffect(() => {
-    setFormData((prev) => {
-      const nextCountry = regionCountry === "TR" ? "TR" : "SY";
-      if (prev.country === nextCountry) return prev;
-      return { ...prev, country: nextCountry, city: "" };
-    });
-  }, [regionCountry]);
-
-  const validateStock = useCallback(async (country: string) => {
-    if (!country || items.length === 0) {
+  const validateStock = useCallback(async () => {
+    if (items.length === 0) {
       setStockErrors([]);
       return;
     }
@@ -81,7 +70,7 @@ export default function CheckoutPage() {
       const res = await fetch("/api/checkout/validate-stock", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ country, items }),
+        body: JSON.stringify({ country: "SY", items }),
       });
       const data = await res.json();
       if (data.outOfStock?.length > 0) {
@@ -101,29 +90,21 @@ export default function CheckoutPage() {
     }
   }, [items]);
 
-  // Validate stock when country or items change
   useEffect(() => {
-    if (formData.country) {
-      validateStock(formData.country);
-    }
-  }, [formData.country, items, validateStock]);
+    validateStock();
+  }, [items, validateStock]);
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target;
       setFormData((prev) => {
-        const next = { ...prev, [name]: value };
-        if (name === "country") {
-          next.city = "";
-          validateStock(value);
-        }
-        return next;
+        return { ...prev, [name]: value };
       });
     },
-    [validateStock]
+    []
   );
 
-  const availableCities = formData.country ? citiesByCountry[formData.country] || [] : [];
+  const availableCities = citiesByCountry.SY || [];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -290,15 +271,16 @@ export default function CheckoutPage() {
                       name="country"
                       required
                       value={formData.country}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink/50 focus:border-pink transition-all text-gray-dark bg-white"
+                      disabled
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-dark bg-gray-50 disabled:opacity-100 disabled:cursor-not-allowed"
                     >
-                      <option value="">اختر الدولة</option>
-                      {countries.map((c) => (
-                        <option key={c.code} value={c.code}>
-                          {c.name}
-                        </option>
-                      ))}
+                      {countries
+                        .filter((c) => c.code === "SY")
+                        .map((c) => (
+                          <option key={c.code} value={c.code}>
+                            {c.name}
+                          </option>
+                        ))}
                     </select>
                   </div>
 
@@ -366,7 +348,7 @@ export default function CheckoutPage() {
 
                 {/* Map */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                  <label className="mb-2 flex items-center gap-2 text-sm font-medium text-gray-700">
                     <MapPin size={18} className="text-pink" />
                     تحديد الموقع على الخريطة
                   </label>
@@ -375,13 +357,13 @@ export default function CheckoutPage() {
                   </p>
                   <MapPicker position={position} onPositionChange={setPosition} />
                   {position && (
-                    <p className="text-xs text-pink-dark mt-2 flex items-center gap-1">
+                    <p className="mt-2 inline-flex items-center gap-1 text-xs text-pink-dark">
                       <CheckCircle size={14} />
                       تم تحديد الموقع: {position[0].toFixed(5)}, {position[1].toFixed(5)}
                     </p>
                   )}
                   {locationError && (
-                    <p className="text-xs text-amber-600 mt-2 flex items-center gap-1">
+                    <p className="mt-2 inline-flex items-center gap-1 text-xs text-amber-600">
                       <MapPin size={14} />
                       {locationError}
                     </p>

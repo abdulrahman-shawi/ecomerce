@@ -4,16 +4,16 @@ import { prisma } from "@/lib/prisma";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { country, items } = body;
+    const { items } = body;
 
-    if (!country || !items?.length) {
+    if (!items?.length) {
       return NextResponse.json(
         { error: "Missing fields" },
         { status: 400 }
       );
     }
 
-    const stockCountry = country === "TR" ? "تركيا" : "سوريا";
+    const stockCountry = "سوريا";
 
     const warehouses = await prisma.warehouse.findMany();
     const warehouse = warehouses.find((w) =>

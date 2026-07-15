@@ -21,7 +21,6 @@ export async function POST(request: NextRequest) {
       customerId,
       name,
       phone,
-      country,
       city,
       address,
       notes,
@@ -30,8 +29,9 @@ export async function POST(request: NextRequest) {
       items,
       totalPrice,
     } = body;
+    const country = "SY";
 
-    if (!name || !phone || !country || !city || !address || !items?.length) {
+    if (!name || !phone || !city || !address || !items?.length) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
       ? items.find((item: { id: number }) => item.id === affiliateLink.productId)
       : null;
 
-    const stockCountry = country === "TR" ? "تركيا" : "سوريا";
+    const stockCountry = "سوريا";
 
     const { customer, order } = await prisma.$transaction(async (tx) => {
       // ─── 1. Resolve customer ───

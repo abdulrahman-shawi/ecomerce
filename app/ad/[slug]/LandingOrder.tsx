@@ -122,7 +122,7 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
   const [form, setForm] = useState({
     name: "",
     phone: "",
-    country: "SY" as "SY" | "TR",
+    country: "SY" as "SY",
     city: "",
     address: "",
     notes: "",
@@ -234,7 +234,7 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
         <div className="phone-input-wrapper" dir="ltr">
           <PhoneInput
             international
-            defaultCountry={form.country}
+            defaultCountry="SY"
             value={form.phone}
             onChange={(value) => setForm({ ...form, phone: sanitizePhoneNumber(value || "") })}
             placeholder="Enter phone number"
@@ -251,11 +251,10 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
           <label className="block text-sm font-medium text-gray-700 mb-1 font-tajawal">الدولة *</label>
           <select
             value={form.country}
-            onChange={(e) => setForm({ ...form, country: e.target.value as "SY" | "TR", city: "" })}
-            className="w-full border border-gray-200 rounded-xl px-3 py-3 focus:outline-none focus:ring-2 focus:ring-pink focus:border-transparent font-tajawal bg-gray-50"
+            disabled
+            className="w-full border border-gray-200 rounded-xl px-3 py-3 font-tajawal bg-gray-50 disabled:opacity-100 disabled:cursor-not-allowed"
           >
             <option value="SY">سوريا</option>
-            <option value="TR">تركيا</option>
           </select>
         </div>
         <div>

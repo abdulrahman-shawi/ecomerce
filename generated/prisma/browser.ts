@@ -167,3 +167,8 @@ export type Commission = Prisma.CommissionModel
  * 
  */
 export type AdPageVisit = Prisma.AdPageVisitModel
+/**
+ * Model AffiliateWalletTransfer
+ * 
+ */
+export type AffiliateWalletTransfer = Prisma.AffiliateWalletTransferModel

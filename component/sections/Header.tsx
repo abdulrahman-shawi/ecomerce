@@ -5,7 +5,6 @@ import { Search, User, Heart, ShoppingCart, Menu, X, ChevronDown, Globe } from '
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
 import { useAuth } from '@/context/AuthContext';
-import { useRegion } from '@/context/RegionContext';
 import { useSettings } from '@/context/SettingsContext';
 import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
@@ -24,7 +23,6 @@ export default function Header() {
   const { totalItems, setIsOpen } = useCart();
   const { wishlistCount } = useWishlist();
   const { isLoggedIn } = useAuth();
-  const { country, setCountry } = useRegion();
   const { siteName, logo } = useSettings();
   const router = useRouter();
   const pathname = usePathname();
@@ -32,7 +30,6 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [regionOpen, setRegionOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,18 +38,6 @@ export default function Header() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  useEffect(() => {
-    if (!regionOpen) return;
-    const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (!target.closest('[data-region-selector]')) {
-        setRegionOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [regionOpen]);
 
   const handleNavClick = (href: string) => {
     if (href.startsWith('/#')) {
@@ -153,47 +138,9 @@ export default function Header() {
         {/* Icons */}
         <div className="flex items-center gap-1 sm:gap-2">
           {/* Country selector */}
-          <div className="relative" data-region-selector>
-            <button
-              onClick={() => setRegionOpen(!regionOpen)}
-              className="flex items-center gap-1 px-2 py-1.5 rounded-lg hover:bg-gray-100 transition-colors text-gray-700"
-              aria-label="اختيار الدولة"
-            >
-              <Globe size={18} className="hidden sm:inline text-pink" />
-              <span className="text-sm font-tajawal font-medium">
-                {country === 'TR' ? 'تركيا' : 'سوريا'}
-              </span>
-              <ChevronDown size={14} className={`transition-transform ${regionOpen ? 'rotate-180' : ''}`} />
-            </button>
-
-            {regionOpen && (
-              <div className="absolute left-0 top-full mt-2 w-40 bg-white border border-gray-100 shadow-lg rounded-xl py-1.5 z-50 animate-in fade-in slide-in-from-top-1">
-                <button
-                  onClick={() => {
-                    setCountry('TR');
-                    setRegionOpen(false);
-                  }}
-                  className={`w-full text-right px-4 py-2 text-sm font-tajawal hover:bg-pink-50 transition-colors flex items-center justify-between ${
-                    country === 'TR' ? 'text-pink font-bold bg-pink-50' : 'text-gray-700'
-                  }`}
-                >
-                  <span>تركيا</span>
-                  {country === 'TR' && <span className="text-pink">✓</span>}
-                </button>
-                <button
-                  onClick={() => {
-                    setCountry('SY');
-                    setRegionOpen(false);
-                  }}
-                  className={`w-full text-right px-4 py-2 text-sm font-tajawal hover:bg-pink-50 transition-colors flex items-center justify-between ${
-                    country === 'SY' ? 'text-pink font-bold bg-pink-50' : 'text-gray-700'
-                  }`}
-                >
-                  <span>سوريا</span>
-                  {country === 'SY' && <span className="text-pink">✓</span>}
-                </button>
-              </div>
-            )}
+          <div className="flex items-center gap-1 px-2 py-1.5 rounded-lg bg-gray-50 text-gray-700">
+            <Globe size={18} className="hidden sm:inline text-pink" />
+            <span className="text-sm font-tajawal font-medium">سوريا</span>
           </div>
 
           <button

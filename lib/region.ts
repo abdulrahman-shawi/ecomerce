@@ -4,11 +4,21 @@ import { prisma } from "@/lib/prisma";
 export type CountryCode = "TR" | "SY";
 
 const REGION_COOKIE = "skynova-country";
+const SYRIA_COUNTRY: CountryCode = "SY";
 
 export function getServerCountry(): CountryCode {
   const store = cookies();
   const value = store.get(REGION_COOKIE)?.value;
-  return value === "TR" ? "TR" : "SY";
+
+  if (value !== SYRIA_COUNTRY) {
+    void store.set(REGION_COOKIE, SYRIA_COUNTRY, {
+      path: "/",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 365,
+    });
+  }
+
+  return SYRIA_COUNTRY;
 }
 
 /**
@@ -20,7 +30,7 @@ export async function getWarehouseIdsByCountry(
   country: CountryCode
 ): Promise<number[]> {
   const warehouses = await prisma.warehouse.findMany();
-  const stockCountry = country === "TR" ? "تركيا" : "سوريا";
+  const stockCountry = country === "TR" ? "سوريا" : "سوريا";
 
   const matching = warehouses.filter(
     (w) =>
