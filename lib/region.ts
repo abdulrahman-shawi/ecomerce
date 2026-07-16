@@ -1,23 +1,10 @@
-import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 
 export type CountryCode = "TR" | "SY";
 
-const REGION_COOKIE = "skynova-country";
 const SYRIA_COUNTRY: CountryCode = "SY";
 
 export function getServerCountry(): CountryCode {
-  const store = cookies();
-  const value = store.get(REGION_COOKIE)?.value;
-
-  if (value !== SYRIA_COUNTRY) {
-    void store.set(REGION_COOKIE, SYRIA_COUNTRY, {
-      path: "/",
-      sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 365,
-    });
-  }
-
   return SYRIA_COUNTRY;
 }
 
