@@ -1,5 +1,6 @@
 "use server";
 
+import { calculateAffiliateCommissionAmount } from "@/lib/affiliate-commission";
 import { prisma } from "@/lib/prisma";
 import { verifyToken } from "@/lib/jwt";
 import { cookies } from "next/headers";
@@ -260,16 +261,19 @@ export async function createLandingOrder(input: LandingOrderInput) {
 
       // Create commission if affiliate link matches
       if (affiliateLinkId && affiliateLink) {
-        const commissionRate =
-          product.affiliateCommissionRate ?? affiliateLink.commissionRate ?? 10;
-        const basePrice = product.affiliatePrice > 0 ? product.affiliatePrice : unitPrice;
-        const commissionAmount = (basePrice * quantity * commissionRate) / 100;
+        const commissionAmount = calculateAffiliateCommissionAmount({
+          affiliatePrice: product.affiliatePrice,
+          affiliateCommissionRate: product.affiliateCommissionRate,
+          linkCommissionRate: affiliateLink.commissionRate,
+          basePrice: unitPrice,
+          quantity,
+        });
 
         await tx.commission.create({
           data: {
             affiliateLinkId: affiliateLink.id,
             orderId: order.id,
-            amount: Math.round(commissionAmount * 100) / 100,
+            amount: commissionAmount,
             status: "PENDING",
           },
         });
