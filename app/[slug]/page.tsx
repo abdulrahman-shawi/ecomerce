@@ -1,21 +1,14 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getPageBySlug, getPublishedPages } from "@/server/pages";
+import { getPageBySlug } from "@/server/pages";
 import TopBanner from "@/component/sections/TopBanner";
 import Header from "@/component/sections/Header";
 import Footer from "@/component/sections/Footer";
 
+export const dynamic = "force-dynamic";
+
 interface PageProps {
   params: { slug: string };
-}
-
-export async function generateStaticParams() {
-  try {
-    const pages = await getPublishedPages();
-    return pages.map((page) => ({ slug: page.slug }));
-  } catch {
-    return [];
-  }
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
