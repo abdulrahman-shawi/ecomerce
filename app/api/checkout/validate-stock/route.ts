@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getWarehouseIdsByCountry } from "@/lib/region";
 import { prisma } from "@/lib/prisma";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { items, country: requestedCountry } = body;
+    const { items } = body;
 
     if (!items?.length) {
       return NextResponse.json(
@@ -13,25 +14,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const normalizedCountry = String(requestedCountry || "SY").trim().toUpperCase();
-    const stockCountryMap: Record<string, string> = {
-      LB: "لبنان",
-      SY: "سوريا",
-      TR: "تركيا",
-      IQ: "العراق",
-    };
-    const stockCountry = stockCountryMap[normalizedCountry] || stockCountryMap.SY;
+    const sourceWarehouseIds = await getWarehouseIdsByCountry("SY");
 
-    const warehouses = await prisma.warehouse.findMany();
-    const warehouse = warehouses.find((w) =>
-      w.location.toLowerCase().includes(stockCountry.toLowerCase()) ||
-      w.name.toLowerCase().includes(stockCountry.toLowerCase())
-    ) ?? warehouses[0];
-
-    if (!warehouse) {
+    if (sourceWarehouseIds.length === 0) {
       return NextResponse.json(
-        { error: "No warehouse found" },
-        { status: 500 }
+        { error: "No Syria warehouses found" },
+        { status: 404 }
       );
     }
 
@@ -41,7 +29,7 @@ export async function POST(request: NextRequest) {
       const stocks = await prisma.productStock.findMany({
         where: {
           productId: item.id,
-          warehouseId: warehouse.id,
+          warehouseId: { in: sourceWarehouseIds },
         },
       });
 
@@ -59,7 +47,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      warehouseName: warehouse.name,
+      warehouseName: "Syria Warehouses",
       outOfStock,
       isValid: outOfStock.length === 0,
     });

@@ -3,6 +3,12 @@
 import { calculateAffiliateCommissionAmount } from "@/lib/affiliate-commission";
 import { prisma } from "@/lib/prisma";
 import { verifyToken } from "@/lib/jwt";
+import {
+  getPreferredWarehouseByCountry,
+  getWarehouseIdsByCountry,
+  normalizeCountryCode,
+  type CountryCode,
+} from "@/lib/region";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 
@@ -13,7 +19,7 @@ export interface LandingOrderInput {
   authToken?: string;
   name: string;
   phone: string;
-  country: "SY";
+  country: CountryCode;
   city: string;
   address: string;
   notes?: string;
@@ -62,7 +68,7 @@ function getAppliedQuantityDiscountTier(tiers: QuantityDiscountTier[], quantity:
 export async function createLandingOrder(input: LandingOrderInput) {
   try {
     const { productId, quantity, customerId, authToken, name, phone, city, address, notes } = input;
-    const country = "SY";
+    const country = normalizeCountryCode(input.country);
 
     if (!productId || !quantity || !name || !phone || !city || !address) {
       return { success: false, error: "يرجى تعبئة جميع الحقول المطلوبة" };
@@ -77,21 +83,15 @@ export async function createLandingOrder(input: LandingOrderInput) {
       return { success: false, error: "المنتج غير موجود أو غير نشط" };
     }
 
-    const stockCountry = "سوريا";
-    const warehouses = await prisma.warehouse.findMany();
-    const warehouse =
-      warehouses.find(
-        (w) =>
-          w.location.toLowerCase().includes(stockCountry.toLowerCase()) ||
-          w.name.toLowerCase().includes(stockCountry.toLowerCase())
-      ) ?? warehouses[0];
+    const sourceWarehouseIds = await getWarehouseIdsByCountry("SY");
+    const warehouse = await getPreferredWarehouseByCountry("SY");
 
-    if (!warehouse) {
+    if (!warehouse || sourceWarehouseIds.length === 0) {
       return { success: false, error: "لا يوجد مستودع متاح" };
     }
 
     const stocks = await prisma.productStock.findMany({
-      where: { productId, warehouseId: warehouse.id },
+      where: { productId, warehouseId: { in: sourceWarehouseIds } },
       orderBy: { quantity: "desc" },
     });
 

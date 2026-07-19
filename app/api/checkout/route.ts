@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { calculateAffiliateCommissionAmount } from "@/lib/affiliate-commission";
+import {
+  getPreferredWarehouseByCountry,
+  getWarehouseIdsByCountry,
+  normalizeCountryCode,
+} from "@/lib/region";
 import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { verifyToken } from "@/lib/jwt";
@@ -31,8 +36,7 @@ export async function POST(request: NextRequest) {
       items,
       totalPrice,
     } = body;
-    const normalizedCountry = String(requestedCountry || "SY").trim().toUpperCase();
-    const country = normalizedCountry || "SY";
+    const country = normalizeCountryCode(requestedCountry);
 
     if (!name || !phone || !city || !address || !items?.length) {
       return NextResponse.json(
@@ -63,14 +67,6 @@ export async function POST(request: NextRequest) {
     const matchedAffiliateItem = affiliateLink
       ? items.find((item: { id: number }) => item.id === affiliateLink.productId)
       : null;
-
-    const stockCountryMap: Record<string, string> = {
-      LB: "لبنان",
-      SY: "سوريا",
-      TR: "تركيا",
-      IQ: "العراق",
-    };
-    const stockCountry = stockCountryMap[country] || stockCountryMap.SY;
 
     const { customer, order } = await prisma.$transaction(async (tx) => {
       // ─── 1. Resolve customer ───
@@ -154,15 +150,15 @@ export async function POST(request: NextRequest) {
         }
       }
 
-      // ─── 2. Determine warehouse by country ───
-      const warehouses = await tx.warehouse.findMany();
-      const warehouse = warehouses.find((w) =>
-        w.location.toLowerCase().includes(stockCountry.toLowerCase()) ||
-        w.name.toLowerCase().includes(stockCountry.toLowerCase())
-      ) ?? warehouses[0];
+      // ─── 2. Determine stock source from all Syria warehouses ───
+      const sourceWarehouseIds = await getWarehouseIdsByCountry("SY");
+      const preferredWarehouse = await getPreferredWarehouseByCountry("SY");
+      const warehouse = preferredWarehouse
+        ? await tx.warehouse.findUnique({ where: { id: preferredWarehouse.id } })
+        : null;
 
-      if (!warehouse) {
-        throw new Error("No warehouse found");
+      if (!warehouse || sourceWarehouseIds.length === 0) {
+        throw new Error("No Syria warehouses found");
       }
 
       // ─── 3. Validate & deduct stock ───
@@ -170,7 +166,7 @@ export async function POST(request: NextRequest) {
         const stocks = await tx.productStock.findMany({
           where: {
             productId: item.id,
-            warehouseId: warehouse.id,
+            warehouseId: { in: sourceWarehouseIds },
           },
           orderBy: { quantity: "desc" },
         });
