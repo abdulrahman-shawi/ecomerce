@@ -8,7 +8,7 @@ import { useSettings } from "@/context/SettingsContext";
 import { useAuth } from "@/context/AuthContext";
 import { formatPrice } from "@/lib/currency";
 import { countries, citiesByCountry } from "@/lib/cities";
-import { MapPin, User, ShoppingBag, ChevronLeft, CheckCircle } from "lucide-react";
+import { MapPin, User, ShoppingBag, ChevronLeft, CheckCircle, Minus, Plus, Trash2 } from "lucide-react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 
@@ -16,7 +16,7 @@ const MapPicker = dynamic(() => import("@/component/MapPicker"), { ssr: false })
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, totalPrice, clearCart } = useCart();
+  const { items, totalPrice, clearCart, updateQuantity, removeFromCart } = useCart();
   const { siteCurrency, usdToTryRate } = useSettings();
   const { user } = useAuth();
 
@@ -70,7 +70,7 @@ export default function CheckoutPage() {
       const res = await fetch("/api/checkout/validate-stock", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ country: "SY", items }),
+        body: JSON.stringify({ country: formData.country, items }),
       });
       const data = await res.json();
       if (data.outOfStock?.length > 0) {
@@ -88,7 +88,7 @@ export default function CheckoutPage() {
     } finally {
       setCheckingStock(false);
     }
-  }, [items]);
+  }, [formData.country, items]);
 
   useEffect(() => {
     validateStock();
@@ -98,13 +98,17 @@ export default function CheckoutPage() {
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target;
       setFormData((prev) => {
+        if (name === "country") {
+          return { ...prev, country: value, city: "" };
+        }
+
         return { ...prev, [name]: value };
       });
     },
     []
   );
 
-  const availableCities = citiesByCountry.SY || [];
+  const availableCities = citiesByCountry[formData.country] || [];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -251,7 +255,7 @@ export default function CheckoutPage() {
                     </label>
                     <div className="phone-input-wrapper" dir="ltr">
                       <PhoneInput
-                        defaultCountry="SY"
+                        defaultCountry={formData.country as "LB" | "SY" | "TR" | "IQ"}
                         value={formData.phone}
                         onChange={(value) =>
                           setFormData((prev) => ({ ...prev, phone: value || "" }))
@@ -271,16 +275,14 @@ export default function CheckoutPage() {
                       name="country"
                       required
                       value={formData.country}
-                      disabled
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-dark bg-gray-50 disabled:opacity-100 disabled:cursor-not-allowed"
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-dark bg-white focus:outline-none focus:ring-2 focus:ring-pink/50 focus:border-pink transition-all"
                     >
-                      {countries
-                        .filter((c) => c.code === "SY")
-                        .map((c) => (
-                          <option key={c.code} value={c.code}>
-                            {c.name}
-                          </option>
-                        ))}
+                      {countries.map((country) => (
+                        <option key={country.code} value={country.code}>
+                          {country.name}
+                        </option>
+                      ))}
                     </select>
                   </div>
 
@@ -415,9 +417,37 @@ export default function CheckoutPage() {
                       <h4 className="text-sm font-medium text-gray-dark truncate">
                         {item.name}
                       </h4>
-                      <p className="text-xs text-gray-500 mt-1">
-                        الكمية: {item.quantity}
-                      </p>
+                      <div className="mt-2 flex items-center justify-between gap-3">
+                        <div className="flex items-center rounded-full border border-gray-200 bg-white">
+                          <button
+                            type="button"
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            className="p-2 text-pink transition-colors hover:bg-pink/10"
+                            aria-label={`زيادة كمية ${item.name}`}
+                          >
+                            <Plus size={14} />
+                          </button>
+                          <span className="min-w-8 text-center text-sm font-bold text-gray-dark">
+                            {item.quantity}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            className="p-2 text-pink transition-colors hover:bg-pink/10"
+                            aria-label={`تقليل كمية ${item.name}`}
+                          >
+                            <Minus size={14} />
+                          </button>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removeFromCart(item.id)}
+                          className="p-2 text-gray-400 transition-colors hover:text-red-500"
+                          aria-label={`حذف ${item.name} من السلة`}
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
                       <p className="text-pink-dark font-bold text-sm mt-1">
                         {formatPrice(item.price * item.quantity, siteCurrency, usdToTryRate)}
                       </p>

@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { items } = body;
+    const { items, country: requestedCountry } = body;
 
     if (!items?.length) {
       return NextResponse.json(
@@ -13,7 +13,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const stockCountry = "سوريا";
+    const normalizedCountry = String(requestedCountry || "SY").trim().toUpperCase();
+    const stockCountryMap: Record<string, string> = {
+      LB: "لبنان",
+      SY: "سوريا",
+      TR: "تركيا",
+      IQ: "العراق",
+    };
+    const stockCountry = stockCountryMap[normalizedCountry] || stockCountryMap.SY;
 
     const warehouses = await prisma.warehouse.findMany();
     const warehouse = warehouses.find((w) =>

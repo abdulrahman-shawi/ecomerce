@@ -22,6 +22,7 @@ export async function POST(request: NextRequest) {
       customerId,
       name,
       phone,
+      country: requestedCountry,
       city,
       address,
       notes,
@@ -30,7 +31,8 @@ export async function POST(request: NextRequest) {
       items,
       totalPrice,
     } = body;
-    const country = "SY";
+    const normalizedCountry = String(requestedCountry || "SY").trim().toUpperCase();
+    const country = normalizedCountry || "SY";
 
     if (!name || !phone || !city || !address || !items?.length) {
       return NextResponse.json(
@@ -62,7 +64,13 @@ export async function POST(request: NextRequest) {
       ? items.find((item: { id: number }) => item.id === affiliateLink.productId)
       : null;
 
-    const stockCountry = "سوريا";
+    const stockCountryMap: Record<string, string> = {
+      LB: "لبنان",
+      SY: "سوريا",
+      TR: "تركيا",
+      IQ: "العراق",
+    };
+    const stockCountry = stockCountryMap[country] || stockCountryMap.SY;
 
     const { customer, order } = await prisma.$transaction(async (tx) => {
       // ─── 1. Resolve customer ───
