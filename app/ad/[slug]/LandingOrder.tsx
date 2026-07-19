@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { formatPrice, getCurrencySymbol } from "@/lib/currency";
-import { citiesByCountry } from "@/lib/cities";
+import { citiesByCountry, countries } from "@/lib/cities";
 import { createLandingOrder } from "@/server/landing-order";
 import { useAuth } from "@/context/AuthContext";
 import StarRating from "@/component/StarRating";
@@ -114,19 +114,23 @@ function getAppliedQuantityDiscountTier(
     .sort((a, b) => b.minQty - a.minQty)[0] ?? null;
 }
 
+type LandingOrderCountryCode = "LB" | "SY" | "TR" | "IQ";
+
+const initialFormState = {
+  name: "",
+  phone: "",
+  country: "SY" as LandingOrderCountryCode,
+  city: "",
+  address: "",
+  notes: "",
+};
+
 export default function LandingOrder({ product, reviews, siteName, usdToTryRate }: LandingOrderProps) {
   const { user } = useAuth();
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(product.image);
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    country: "SY" as "SY",
-    city: "",
-    address: "",
-    notes: "",
-  });
+  const [form, setForm] = useState(initialFormState);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{ success: boolean; message: string; orderNumber?: string } | null>(null);
 
@@ -200,7 +204,7 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
         message: "تم استلام طلبك بنجاح! سنتواصل معك قريباً لتأكيد الطلب.",
         orderNumber: res.orderNumber,
       });
-      setForm({ name: "", phone: "", country: "SY", city: "", address: "", notes: "" });
+      setForm(initialFormState);
       setQuantity(1);
       setShowForm(false);
     } else {
@@ -234,7 +238,7 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
         <div className="phone-input-wrapper" dir="ltr">
           <PhoneInput
             international
-            defaultCountry="SY"
+            defaultCountry={form.country}
             value={form.phone}
             onChange={(value) => setForm({ ...form, phone: sanitizePhoneNumber(value || "") })}
             placeholder="Enter phone number"
@@ -251,10 +255,20 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
           <label className="block text-sm font-medium text-gray-700 mb-1 font-tajawal">الدولة *</label>
           <select
             value={form.country}
-            disabled
-            className="w-full border border-gray-200 rounded-xl px-3 py-3 font-tajawal bg-gray-50 disabled:opacity-100 disabled:cursor-not-allowed"
+            onChange={(e) =>
+              setForm((prev) => ({
+                ...prev,
+                country: e.target.value as LandingOrderCountryCode,
+                city: "",
+              }))
+            }
+            className="w-full border border-gray-200 rounded-xl px-3 py-3 font-tajawal bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink focus:border-transparent"
           >
-            <option value="SY">سوريا</option>
+            {countries.map((country) => (
+              <option key={country.code} value={country.code}>
+                {country.name}
+              </option>
+            ))}
           </select>
         </div>
         <div>
