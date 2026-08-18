@@ -121,9 +121,9 @@ export async function createLandingOrder(input: LandingOrderInput) {
 
     const firstStock = stocks[0];
     const originalUnitPrice = firstStock?.price ?? product.affiliatePrice;
-    const stockDiscount =
-      firstStock && firstStock.price > firstStock.discount ? firstStock.discount : 0;
-    const baseUnitPrice = Math.max(originalUnitPrice - stockDiscount, 0);
+    const hasStockDiscount =
+      !!firstStock && firstStock.discount > 0 && firstStock.price > firstStock.discount;
+    const baseUnitPrice = hasStockDiscount ? firstStock.discount : originalUnitPrice;
     const quantityDiscountTiers = normalizeQuantityDiscountTiers(product.landingPage?.quantityDiscountTiers);
     const appliedQuantityDiscountTier = getAppliedQuantityDiscountTier(quantityDiscountTiers, quantity);
     const unitPrice = appliedQuantityDiscountTier

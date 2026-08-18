@@ -14,6 +14,38 @@ import "react-phone-number-input/style.css";
 
 const MapPicker = dynamic(() => import("@/component/MapPicker"), { ssr: false });
 
+const checkoutCountries = [
+  ...countries,
+  { code: "LY", name: "ليبيا" },
+  { code: "EU", name: "أوروبا" },
+  { code: "OTHER", name: "أخرى" },
+] as const;
+
+const libyaCities = [
+  "طرابلس",
+  "بنغازي",
+  "مصراتة",
+  "الزاوية",
+  "البيضاء",
+  "سبها",
+  "سرت",
+  "زليتن",
+  "أجدابيا",
+  "الخمس",
+  "درنة",
+  "طبرق",
+];
+
+const phoneCountryByCheckoutCountry: Record<string, "LB" | "SY" | "TR" | "IQ"> = {
+  LB: "LB",
+  SY: "SY",
+  TR: "TR",
+  IQ: "IQ",
+  LY: "SY",
+  EU: "SY",
+  OTHER: "SY",
+};
+
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, totalPrice, clearCart, updateQuantity, removeFromCart } = useCart();
@@ -25,6 +57,7 @@ export default function CheckoutPage() {
     phone: "",
     country: "SY",
     city: "",
+    customCountry: "",
     address: "",
     notes: "",
   });
@@ -99,7 +132,7 @@ export default function CheckoutPage() {
       const { name, value } = e.target;
       setFormData((prev) => {
         if (name === "country") {
-          return { ...prev, country: value, city: "" };
+          return { ...prev, country: value, city: "", customCountry: "" };
         }
 
         return { ...prev, [name]: value };
@@ -108,11 +141,21 @@ export default function CheckoutPage() {
     []
   );
 
-  const availableCities = citiesByCountry[formData.country] || [];
+  const isEuropeCountry = formData.country === "EU";
+  const isOtherCountry = formData.country === "OTHER";
+  const availableCities =
+    formData.country === "LY"
+      ? libyaCities
+      : citiesByCountry[formData.country] || [];
+  const resolvedCountry = isOtherCountry
+    ? formData.customCountry.trim()
+    : formData.country;
+  const phoneDefaultCountry = phoneCountryByCheckoutCountry[formData.country] || "SY";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (items.length === 0) return;
+    if (isOtherCountry && !formData.customCountry.trim()) return;
 
     setIsSubmitting(true);
 
@@ -128,6 +171,8 @@ export default function CheckoutPage() {
         credentials: "include",
         body: JSON.stringify({
           ...formData,
+          country: resolvedCountry,
+          city: formData.city.trim(),
           customerId: user?.id ?? null,
           lat: position?.[0] ?? null,
           lng: position?.[1] ?? null,
@@ -255,7 +300,7 @@ export default function CheckoutPage() {
                     </label>
                     <div className="phone-input-wrapper" dir="ltr">
                       <PhoneInput
-                        defaultCountry={formData.country as "LB" | "SY" | "TR" | "IQ"}
+                        defaultCountry={phoneDefaultCountry}
                         value={formData.phone}
                         onChange={(value) =>
                           setFormData((prev) => ({ ...prev, phone: value || "" }))
@@ -278,7 +323,7 @@ export default function CheckoutPage() {
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-dark bg-white focus:outline-none focus:ring-2 focus:ring-pink/50 focus:border-pink transition-all"
                     >
-                      {countries.map((country) => (
+                      {checkoutCountries.map((country) => (
                         <option key={country.code} value={country.code}>
                           {country.name}
                         </option>
@@ -289,26 +334,55 @@ export default function CheckoutPage() {
                   {/* City */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                      المدينة <span className="text-red-500">*</span>
+                      {isOtherCountry ? "المدينة" : "المدينة"} <span className="text-red-500">*</span>
                     </label>
-                    <select
-                      name="city"
-                      required
-                      value={formData.city}
-                      onChange={handleChange}
-                      disabled={!formData.country}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink/50 focus:border-pink transition-all text-gray-dark bg-white disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      <option value="">
-                        {formData.country ? "اختر المدينة" : "اختر الدولة أولاً"}
-                      </option>
-                      {availableCities.map((city) => (
-                        <option key={city} value={city}>
-                          {city}
+                    {isEuropeCountry || isOtherCountry ? (
+                      <input
+                        type="text"
+                        name="city"
+                        required
+                        value={formData.city}
+                        onChange={handleChange}
+                        placeholder={isEuropeCountry ? "اكتب اسم المدينة" : "اكتب اسم المدينة"}
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink/50 focus:border-pink transition-all text-gray-dark"
+                      />
+                    ) : (
+                      <select
+                        name="city"
+                        required
+                        value={formData.city}
+                        onChange={handleChange}
+                        disabled={!formData.country}
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink/50 focus:border-pink transition-all text-gray-dark bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <option value="">
+                          {formData.country ? "اختر المدينة" : "اختر الدولة أولاً"}
                         </option>
-                      ))}
-                    </select>
+                        {availableCities.map((city) => (
+                          <option key={city} value={city}>
+                            {city}
+                          </option>
+                        ))}
+                      </select>
+                    )}
                   </div>
+
+                  {isOtherCountry && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                        البلد <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="customCountry"
+                        required
+                        value={formData.customCountry}
+                        onChange={handleChange}
+                        placeholder="اكتب اسم البلد"
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink/50 focus:border-pink transition-all text-gray-dark"
+                      />
+                    </div>
+                  )}
                 </div>
 
                 {/* Address */}
