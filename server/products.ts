@@ -57,8 +57,13 @@ export async function searchProducts(
       p.images[0]?.url ||
       "/images/products/placeholder.jpg";
 
-    const price = stock ? stock.discount : p.affiliatePrice;
-    const originalPrice = stock?.price ?? null;
+    const hasStockDiscount = !!stock && stock.discount > 0 && stock.discount < stock.price;
+    const price = stock
+      ? hasStockDiscount
+        ? stock.price - stock.discount
+        : stock.price
+      : p.affiliatePrice;
+    const originalPrice = hasStockDiscount ? stock.price : null;
     const totalStock = p.stocks.reduce((sum, s) => sum + s.quantity, 0);
     const { averageRating, totalReviews } = getRatingInfo(p.reviews);
 
@@ -139,8 +144,13 @@ async function fetchCategoryProducts(
       p.images[0]?.url ||
       "/images/products/placeholder.jpg";
 
-    const price = stock ? stock.discount : p.affiliatePrice;
-    const originalPrice = stock?.price ?? null;
+    const hasStockDiscount = !!stock && stock.discount > 0 && stock.discount < stock.price;
+    const price = stock
+      ? hasStockDiscount
+        ? stock.price - stock.discount
+        : stock.price
+      : p.affiliatePrice;
+    const originalPrice = hasStockDiscount ? stock.price : null;
     const totalStock = p.stocks.reduce((sum, s) => sum + s.quantity, 0);
     const { averageRating, totalReviews } = getRatingInfo(p.reviews);
 
@@ -281,8 +291,13 @@ export async function getProductBySlug(
     .map((img) => img.url);
   const image = images[0] || "/images/products/placeholder.jpg";
 
-  const price = stock ? stock.discount : product.affiliatePrice;
-  const originalPrice = stock?.price ?? null;
+  const hasStockDiscount = !!stock && stock.discount > 0 && stock.discount < stock.price;
+  const price = stock
+    ? hasStockDiscount
+      ? stock.price - stock.discount
+      : stock.price
+    : product.affiliatePrice;
+  const originalPrice = hasStockDiscount ? stock.price : null;
   const totalStock = product.stocks.reduce((sum, s) => sum + s.quantity, 0);
   const { averageRating, totalReviews } = getRatingInfo(product.reviews);
 
@@ -413,8 +428,13 @@ export async function getLandingProduct(
     .map((img: any) => img.url);
 
   const mainImage = images[0] || "/images/products/placeholder.jpg";
-  const price = stock ? stock.discount : product.affiliatePrice;
-  const originalPrice = stock?.price ?? null;
+  const hasStockDiscount = !!stock && stock.discount > 0 && stock.discount < stock.price;
+  const price = stock
+    ? hasStockDiscount
+      ? stock.price - stock.discount
+      : stock.price
+    : product.affiliatePrice;
+  const originalPrice = hasStockDiscount ? stock.price : null;
   const totalStock = product.stocks.reduce((sum: number, s: any) => sum + s.quantity, 0);
   const { averageRating, totalReviews } = getRatingInfo(product.reviews);
 

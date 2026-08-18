@@ -150,11 +150,8 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
   const showGuarantee = lp?.showGuarantee ?? true;
   const quantityDiscountTiers = lp?.quantityDiscountTiers ?? [];
 
-  const hasDiscount =
-    !!product.originalPrice && product.price > 0 && product.originalPrice > product.price;
-  const baseUnitPrice = Math.round(
-    hasDiscount ? product.price : (product.originalPrice ?? product.price)
-  );
+  const hasDiscount = !!product.originalPrice && product.originalPrice > product.price;
+  const baseUnitPrice = Math.round(product.price);
   const appliedQuantityDiscountTier = getAppliedQuantityDiscountTier(quantityDiscountTiers, quantity);
   const displayedUnitPrice = appliedQuantityDiscountTier
     ? Math.max(0, Math.round(baseUnitPrice * (1 - appliedQuantityDiscountTier.discountPercent / 100)))

@@ -92,8 +92,13 @@ function mapProductsToHomeProducts(
       p.images[0]?.url ||
       "/images/products/placeholder.jpg";
 
-    const price = stock ? stock.discount : p.affiliatePrice;
-    const originalPrice = stock?.price ?? null;
+    const hasStockDiscount = !!stock && stock.discount > 0 && stock.discount < stock.price;
+    const price = stock
+      ? hasStockDiscount
+        ? stock.price - stock.discount
+        : stock.price
+      : p.affiliatePrice;
+    const originalPrice = hasStockDiscount ? stock.price : null;
     const totalStock = p.stocks.reduce((sum, s) => sum + s.quantity, 0);
     const approvedReviews = p.reviews ?? [];
     const totalReviews = approvedReviews.length;
@@ -163,8 +168,13 @@ export async function getHomePageData(country?: string) {
       || p.images[0]?.url
       || "/images/products/placeholder.jpg";
 
-    const price = stock ? stock.discount : p.affiliatePrice;
-    const originalPrice = stock?.price ?? null;
+    const hasStockDiscount = !!stock && stock.discount > 0 && stock.discount < stock.price;
+    const price = stock
+      ? hasStockDiscount
+        ? stock.price - stock.discount
+        : stock.price
+      : p.affiliatePrice;
+    const originalPrice = hasStockDiscount ? stock.price : null;
     const totalStock = p.stocks.reduce((sum, s) => sum + s.quantity, 0);
 
     const approvedReviews = p.reviews ?? [];
