@@ -23,17 +23,12 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
 
   if (!isOpen || !product) return null;
 
-  const finalPrice = product.originalPrice
-    ? product.originalPrice - product.price
-    : product.price;
+  const finalPrice = product.price;
   const discount = product.originalPrice
     ? Math.round(((product.originalPrice - finalPrice) / product.originalPrice) * 100)
     : 0;
 
   const handleAddToCart = () => {
-    const finalPrice = product.originalPrice
-      ? product.originalPrice - product.price
-      : product.price;
     const cartPrice = convertPrice(finalPrice, siteCurrency, usdToTryRate);
     for (let i = 0; i < quantity; i++) {
       addToCart({
@@ -106,9 +101,9 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
                   {formatPrice(product.originalPrice, siteCurrency, usdToTryRate)}
                 </span>
               )}
-              {discount > 0 && (
+              {discount > 0 && product.originalPrice && (
                 <span className="text-sm bg-green-100 text-green-700 px-2 py-1 rounded-md font-tajawal">
-                  وفّر {formatPrice(product.price, siteCurrency, usdToTryRate)}
+                  وفّر {formatPrice(product.originalPrice - product.price, siteCurrency, usdToTryRate)}
                 </span>
               )}
             </div>

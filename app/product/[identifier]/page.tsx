@@ -212,7 +212,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               {/* Price */}
               <div className="mb-6 flex flex-wrap items-center gap-4">
                 <span className="text-3xl font-bold text-pink-dark font-tajawal">
-                  {formatPrice(discountAmount, settings.siteCurrency, settings.usdToTryRate)}
+                  {formatPrice(product.price, settings.siteCurrency, settings.usdToTryRate)}
                 </span>
                 {product.originalPrice && (
                   <span className="text-xl text-gray-400 line-through font-tajawal">
@@ -221,7 +221,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 )}
                 {hasDiscount && (
                   <span className="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-md font-tajawal">
-                    وفّر {formatPrice(product.price, settings.siteCurrency, settings.usdToTryRate)}
+                    وفّر {formatPrice(discountAmount, settings.siteCurrency, settings.usdToTryRate)}
                   </span>
                 )}
               </div>

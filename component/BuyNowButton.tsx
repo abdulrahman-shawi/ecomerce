@@ -22,13 +22,10 @@ export default function BuyNowButton({ product }: BuyNowButtonProps) {
   const { siteCurrency, usdToTryRate } = useSettings();
 
   const handleBuyNow = () => {
-    const finalPrice = product.originalPrice
-      ? product.originalPrice - product.price
-      : product.price;
     addToCart({
       id: product.id,
       name: product.name,
-      price: convertPrice(finalPrice, siteCurrency, usdToTryRate),
+      price: convertPrice(product.price, siteCurrency, usdToTryRate),
       image: product.image,
     });
     router.push("/checkout");

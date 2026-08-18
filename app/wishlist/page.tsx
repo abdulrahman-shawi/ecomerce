@@ -17,13 +17,10 @@ export default function WishlistPage() {
 
   const handleAddAllToCart = () => {
     wishlistItems.forEach((item) => {
-      const finalPrice = item.originalPrice
-        ? item.originalPrice - item.price
-        : item.price;
       addToCart({
         id: item.id,
         name: item.name,
-        price: convertPrice(finalPrice, siteCurrency, usdToTryRate),
+        price: convertPrice(item.price, siteCurrency, usdToTryRate),
         image: item.image,
       });
     });
