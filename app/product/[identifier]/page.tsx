@@ -188,7 +188,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               badge={product.badge}
               discountLabel={
                 hasDiscount
-                  ? `-${formatPrice(product.price, settings.siteCurrency, settings.usdToTryRate)}`
+                  ? `-${formatPrice(discountAmount, settings.siteCurrency, settings.usdToTryRate)}`
                   : null
               }
             />
