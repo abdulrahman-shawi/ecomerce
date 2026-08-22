@@ -120,7 +120,7 @@ type LandingOrderCountryCode = "LB" | "SY" | "TR" | "IQ";
 const initialFormState = {
   name: "",
   phone: "",
-  country: "SY" as LandingOrderCountryCode,
+  country: "" as LandingOrderCountryCode | "",
   city: "",
   address: "",
   notes: "",
@@ -172,7 +172,7 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!form.name || !form.phone || !form.city || !form.address) {
+    if (!form.name || !form.country || !form.city || !form.phone || !form.address) {
       setResult({ success: false, message: "يرجى تعبئة جميع الحقول المطلوبة" });
       return;
     }
@@ -189,7 +189,7 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
       authToken: authToken ?? undefined,
       name: form.name,
       phone: form.phone,
-      country: form.country,
+      country: form.country as LandingOrderCountryCode,
       city: form.city,
       address: form.address,
       notes: form.notes,
@@ -232,37 +232,22 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
         </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1 font-tajawal">رقم الهاتف *</label>
-        <div className="phone-input-wrapper" dir="ltr">
-          <PhoneInput
-            international
-            defaultCountry={form.country}
-            value={form.phone}
-            onChange={(value) => setForm({ ...form, phone: sanitizePhoneNumber(value || "") })}
-            placeholder="Enter phone number"
-            className="w-full border border-gray-200 rounded-xl focus-within:outline-none focus-within:ring-2 focus-within:ring-pink focus-within:border-transparent font-tajawal bg-gray-50 overflow-hidden"
-            numberInputProps={{
-              inputMode: "numeric",
-            }}
-          />
-        </div>
-      </div>
-
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1 font-tajawal">الدولة *</label>
           <select
+            required
             value={form.country}
             onChange={(e) =>
               setForm((prev) => ({
                 ...prev,
-                country: e.target.value as LandingOrderCountryCode,
+                country: e.target.value as LandingOrderCountryCode | "",
                 city: "",
               }))
             }
             className="w-full border border-gray-200 rounded-xl px-3 py-3 font-tajawal bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink focus:border-transparent"
           >
+            <option value="">اختر الدولة</option>
             {countries.map((country) => (
               <option key={country.code} value={country.code}>
                 {country.name}
@@ -276,15 +261,34 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
             required
             value={form.city}
             onChange={(e) => setForm({ ...form, city: e.target.value })}
-            className="w-full border border-gray-200 rounded-xl px-3 py-3 focus:outline-none focus:ring-2 focus:ring-pink focus:border-transparent font-tajawal bg-gray-50"
+            disabled={!form.country}
+            className="w-full border border-gray-200 rounded-xl px-3 py-3 focus:outline-none focus:ring-2 focus:ring-pink focus:border-transparent font-tajawal bg-gray-50 disabled:opacity-60"
           >
             <option value="">اختر المدينة</option>
-            {(citiesByCountry[form.country] || []).map((city) => (
+            {(form.country ? citiesByCountry[form.country] : [])?.map((city) => (
               <option key={city} value={city}>
                 {city}
               </option>
             ))}
           </select>
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1 font-tajawal">رقم الهاتف *</label>
+        <div className="phone-input-wrapper" dir="ltr">
+          <PhoneInput
+            key={form.country || "none"}
+            international
+            defaultCountry={form.country || undefined}
+            value={form.phone}
+            onChange={(value) => setForm({ ...form, phone: sanitizePhoneNumber(value || "") })}
+            placeholder="Enter phone number"
+            className="w-full border border-gray-200 rounded-xl focus-within:outline-none focus-within:ring-2 focus-within:ring-pink focus-within:border-transparent font-tajawal bg-gray-50 overflow-hidden"
+            numberInputProps={{
+              inputMode: "numeric",
+            }}
+          />
         </div>
       </div>
 
