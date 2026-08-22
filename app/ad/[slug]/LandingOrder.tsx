@@ -63,6 +63,7 @@ interface LandingProduct {
     discountPercent: number | null;
     quantityDiscountTiers: QuantityDiscountTier[];
     features: LandingFeature[];
+    showPrice: boolean;
     showReviews: boolean;
     showGuarantee: boolean;
     guaranteeTitle: string | null;
@@ -146,6 +147,7 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
     lp?.guaranteeText ||
     "إذا لم تكوني راضية عن المنتج، يمكنكِ استرجاعه واسترداد قيمته خلال 14 يوماً من تاريخ الاستلام.";
   const features = lp?.features?.length ? lp.features : defaultFeatures;
+  const showPrice = lp?.showPrice ?? true;
   const showReviews = lp?.showReviews ?? true;
   const showGuarantee = lp?.showGuarantee ?? true;
   const quantityDiscountTiers = lp?.quantityDiscountTiers ?? [];
@@ -417,7 +419,7 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
             {/* Product Visual */}
             <div className="order-1 min-w-0 lg:order-2">
               <div className="relative">
-                {discountAmount > 0 && (
+                {showPrice && discountAmount > 0 && (
                   <div className="absolute -top-4 -right-4 z-10 bg-red-500 text-white font-bold px-4 py-2 rounded-full shadow-lg font-tajawal">
                     خصم {formatPrice(discountAmount, product.currency, usdToTryRate)}
                   </div>
@@ -473,16 +475,18 @@ export default function LandingOrder({ product, reviews, siteName, usdToTryRate 
                 />
               )}
 
-              <div className="mb-6 flex flex-wrap items-center gap-4">
-                <span className="text-4xl font-bold text-pink-dark font-tajawal">
-                  {formatPrice(displayedUnitPrice, product.currency, usdToTryRate)}
-                </span>
-                {hasDiscount && (
-                  <span className="text-2xl text-gray-400 line-through font-tajawal">
-                    {formatPrice(product.originalPrice!, product.currency, usdToTryRate)}
+              {showPrice && (
+                <div className="mb-6 flex flex-wrap items-center gap-4">
+                  <span className="text-4xl font-bold text-pink-dark font-tajawal">
+                    {formatPrice(displayedUnitPrice, product.currency, usdToTryRate)}
                   </span>
-                )}
-              </div>
+                  {hasDiscount && (
+                    <span className="text-2xl text-gray-400 line-through font-tajawal">
+                      {formatPrice(product.originalPrice!, product.currency, usdToTryRate)}
+                    </span>
+                  )}
+                </div>
+              )}
 
               {/* Trust Badges */}
               <div className="grid grid-cols-2 gap-3 mb-8">

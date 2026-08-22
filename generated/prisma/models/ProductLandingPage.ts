@@ -44,6 +44,7 @@ export type ProductLandingPageMinAggregateOutputType = {
   heroDescription: string | null
   badgeText: string | null
   discountPercent: number | null
+  showPrice: boolean | null
   showReviews: boolean | null
   showGuarantee: boolean | null
   guaranteeTitle: string | null
@@ -62,6 +63,7 @@ export type ProductLandingPageMaxAggregateOutputType = {
   heroDescription: string | null
   badgeText: string | null
   discountPercent: number | null
+  showPrice: boolean | null
   showReviews: boolean | null
   showGuarantee: boolean | null
   guaranteeTitle: string | null
@@ -81,6 +83,7 @@ export type ProductLandingPageCountAggregateOutputType = {
   badgeText: number
   discountPercent: number
   features: number
+  showPrice: number
   showReviews: number
   showGuarantee: number
   guaranteeTitle: number
@@ -112,6 +115,7 @@ export type ProductLandingPageMinAggregateInputType = {
   heroDescription?: true
   badgeText?: true
   discountPercent?: true
+  showPrice?: true
   showReviews?: true
   showGuarantee?: true
   guaranteeTitle?: true
@@ -130,6 +134,7 @@ export type ProductLandingPageMaxAggregateInputType = {
   heroDescription?: true
   badgeText?: true
   discountPercent?: true
+  showPrice?: true
   showReviews?: true
   showGuarantee?: true
   guaranteeTitle?: true
@@ -149,6 +154,7 @@ export type ProductLandingPageCountAggregateInputType = {
   badgeText?: true
   discountPercent?: true
   features?: true
+  showPrice?: true
   showReviews?: true
   showGuarantee?: true
   guaranteeTitle?: true
@@ -256,6 +262,7 @@ export type ProductLandingPageGroupByOutputType = {
   badgeText: string | null
   discountPercent: number | null
   features: runtime.JsonValue | null
+  showPrice: boolean
   showReviews: boolean
   showGuarantee: boolean
   guaranteeTitle: string | null
@@ -299,6 +306,7 @@ export type ProductLandingPageWhereInput = {
   badgeText?: Prisma.StringNullableFilter<"ProductLandingPage"> | string | null
   discountPercent?: Prisma.IntNullableFilter<"ProductLandingPage"> | number | null
   features?: Prisma.JsonNullableFilter<"ProductLandingPage">
+  showPrice?: Prisma.BoolFilter<"ProductLandingPage"> | boolean
   showReviews?: Prisma.BoolFilter<"ProductLandingPage"> | boolean
   showGuarantee?: Prisma.BoolFilter<"ProductLandingPage"> | boolean
   guaranteeTitle?: Prisma.StringNullableFilter<"ProductLandingPage"> | string | null
@@ -320,6 +328,7 @@ export type ProductLandingPageOrderByWithRelationInput = {
   badgeText?: Prisma.SortOrderInput | Prisma.SortOrder
   discountPercent?: Prisma.SortOrderInput | Prisma.SortOrder
   features?: Prisma.SortOrderInput | Prisma.SortOrder
+  showPrice?: Prisma.SortOrder
   showReviews?: Prisma.SortOrder
   showGuarantee?: Prisma.SortOrder
   guaranteeTitle?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -344,6 +353,7 @@ export type ProductLandingPageWhereUniqueInput = Prisma.AtLeast<{
   badgeText?: Prisma.StringNullableFilter<"ProductLandingPage"> | string | null
   discountPercent?: Prisma.IntNullableFilter<"ProductLandingPage"> | number | null
   features?: Prisma.JsonNullableFilter<"ProductLandingPage">
+  showPrice?: Prisma.BoolFilter<"ProductLandingPage"> | boolean
   showReviews?: Prisma.BoolFilter<"ProductLandingPage"> | boolean
   showGuarantee?: Prisma.BoolFilter<"ProductLandingPage"> | boolean
   guaranteeTitle?: Prisma.StringNullableFilter<"ProductLandingPage"> | string | null
@@ -365,6 +375,7 @@ export type ProductLandingPageOrderByWithAggregationInput = {
   badgeText?: Prisma.SortOrderInput | Prisma.SortOrder
   discountPercent?: Prisma.SortOrderInput | Prisma.SortOrder
   features?: Prisma.SortOrderInput | Prisma.SortOrder
+  showPrice?: Prisma.SortOrder
   showReviews?: Prisma.SortOrder
   showGuarantee?: Prisma.SortOrder
   guaranteeTitle?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -393,6 +404,7 @@ export type ProductLandingPageScalarWhereWithAggregatesInput = {
   badgeText?: Prisma.StringNullableWithAggregatesFilter<"ProductLandingPage"> | string | null
   discountPercent?: Prisma.IntNullableWithAggregatesFilter<"ProductLandingPage"> | number | null
   features?: Prisma.JsonNullableWithAggregatesFilter<"ProductLandingPage">
+  showPrice?: Prisma.BoolWithAggregatesFilter<"ProductLandingPage"> | boolean
   showReviews?: Prisma.BoolWithAggregatesFilter<"ProductLandingPage"> | boolean
   showGuarantee?: Prisma.BoolWithAggregatesFilter<"ProductLandingPage"> | boolean
   guaranteeTitle?: Prisma.StringNullableWithAggregatesFilter<"ProductLandingPage"> | string | null
@@ -412,6 +424,7 @@ export type ProductLandingPageCreateInput = {
   badgeText?: string | null
   discountPercent?: number | null
   features?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  showPrice?: boolean
   showReviews?: boolean
   showGuarantee?: boolean
   guaranteeTitle?: string | null
@@ -433,6 +446,7 @@ export type ProductLandingPageUncheckedCreateInput = {
   badgeText?: string | null
   discountPercent?: number | null
   features?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  showPrice?: boolean
   showReviews?: boolean
   showGuarantee?: boolean
   guaranteeTitle?: string | null
@@ -452,6 +466,7 @@ export type ProductLandingPageUpdateInput = {
   badgeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   features?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  showPrice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showReviews?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showGuarantee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   guaranteeTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -473,6 +488,7 @@ export type ProductLandingPageUncheckedUpdateInput = {
   badgeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   features?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  showPrice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showReviews?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showGuarantee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   guaranteeTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -493,6 +509,7 @@ export type ProductLandingPageCreateManyInput = {
   badgeText?: string | null
   discountPercent?: number | null
   features?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  showPrice?: boolean
   showReviews?: boolean
   showGuarantee?: boolean
   guaranteeTitle?: string | null
@@ -512,6 +529,7 @@ export type ProductLandingPageUpdateManyMutationInput = {
   badgeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   features?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  showPrice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showReviews?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showGuarantee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   guaranteeTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -532,6 +550,7 @@ export type ProductLandingPageUncheckedUpdateManyInput = {
   badgeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   features?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  showPrice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showReviews?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showGuarantee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   guaranteeTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -557,6 +576,7 @@ export type ProductLandingPageCountOrderByAggregateInput = {
   badgeText?: Prisma.SortOrder
   discountPercent?: Prisma.SortOrder
   features?: Prisma.SortOrder
+  showPrice?: Prisma.SortOrder
   showReviews?: Prisma.SortOrder
   showGuarantee?: Prisma.SortOrder
   guaranteeTitle?: Prisma.SortOrder
@@ -581,6 +601,7 @@ export type ProductLandingPageMaxOrderByAggregateInput = {
   heroDescription?: Prisma.SortOrder
   badgeText?: Prisma.SortOrder
   discountPercent?: Prisma.SortOrder
+  showPrice?: Prisma.SortOrder
   showReviews?: Prisma.SortOrder
   showGuarantee?: Prisma.SortOrder
   guaranteeTitle?: Prisma.SortOrder
@@ -599,6 +620,7 @@ export type ProductLandingPageMinOrderByAggregateInput = {
   heroDescription?: Prisma.SortOrder
   badgeText?: Prisma.SortOrder
   discountPercent?: Prisma.SortOrder
+  showPrice?: Prisma.SortOrder
   showReviews?: Prisma.SortOrder
   showGuarantee?: Prisma.SortOrder
   guaranteeTitle?: Prisma.SortOrder
@@ -654,6 +676,7 @@ export type ProductLandingPageCreateWithoutProductInput = {
   badgeText?: string | null
   discountPercent?: number | null
   features?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  showPrice?: boolean
   showReviews?: boolean
   showGuarantee?: boolean
   guaranteeTitle?: string | null
@@ -673,6 +696,7 @@ export type ProductLandingPageUncheckedCreateWithoutProductInput = {
   badgeText?: string | null
   discountPercent?: number | null
   features?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  showPrice?: boolean
   showReviews?: boolean
   showGuarantee?: boolean
   guaranteeTitle?: string | null
@@ -708,6 +732,7 @@ export type ProductLandingPageUpdateWithoutProductInput = {
   badgeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   features?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  showPrice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showReviews?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showGuarantee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   guaranteeTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -727,6 +752,7 @@ export type ProductLandingPageUncheckedUpdateWithoutProductInput = {
   badgeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   features?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  showPrice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showReviews?: Prisma.BoolFieldUpdateOperationsInput | boolean
   showGuarantee?: Prisma.BoolFieldUpdateOperationsInput | boolean
   guaranteeTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -749,6 +775,7 @@ export type ProductLandingPageSelect<ExtArgs extends runtime.Types.Extensions.In
   badgeText?: boolean
   discountPercent?: boolean
   features?: boolean
+  showPrice?: boolean
   showReviews?: boolean
   showGuarantee?: boolean
   guaranteeTitle?: boolean
@@ -770,6 +797,7 @@ export type ProductLandingPageSelectCreateManyAndReturn<ExtArgs extends runtime.
   badgeText?: boolean
   discountPercent?: boolean
   features?: boolean
+  showPrice?: boolean
   showReviews?: boolean
   showGuarantee?: boolean
   guaranteeTitle?: boolean
@@ -791,6 +819,7 @@ export type ProductLandingPageSelectUpdateManyAndReturn<ExtArgs extends runtime.
   badgeText?: boolean
   discountPercent?: boolean
   features?: boolean
+  showPrice?: boolean
   showReviews?: boolean
   showGuarantee?: boolean
   guaranteeTitle?: boolean
@@ -812,6 +841,7 @@ export type ProductLandingPageSelectScalar = {
   badgeText?: boolean
   discountPercent?: boolean
   features?: boolean
+  showPrice?: boolean
   showReviews?: boolean
   showGuarantee?: boolean
   guaranteeTitle?: boolean
@@ -823,7 +853,7 @@ export type ProductLandingPageSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProductLandingPageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "productId" | "heroTitle" | "heroSubtitle" | "heroDescription" | "badgeText" | "discountPercent" | "features" | "showReviews" | "showGuarantee" | "guaranteeTitle" | "guaranteeText" | "ctaText" | "quantityDiscountTiers" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["productLandingPage"]>
+export type ProductLandingPageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "productId" | "heroTitle" | "heroSubtitle" | "heroDescription" | "badgeText" | "discountPercent" | "features" | "showPrice" | "showReviews" | "showGuarantee" | "guaranteeTitle" | "guaranteeText" | "ctaText" | "quantityDiscountTiers" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["productLandingPage"]>
 export type ProductLandingPageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }
@@ -848,6 +878,7 @@ export type $ProductLandingPagePayload<ExtArgs extends runtime.Types.Extensions.
     badgeText: string | null
     discountPercent: number | null
     features: runtime.JsonValue | null
+    showPrice: boolean
     showReviews: boolean
     showGuarantee: boolean
     guaranteeTitle: string | null
@@ -1289,6 +1320,7 @@ export interface ProductLandingPageFieldRefs {
   readonly badgeText: Prisma.FieldRef<"ProductLandingPage", 'String'>
   readonly discountPercent: Prisma.FieldRef<"ProductLandingPage", 'Int'>
   readonly features: Prisma.FieldRef<"ProductLandingPage", 'Json'>
+  readonly showPrice: Prisma.FieldRef<"ProductLandingPage", 'Boolean'>
   readonly showReviews: Prisma.FieldRef<"ProductLandingPage", 'Boolean'>
   readonly showGuarantee: Prisma.FieldRef<"ProductLandingPage", 'Boolean'>
   readonly guaranteeTitle: Prisma.FieldRef<"ProductLandingPage", 'String'>

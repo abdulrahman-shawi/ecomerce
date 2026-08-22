@@ -96,46 +96,46 @@ enum DiscountType {
 // ============================================
 
 model User {
-  id                     String          @id @default(uuid())
+  id                     String      @id @default(uuid())
   username               String
-  email                  String          @unique
+  email                  String      @unique
   phone                  String?
   notes                  String?
   jobTitle               String?
   avatar                 String?
-  accountType            AccountType     @default(STAFF)
+  accountType            AccountType @default(STAFF)
   password               String
-  salesCommissionPercent Float           @default(0)
-  wage                   Int             @default(0)
-  createdAt              DateTime        @default(now())
-  updatedAt              DateTime        @updatedAt
+  salesCommissionPercent Float       @default(0)
+  wage                   Int         @default(0)
+  createdAt              DateTime    @default(now())
+  updatedAt              DateTime    @updatedAt
   permissionId           String?
   parentId               String?
 
   // ─── NEW: E-commerce Affiliate columns (nullable / with defaults) ───
-  isAffiliate            Boolean         @default(false)
-  affiliateApproved      Boolean         @default(false)
-  affiliateCode          String?         @unique
-  affiliateRequestedAt   DateTime?
-  affiliateApprovedAt    DateTime?
+  isAffiliate          Boolean   @default(false)
+  affiliateApproved    Boolean   @default(false)
+  affiliateCode        String?   @unique
+  affiliateRequestedAt DateTime?
+  affiliateApprovedAt  DateTime?
 
   // ─── Existing Relations ───
-  parent          User?    @relation("UserToSubordinates", fields: [parentId], references: [id])
-  subordinates    User[]   @relation("UserToSubordinates")
-  orders                 Order[]
-  walletTransfers        AffiliateWalletTransfer[]
-  permission             Permission?     @relation(fields: [permissionId], references: [id])
-  customers              Customer[]      @relation("CustomerToUser")
-  message                Message[]
-  targets                UserTarget[]
-  activityTargets        UserActivityTarget[]
-  salaryAdjustments      EmployeeSalaryAdjustment[]
-  expenses               Expense[]
-  stockMovements         StockMovement[]
+  parent            User?                      @relation("UserToSubordinates", fields: [parentId], references: [id])
+  subordinates      User[]                     @relation("UserToSubordinates")
+  orders            Order[]
+  walletTransfers   AffiliateWalletTransfer[]
+  permission        Permission?                @relation(fields: [permissionId], references: [id])
+  customers         Customer[]                 @relation("CustomerToUser")
+  message           Message[]
+  targets           UserTarget[]
+  activityTargets   UserActivityTarget[]
+  salaryAdjustments EmployeeSalaryAdjustment[]
+  expenses          Expense[]
+  stockMovements    StockMovement[]
 
   // ─── NEW: E-commerce Affiliate Relations ───
-  affiliateLinks         AffiliateLink[]
-  reviews                Review[]
+  affiliateLinks AffiliateLink[]
+  reviews        Review[]
 }
 
 // ============================================
@@ -203,16 +203,16 @@ model Permission {
 // ============================================
 
 model Category {
-  id       Int       @id @default(autoincrement())
-  name     String    @unique
+  id   Int    @id @default(autoincrement())
+  name String @unique
 
   // ─── NEW: E-commerce Affiliate columns ───
-  slug     String?   @unique
-  image    String?
+  slug      String?  @unique
+  image     String?
   isVisible Boolean  @default(false)
   createdAt DateTime @default(now())
 
-  products Product[]
+  products       Product[]
   offerDiscounts OfferDiscount[]
 }
 
@@ -221,32 +221,32 @@ model Category {
 // ============================================
 
 model Product {
-  id             Int             @id @default(autoincrement())
-  name           String
-  description    String?
-  googleLink     String?
-  categoryId     Int?
-  createdAt      DateTime        @default(now())
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  googleLink  String?
+  categoryId  Int?
+  createdAt   DateTime @default(now())
 
   // ─── NEW: E-commerce Affiliate columns ───
-  seoSlug               String?  @unique
-  metaTitle             String?
-  metaDescription       String?
-  metaKeywords          String?
-  isActive              Boolean  @default(true)
-  showInAds             Boolean  @default(false)
-  affiliatePrice        Float    @default(0)
-  affiliateCommissionRate Float? @default(10.00)
-  adPageVisits   AdPageVisit[]
+  seoSlug                 String?       @unique
+  metaTitle               String?
+  metaDescription         String?
+  metaKeywords            String?
+  isActive                Boolean       @default(true)
+  showInAds               Boolean       @default(false)
+  affiliatePrice          Float         @default(0)
+  affiliateCommissionRate Float?        @default(10.00)
+  adPageVisits            AdPageVisit[]
 
   // ─── Existing Relations ───
-  orderItems     OrderItem[]
-  category       Category?       @relation(fields: [categoryId], references: [id])
-  images         ProductImage[]
-  targetProducts TargetProduct[]
-  stocks         ProductStock[]
-  stockMovements StockMovement[]
-  warrantiesAsProduct     Warranty[] @relation("WarrantyOriginalProduct")
+  orderItems          OrderItem[]
+  category            Category?       @relation(fields: [categoryId], references: [id])
+  images              ProductImage[]
+  targetProducts      TargetProduct[]
+  stocks              ProductStock[]
+  stockMovements      StockMovement[]
+  warrantiesAsProduct Warranty[]      @relation("WarrantyOriginalProduct")
 
   // ─── NEW: E-commerce Affiliate Relations ───
   affiliateLinks AffiliateLink[]
@@ -260,35 +260,35 @@ model Product {
 // ============================================
 
 model ProductLandingPage {
-  id                  String   @id @default(cuid())
-  productId           Int      @unique
-  product             Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id        String  @id @default(cuid())
+  productId Int     @unique
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   // Hero content overrides
-  heroTitle           String?
-  heroSubtitle        String?
-  heroDescription     String?
-  badgeText           String?
-  discountPercent     Int?
+  heroTitle       String?
+  heroSubtitle    String?
+  heroDescription String?
+  badgeText       String?
+  discountPercent Int?
 
   // Features section (JSON array of { title, description })
-  features            Json?    @default("[]")
-
+  features       Json?   @default("[]")
+  showPrice      Boolean @default(true)
   // Trust / Guarantee
-  showReviews         Boolean  @default(true)
-  showGuarantee       Boolean  @default(true)
-  guaranteeTitle      String?
-  guaranteeText       String?
+  showReviews    Boolean @default(true)
+  showGuarantee  Boolean @default(true)
+  guaranteeTitle String?
+  guaranteeText  String?
 
   // CTA
-  ctaText             String?
-  quantityDiscountTiers Json?    @default("[]")
+  ctaText               String?
+  quantityDiscountTiers Json?   @default("[]")
 
   // Status
-  isActive            Boolean  @default(true)
+  isActive Boolean @default(true)
 
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("product_landing_pages")
 }
@@ -298,18 +298,18 @@ model ProductLandingPage {
 // ============================================
 
 model Review {
-  id          String   @id @default(uuid())
-  productId   Int      @map("product_id")
-  userId      String?  @map("user_id")
-  name        String
-  rating      Int
-  comment     String?
-  isApproved  Boolean  @default(true) @map("is_approved")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  id         String   @id @default(uuid())
+  productId  Int      @map("product_id")
+  userId     String?  @map("user_id")
+  name       String
+  rating     Int
+  comment    String?
+  isApproved Boolean  @default(true) @map("is_approved")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
 
-  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user    User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@index([productId])
   @@index([userId])
@@ -322,14 +322,14 @@ model Review {
 // ============================================
 
 model Warehouse {
-  id        Int             @id @default(autoincrement())
-  name      String          @unique
-  location  String
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
-  stocks    ProductStock[]
-  orders    Order[]
-  movements StockMovement[]
+  id         Int             @id @default(autoincrement())
+  name       String          @unique
+  location   String
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+  stocks     ProductStock[]
+  orders     Order[]
+  movements  StockMovement[]
   warranties Warranty[]
 }
 
@@ -391,22 +391,22 @@ model UserTarget {
 // ============================================
 
 model UserActivityTarget {
-  id                            String              @id @default(uuid())
-  userId                        String
-  cycle                         ActivityTargetCycle @default(DAILY)
-  activeWeekDays                ActivityWeekDay[]   @default([SATURDAY, SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY])
-  requiredCustomers             Int                 @default(0)
-  customerReward                Float               @default(0)
-  customerMissPenaltyAmount     Float               @default(0)
-  requiredCommunications        Int                 @default(0)
-  communicationReward           Float               @default(0)
-  communicationMissPenaltyAmount Float              @default(0)
-  startsAt                      DateTime            @default(now())
-  endedAt                       DateTime?
-  isActive                      Boolean             @default(true)
-  createdAt                     DateTime            @default(now())
-  updatedAt                     DateTime            @updatedAt
-  user                          User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                             String              @id @default(uuid())
+  userId                         String
+  cycle                          ActivityTargetCycle @default(DAILY)
+  activeWeekDays                 ActivityWeekDay[]   @default([SATURDAY, SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY])
+  requiredCustomers              Int                 @default(0)
+  customerReward                 Float               @default(0)
+  customerMissPenaltyAmount      Float               @default(0)
+  requiredCommunications         Int                 @default(0)
+  communicationReward            Float               @default(0)
+  communicationMissPenaltyAmount Float               @default(0)
+  startsAt                       DateTime            @default(now())
+  endedAt                        DateTime?
+  isActive                       Boolean             @default(true)
+  createdAt                      DateTime            @default(now())
+  updatedAt                      DateTime            @updatedAt
+  user                           User                @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, isActive, cycle])
 }
@@ -444,8 +444,8 @@ model ProductImage {
 // ============================================
 
 model Customer {
-  id          String    @id @default(uuid())
-  name        String    @unique
+  id          String     @id @default(uuid())
+  name        String     @unique
   phone       String[]
   countryCode String?
   phonestatus String?
@@ -456,10 +456,10 @@ model Customer {
   city        String?
   rating      Int?
   status      String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   orders      Order[]
-  users       User[]    @relation("CustomerToUser")
+  users       User[]     @relation("CustomerToUser")
   message     Message[]
   warranties  Warranty[]
 }
@@ -481,9 +481,9 @@ model Warranty {
   createdAt            DateTime     @default(now())
   updatedAt            DateTime     @updatedAt
 
-  product            Product   @relation("WarrantyOriginalProduct", fields: [productId], references: [id], onDelete: Cascade)
-  customer           Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  warehouse          Warehouse? @relation(fields: [warehouseId], references: [id], onDelete: SetNull)
+  product   Product    @relation("WarrantyOriginalProduct", fields: [productId], references: [id], onDelete: Cascade)
+  customer  Customer   @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  warehouse Warehouse? @relation(fields: [warehouseId], references: [id], onDelete: SetNull)
 }
 
 // ============================================
@@ -506,17 +506,17 @@ model Message {
 // ============================================
 
 model Order {
-  id                              Int         @id @default(autoincrement())
-  orderNumber                     String      @unique
-  usdToTryRateAtOrder            Float?
+  id                              Int       @id @default(autoincrement())
+  orderNumber                     String    @unique
+  usdToTryRateAtOrder             Float?
   shippingPrice                   Float?
-  moneyTransferCommission         Float? @default(0)
-  otherCommissions                Float? @default(0)
-  carrierCollectionReceivedAt    DateTime?
+  moneyTransferCommission         Float?    @default(0)
+  otherCommissions                Float?    @default(0)
+  carrierCollectionReceivedAt     DateTime?
   carrierCollectionReceivedAmount Float?
-  carrierCollectionNotes         String?
+  carrierCollectionNotes          String?
   totalAmount                     Float
-  discount                        Float       @default(0)
+  discount                        Float     @default(0)
   finalAmount                     Float
   paymentMethod                   String
   pay                             String?
@@ -533,24 +533,24 @@ model Order {
   amountBank                      String?
   deliveryMethod                  String?
   additionalNotes                 String?
-  status                          String      @default("PENDING")
+  status                          String    @default("PENDING")
   customerId                      String
   userId                          String?
   warehouseId                     Int?
   shippingId                      Int?
   manualCreatedAt                 DateTime?
-  createdAt                       DateTime    @default(now())
-  updatedAt                       DateTime    @updatedAt
+  createdAt                       DateTime  @default(now())
+  updatedAt                       DateTime  @updatedAt
 
   // ─── Existing Relations ───
-  customer        Customer    @relation(fields: [customerId], references: [id])
-  user            User?       @relation(fields: [userId], references: [id])
-  items           OrderItem[]
-  warehouse       Warehouse?  @relation(fields: [warehouseId], references: [id])
-  shipping        shipping?   @relation(fields: [shippingId], references: [id])
+  customer  Customer    @relation(fields: [customerId], references: [id])
+  user      User?       @relation(fields: [userId], references: [id])
+  items     OrderItem[]
+  warehouse Warehouse?  @relation(fields: [warehouseId], references: [id])
+  shipping  shipping?   @relation(fields: [shippingId], references: [id])
 
   // ─── NEW: E-commerce Affiliate Relations ───
-  commissions     Commission[]
+  commissions Commission[]
 
   @@index([createdAt])
   @@index([customerId, createdAt])
@@ -584,12 +584,12 @@ model Expense {
 // ============================================
 
 model shipping {
-  id          Int       @id @default(autoincrement())
-  name        String    @unique
-  price       Float
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  orders      Order[]
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  price     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
 }
 
 // ============================================
@@ -597,8 +597,8 @@ model shipping {
 // ============================================
 
 model OrderItem {
-  id        Int     @id @default(autoincrement())
-  quantity  Int     @default(1)
+  id        Int   @id @default(autoincrement())
+  quantity  Int   @default(1)
   price     Float
   discount  Float
   orderId   Int
@@ -608,8 +608,8 @@ model OrderItem {
   affiliateLinkId String?
 
   // ─── Existing Relations ───
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [productId], references: [id])
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
 
   // ─── NEW: E-commerce Affiliate Relation ───
   affiliateLink AffiliateLink? @relation(fields: [affiliateLinkId], references: [id], onDelete: SetNull)
@@ -651,22 +651,21 @@ model Page {
   @@map("pages")
 }
 
-
 // ============================================
 // HeroSlide (E-commerce Homepage Slider)
 // ============================================
 
 model HeroSlide {
-  id          String   @id @default(cuid())
-  title       String?
-  subtitle    String?
-  image       String
-  buttonText  String?
-  buttonLink  String?
-  sortOrder   Int      @default(0)
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String   @id @default(cuid())
+  title      String?
+  subtitle   String?
+  image      String
+  buttonText String?
+  buttonLink String?
+  sortOrder  Int      @default(0)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@map("hero_slides")
 }
@@ -676,24 +675,24 @@ model HeroSlide {
 // ============================================
 
 model GeneralSetting {
-  id              Int      @id @default(autoincrement())
-  siteName        String?
-  companyEmail    String?
-  companyPhone    String?
-  siteCurrency    String?  @default("USD")
-  usdToTryRate    Float?   @default(0)
-  usdToSypRate    Float?   @default(0)
-  cashboxSyp      Float?   @default(0)
-  cashboxTry      Float?   @default(0)
-  cashboxUsd      Float?   @default(0)
-  createdAt       DateTime @default(now())
-  logo            String?
-  facebookUrl     String?
-  instagramUrl    String?
-  topBannerText   String?
-  primaryColor    String?  @default("#10b981")
-  secondaryColor  String?  @default("#0f766e")
-  updatedAt       DateTime @updatedAt
+  id             Int      @id @default(autoincrement())
+  siteName       String?
+  companyEmail   String?
+  companyPhone   String?
+  siteCurrency   String?  @default("USD")
+  usdToTryRate   Float?   @default(0)
+  usdToSypRate   Float?   @default(0)
+  cashboxSyp     Float?   @default(0)
+  cashboxTry     Float?   @default(0)
+  cashboxUsd     Float?   @default(0)
+  createdAt      DateTime @default(now())
+  logo           String?
+  facebookUrl    String?
+  instagramUrl   String?
+  topBannerText  String?
+  primaryColor   String?  @default("#10b981")
+  secondaryColor String?  @default("#0f766e")
+  updatedAt      DateTime @updatedAt
 }
 
 // ============================================
@@ -701,23 +700,23 @@ model GeneralSetting {
 // ============================================
 
 model Offer {
-  id               String          @id @default(cuid())
-  title            String?
-  subtitle         String?
-  description      String?         @db.Text
-  badgeText        String?
-  image            String?
-  ctaText          String?
-  ctaLink          String?
-  startsAt         DateTime?
-  endsAt           DateTime?
-  countdownEndsAt  DateTime?
-  isActive         Boolean         @default(true)
-  sortOrder        Int             @default(0)
-  createdAt        DateTime        @default(now())
-  updatedAt        DateTime        @updatedAt
+  id              String    @id @default(cuid())
+  title           String?
+  subtitle        String?
+  description     String?   @db.Text
+  badgeText       String?
+  image           String?
+  ctaText         String?
+  ctaLink         String?
+  startsAt        DateTime?
+  endsAt          DateTime?
+  countdownEndsAt DateTime?
+  isActive        Boolean   @default(true)
+  sortOrder       Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
-  discounts        OfferDiscount[]
+  discounts OfferDiscount[]
 
   @@index([isActive, sortOrder])
   @@index([startsAt, endsAt])
@@ -729,27 +728,27 @@ model Offer {
 // ============================================
 
 model OfferDiscount {
-  id               String        @id @default(cuid())
-  offerId          String
-  offer            Offer         @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  id      String @id @default(cuid())
+  offerId String
+  offer   Offer  @relation(fields: [offerId], references: [id], onDelete: Cascade)
 
   // Optional targeting (can stay null)
-  productId        Int?
-  product          Product?      @relation(fields: [productId], references: [id], onDelete: SetNull)
-  categoryId       Int?
-  category         Category?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  productId  Int?
+  product    Product?  @relation(fields: [productId], references: [id], onDelete: SetNull)
+  categoryId Int?
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 
-  discountType     DiscountType  @default(PERCENTAGE)
+  discountType     DiscountType @default(PERCENTAGE)
   discountValue    Float?
   maxDiscountValue Float?
   minOrderAmount   Float?
   usageLimit       Int?
-  usedCount        Int           @default(0)
+  usedCount        Int          @default(0)
   startsAt         DateTime?
   endsAt           DateTime?
-  isActive         Boolean       @default(true)
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+  isActive         Boolean      @default(true)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
 
   @@index([offerId, isActive])
   @@index([productId])
@@ -784,18 +783,18 @@ model EmployeeSalaryAdjustment {
 // ============================================
 
 model AffiliateLink {
-  id              String   @id @default(uuid())
-  userId          String   @map("user_id")
-  productId       Int      @map("product_id")
-  uniqueCode      String   @unique @map("unique_code")
-  clicks          Int      @default(0)
-  conversions     Int      @default(0)
-  commissionRate  Float    @default(10.00) @map("commission_rate")
-  createdAt       DateTime @default(now()) @map("created_at")
+  id             String   @id @default(uuid())
+  userId         String   @map("user_id")
+  productId      Int      @map("product_id")
+  uniqueCode     String   @unique @map("unique_code")
+  clicks         Int      @default(0)
+  conversions    Int      @default(0)
+  commissionRate Float    @default(10.00) @map("commission_rate")
+  createdAt      DateTime @default(now()) @map("created_at")
 
   // Relations
-  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  product     Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product     Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
   orderItems  OrderItem[]
   commissions Commission[]
 
@@ -829,7 +828,6 @@ model Commission {
   @@map("commissions")
 }
 
-
 model AdPageVisit {
   id         String   @id @default(uuid())
   productId  Int      @map("product_id")
@@ -852,18 +850,17 @@ model AdPageVisit {
   @@map("ad_page_visits")
 }
 
-
 model AffiliateWalletTransfer {
-  id           String               @id @default(uuid())
-  userId       String               @map("user_id")
-  amount       Float
-  status       WalletTransferStatus @default(PENDING)
-  reference    String?
-  notes        String?
-  transferredAt DateTime            @default(now()) @map("transferred_at")
-  receivedAt   DateTime?            @map("received_at")
-  createdAt    DateTime             @default(now()) @map("created_at")
-  updatedAt    DateTime             @updatedAt @map("updated_at")
+  id            String               @id @default(uuid())
+  userId        String               @map("user_id")
+  amount        Float
+  status        WalletTransferStatus @default(PENDING)
+  reference     String?
+  notes         String?
+  transferredAt DateTime             @default(now()) @map("transferred_at")
+  receivedAt    DateTime?            @map("received_at")
+  createdAt     DateTime             @default(now()) @map("created_at")
+  updatedAt     DateTime             @updatedAt @map("updated_at")
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

@@ -353,6 +353,7 @@ export interface LandingProduct {
     discountPercent: number | null;
     quantityDiscountTiers: { minQty: number; discountPercent: number }[];
     features: LandingFeature[];
+    showPrice: boolean;
     showReviews: boolean;
     showGuarantee: boolean;
     guaranteeTitle: string | null;
@@ -489,6 +490,7 @@ export async function getLandingProduct(
           discountPercent: lp.discountPercent,
           quantityDiscountTiers,
           features,
+          showPrice: lp.showPrice,
           showReviews: lp.showReviews,
           showGuarantee: lp.showGuarantee,
           guaranteeTitle: lp.guaranteeTitle,

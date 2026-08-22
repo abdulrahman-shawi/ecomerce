@@ -214,6 +214,7 @@ export const ProductLandingPageScalarFieldEnum = {
   badgeText: 'badgeText',
   discountPercent: 'discountPercent',
   features: 'features',
+  showPrice: 'showPrice',
   showReviews: 'showReviews',
   showGuarantee: 'showGuarantee',
   guaranteeTitle: 'guaranteeTitle',
