@@ -253,7 +253,7 @@ export async function createLandingOrder(input: LandingOrderInput) {
       await tx.orderItem.create({
         data: {
           quantity,
-          price: unitPrice,
+          price: originalUnitPrice,
           discount: Math.max(originalUnitPrice - unitPrice, 0),
           productId,
           orderId: order.id,
